@@ -1,0 +1,7 @@
+
+"""Entrypoint to launch the FastAPI server via Uvicorn."""
+import uvicorn
+from . import app
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=8000)
