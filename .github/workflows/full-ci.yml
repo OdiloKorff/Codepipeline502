@@ -8,13 +8,20 @@ jobs:
     name: Lint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Install pre-commit
-        run: pip install pre-commit
-      - name: Run linters
+
+      - name: Install Poetry & dev dependencies
+        run: |
+          pip install poetry
+          poetry install --no-interaction --no-ansi
+
+      - name: Run pre-commit hooks
         run: pre-commit run --all-files
 
   build:
@@ -22,14 +29,19 @@ jobs:
     needs: lint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+
       - name: Install dependencies
         run: |
           pip install poetry
           poetry install --only main --no-interaction --no-ansi
+
       - name: Build package
         run: poetry build
 
@@ -38,12 +50,17 @@ jobs:
     needs: [lint, build]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+
       - name: Run tests
         run: pytest -q --junitxml=report.xml
+
       - name: Upload test results
         uses: actions/upload-artifact@v4
         with:
@@ -55,12 +72,17 @@ jobs:
     needs: tests
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+
       - name: Run coverage
         run: pytest --cov=codepipeline --cov-report=xml -q
+
       - name: Enforce coverage threshold
         run: |
           python - <<'PY'
@@ -70,7 +92,9 @@ jobs:
               print(f"Coverage {cov:.2f}% < 80%")
               sys.exit(1)
           PY
-      - uses: actions/upload-artifact@v4
+
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
         with:
           name: coverage-report
           path: coverage.xml
@@ -80,7 +104,7 @@ jobs:
     needs: coverage
     runs-on: ubuntu-latest
     steps:
-      - name: Trivy image scan
+      - name: Scan Docker image
         run: trivy image --exit-code 1 --severity HIGH,CRITICAL ghcr.io/${{ github.repository }}:${{ github.sha }}
 
   sbom-attach:
@@ -90,8 +114,10 @@ jobs:
     steps:
       - name: Generate SBOM
         run: cyclonedx-py -o sbom.json .
+
       - name: Attach SBOM
         run: cosign attach sbom --sbom sbom.json ghcr.io/${{ github.repository }}:${{ github.sha }}
+
       - name: Verify SBOM attestation
         run: cosign verify-attestation --type sbom ghcr.io/${{ github.repository }}:${{ github.sha }}
 
@@ -100,21 +126,24 @@ jobs:
     needs: sbom-attach
     runs-on: ubuntu-latest
     steps:
-      - name: Pull container image
+      - name: Pull image
         run: docker pull ghcr.io/${{ github.repository }}:${{ github.sha }}
+
       - name: Run container
         run: docker run -d --name cp -p 8000:8000 ghcr.io/${{ github.repository }}:${{ github.sha }}
-      - name: Wait for /metrics ≤15s
+
+      - name: Wait for /metrics (≤15s)
         shell: bash
         run: |
           for i in $(seq 1 15); do
             code=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8000/metrics || true)
             if [ "$code" == "200" ]; then
-              echo "Metrics ready after ${i}s"
+              echo "Metrics available after ${i}s"
               break
             fi
             sleep 1
           done
+
       - name: Cleanup container
         if: always()
         run: docker rm -f cp || true
@@ -128,9 +157,7 @@ jobs:
         uses: slackapi/slack-github-action@v1.23.0
         with:
           payload: |
-            {
-              "text": "🚀 Full CI pipeline completed for commit `${{ github.sha }}`"
-            }
+            {"text":"✅ Full CI pipeline completed for commit `${{ github.sha }}`"}
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
           SLACK_CHANNEL: ${{ secrets.SLACK_CHANNEL }}
@@ -141,4 +168,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Deploy artifacts
-        run: echo "Deploy logic here"
+        run: echo "🚀 Deploy logic goes here"

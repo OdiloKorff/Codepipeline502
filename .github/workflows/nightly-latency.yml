@@ -25,10 +25,7 @@ jobs:
           ts1=$(date +%s%3N)
           delta=$((ts1-ts0))
           echo "Cold start: ${delta} ms"
-          if [ $delta -gt 2000 ]; then
-            echo "::error::Cold start exceeded threshold"
-            exit 1
-          fi
+          if [ $delta -gt 2000 ]; then exit 1; fi
       - name: Cleanup
         if: always()
         run: docker rm -f cp || true
@@ -59,7 +56,6 @@ jobs:
             if [[ "$code" == "200" ]]; then exit 0; fi
             sleep 1
           done
-          echo "::error::/metrics not ready after 15s"
           exit 1
 
   grafana-provision:
