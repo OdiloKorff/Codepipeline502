@@ -1,0 +1,31 @@
+name: budget-check
+on:
+  workflow_run:
+    workflows: ["ci", "full-ci", "nightly-latency", "security-auto-merge"]
+    types: [completed]
+permissions:
+  actions: read
+  contents: read
+jobs:
+  budget-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install GH CLI
+        uses: cli/cli-action@v2
+      - name: Install jq & bc
+        run: sudo apt-get update && sudo apt-get install -y jq bc
+      - name: Fetch resource usage
+        id: usage
+        run: |
+          RUN_ID=${{ github.event.workflow_run.id }}
+          gh run view "$RUN_ID" --json resourceUsage > usage.json
+          CPU=$(jq -r '.resourceUsage.billable."UBUNTU".minutes' usage.json)
+          echo "cpu=$CPU" >> $GITHUB_OUTPUT
+      - name: Compare against budget
+        env:
+          LIMIT: ${{ secrets.BUDGET_LIMIT }}
+        run: |
+          if (( $(echo "$CPU > $LIMIT" | bc -l) )); then
+            echo "::error::Budget exceeded ($CPU > $LIMIT)"
+            exit 1
+          fi

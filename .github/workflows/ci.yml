@@ -1,7 +1,123 @@
 name: ci
-on: [push]
+on:
+  push:
+    branches: [main]
 jobs:
-  hello:
+  lint:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "🎉 Pipeline lebt!"
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install pre-commit
+        run: pip install pre-commit
+      - name: Run linters
+        run: pre-commit run --all-files
+
+  build:
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: |
+          pip install poetry
+          poetry install --only main --no-interaction --no-ansi
+      - name: Build package
+        run: poetry build
+
+  tests:
+    needs: [lint, build]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run tests
+        run: pytest -q --junitxml=report.xml
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: report.xml
+
+  coverage:
+    needs: tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run coverage
+        run: pytest --cov=codepipeline --cov-report=xml -q
+      - name: Enforce coverage threshold
+        run: |
+          python - <<'PY'
+          import sys, xml.etree.ElementTree as ET
+          cov = float(ET.parse('coverage.xml').getroot().attrib['line-rate'])*100
+          print(f"Coverage: {cov:.2f}%")
+          if cov < 80: sys.exit(1)
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: coverage.xml
+
+  trivy-scan:
+    needs: coverage
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trivy scan
+        run: trivy image --exit-code 1 --severity HIGH,CRITICAL ghcr.io/${{ github.repository }}:${{ github.sha }}
+
+  sbom-attach:
+    needs: trivy-scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate SBOM
+        run: cyclonedx-py -o sbom.json .
+      - name: Attach SBOM
+        run: cosign attach sbom --sbom sbom.json ghcr.io/${{ github.repository }}:${{ github.sha }}
+      - name: Verify SBOM attestation
+        run: cosign verify-attestation --type sbom ghcr.io/${{ github.repository }}:${{ github.sha }}
+
+  metrics-smoke:
+    needs: sbom-attach
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pull image
+        run: docker pull ghcr.io/${{ github.repository }}:${{ github.sha }}
+      - name: Run container
+        run: docker run -d --name cp -p 8000:8000 ghcr.io/${{ github.repository }}:${{ github.sha }}
+      - name: Wait for /metrics ≤15 s
+        shell: bash
+        run: |
+          for i in $(seq 1 15); do
+            code=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8000/metrics || true)
+            if [[ "$code" == "200" ]]; then
+              echo "Metrics ready in ${i}s"
+              break
+            fi
+            sleep 1
+          done
+      - name: Cleanup
+        if: always()
+        run: docker rm -f cp || true
+
+  notify-slack:
+    needs: [lint, build, tests, coverage, trivy-scan, sbom-attach, metrics-smoke]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notify Slack
+        uses: slackapi/slack-github-action@v1.23.0
+        with:
+          payload: '{"text":"CI Pipeline completed for ${{ github.sha }}"}'
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+          SLACK_CHANNEL: ${{ secrets.SLACK_CHANNEL }}
