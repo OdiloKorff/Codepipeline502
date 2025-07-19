@@ -7,7 +7,7 @@ gitpython
 httpx
 hvac
 influxdb-client
-jwt
+PyJWT
 kubernetes
 libcst
 mlflow
@@ -26,8 +26,6 @@ starlette
 structlog
 temporalio
 tenacity
-tkinter
-toml
 tree-sitter
 typer
 uvicorn
