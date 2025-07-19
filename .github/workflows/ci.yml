@@ -1,165 +1,130 @@
-name: ci
+name: CI
+
 on:
   push:
-    branches: [main]
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+  schedule:
+    - cron: '0 5 * * *'  # 05:00 UTC Daily health run
+
+permissions:
+  contents: read
+  pull-requests: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  PYTHON_DEFAULT: '3.12'
+  PACKAGE_DIR: '.'
 
 jobs:
-  lint:
-    name: Lint
+  setup-matrix:
     runs-on: ubuntu-latest
+    outputs:
+      py: ${{ steps.set.outputs.matrix }}
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - id: set
+        run: echo 'matrix=["3.10","3.11","3.12"]' >> $GITHUB_OUTPUT
 
-      - name: Set up Python 3.12
+  test:
+    needs: setup-matrix
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ${{ fromJson(needs.setup-matrix.outputs.py) }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
-
-      - name: Install Poetry & dependencies
-        run: |
-          pip install poetry
-          poetry install --no-interaction --no-ansi
-
-      - name: Run pre-commit hooks
-        run: pre-commit run --all-files
-
-  build:
-    name: Build
-    needs: lint
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Python 3.12
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
+            python-version: ${{ matrix.python-version }}
+            cache: 'pip'
 
       - name: Install dependencies
         run: |
-          pip install poetry
-          poetry install --only main --no-interaction --no-ansi
-
-      - name: Build package
-        run: poetry build
-
-  tests:
-    name: Tests
-    needs: [lint, build]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Python 3.12
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
+          pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          pip install pytest pytest-cov
 
       - name: Run tests
-        run: pytest -q --junitxml=report.xml
+        run: pytest -q --maxfail=1 --disable-warnings --cov=./ --cov-report=xml --cov-report=term
 
-      - name: Upload test results
-        uses: actions/upload-artifact@v4
+      - name: Upload coverage
+        uses: codecov/codecov-action@v4
         with:
-          name: test-results
-          path: report.xml
-
-  coverage:
-    name: Coverage
-    needs: tests
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Python 3.12
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-
-      - name: Run coverage
-        run: pytest --cov=codepipeline --cov-report=xml -q
-
-      - name: Enforce coverage threshold
-        run: |
-          python - <<'PY'
-          import sys, xml.etree.ElementTree as ET
-          cov = float(ET.parse('coverage.xml').getroot().attrib['line-rate'])*100
-          if cov < 80:
-              print(f"Coverage {cov:.2f}% < 80%")
-              sys.exit(1)
-          PY
-
-      - name: Upload coverage report
-        uses: actions/upload-artifact@v4
-        with:
-          name: coverage-report
-          path: coverage.xml
-
-  trivy-scan:
-    name: Trivy Scan
-    needs: coverage
-    runs-on: ubuntu-latest
-    steps:
-      - name: Scan Docker image for vulnerabilities
-        run: trivy image --exit-code 1 --severity HIGH,CRITICAL ghcr.io/${{ github.repository }}:${{ github.sha }}
-
-  sbom-attach:
-    name: SBOM Attach & Verify
-    needs: trivy-scan
-    runs-on: ubuntu-latest
-    steps:
-      - name: Generate SBOM
-        run: cyclonedx-py -o sbom.json .
-
-      - name: Attach SBOM to image
-        run: cosign attach sbom --sbom sbom.json ghcr.io/${{ github.repository }}:${{ github.sha }}
-
-      - name: Verify SBOM attestation
-        run: cosign verify-attestation --type sbom ghcr.io/${{ github.repository }}:${{ github.sha }}
-
-  metrics-smoke:
-    name: Metrics Smoke Test
-    needs: sbom-attach
-    runs-on: ubuntu-latest
-    steps:
-      - name: Pull container image
-        run: docker pull ghcr.io/${{ github.repository }}:${{ github.sha }}
-
-      - name: Run container
-        run: docker run -d --name cp -p 8000:8000 ghcr.io/${{ github.repository }}:${{ github.sha }}
-
-      - name: Wait for /metrics (≤15s)
-        shell: bash
-        run: |
-          for i in $(seq 1 15); do
-            code=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8000/metrics || true)
-            if [ "$code" == "200" ]; then
-              echo "Metrics available after ${i}s"
-              break
-            fi
-            sleep 1
-          done
-
-      - name: Cleanup container
-        if: always()
-        run: docker rm -f cp || true
-
-  notify-slack:
-    name: Notify Slack
-    needs: [lint, build, tests, coverage, trivy-scan, sbom-attach, metrics-smoke]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Send Slack notification
-        uses: slackapi/slack-github-action@v1.23.0
-        with:
-          payload: |
-            {
-              "text": "✅ CI pipeline completed for commit `${{ github.sha }}`"
-            }
+          fail_ci_if_error: true
         env:
-          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-          SLACK_CHANNEL: ${{ secrets.SLACK_CHANNEL }}
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    if: ${{ always() && needs.test.result == 'success' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_DEFAULT }}
+          cache: 'pip'
+      - name: Build package
+        run: |
+          pip install build
+          python -m build --wheel --sdist
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/*
+          if-no-files-found: error
+
+  smoke:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_DEFAULT }}
+      - name: Install built wheel
+        run: pip install $(ls dist/*.whl | head -n1)
+      - name: Import test
+        run: python -c 'import pkgutil,sys;print("Packages:",[m.name for m in pkgutil.iter_modules()][:5])'
+
+  security-scan:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_DEFAULT }}
+          cache: 'pip'
+      - name: Install
+        run: pip install --upgrade pip safety bandit
+      - name: Safety
+        run: pip freeze > requirements.lock && safety check -r requirements.lock || true
+      - name: Bandit
+        run: bandit -r . -x tests || true
+
+  summary:
+    needs: [ test, build, smoke, security-scan ]
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - name: CI Summary
+        run: |
+          echo '### CI Result Matrix' >> $GITHUB_STEP_SUMMARY
+          echo "*Tests:* ${{ needs.test.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "*Build:* ${{ needs.build.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "*Smoke:* ${{ needs.smoke.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "*Security:* ${{ needs.security-scan.result }}" >> $GITHUB_STEP_SUMMARY

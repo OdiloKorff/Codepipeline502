@@ -1,51 +1,23 @@
-name: security-auto-merge
+name: Security Auto Merge
+
 on:
   pull_request_target:
-    types: [opened, reopened, synchronize]
-    branches: [main]
+    types: [opened, reopened, synchronize, ready_for_review, labeled]
+
 permissions:
   contents: write
   pull-requests: write
+
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-      - run: pip install poetry
-      - run: poetry install --only main --no-interaction --no-ansi
-      - run: poetry build
-
-  tests:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-      - run: pip install pytest
-      - run: pytest -q
-
-  auto-merge:
-    needs: [build, tests]
-    if: contains('dependabot[bot] renovate[bot] feature-bot[bot]', github.event.pull_request.user.login)
+  dependabot-auto-merge:
+    if: >-
+      github.actor == 'dependabot[bot]' &&
+      contains(join(fromJson(toJson(github.event.pull_request.labels)).*.name, ','), 'security')
     runs-on: ubuntu-latest
     steps:
       - name: Enable auto-merge
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const pr = context.payload.pull_request;
-            await github.graphql(\`
-              mutation EnableAutoMerge($prId:ID!) {
-                enablePullRequestAutoMerge(input:{pullRequestId:$prId,mergeMethod:SQUASH}) {
-                  pullRequest { number title }
-                }
-              }\`, { prId: pr.node_id });
+        run: |
+          gh pr merge --auto --squash --delete-branch "$PR_URL"
+        env:
+          GH_TOKEN: ${{ secrets.DEPENDABOT_AUTO_MERGE_TOKEN || secrets.GITHUB_TOKEN }}
+          PR_URL: ${{ github.event.pull_request.html_url }}

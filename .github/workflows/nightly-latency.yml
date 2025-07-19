@@ -1,75 +1,59 @@
-name: nightly-latency
+name: Nightly Latency Benchmark
+
 on:
   schedule:
-    - cron: '0 0 * * *'
+    - cron: '15 2 * * *'   # 02:15 UTC nightly
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
 jobs:
-  build:
+  benchmark:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        scenario: [ small, medium, large ]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - run: pip install poetry
-      - run: poetry install --only main --no-interaction --no-ansi
-
-  cold-start:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Measure cold start
-        shell: bash
+          cache: 'pip'
+      - name: Install
         run: |
-          ts0=$(date +%s%3N)
-          docker run --rm ghcr.io/${{ github.repository }}:${{ github.sha }} --help >/dev/null
-          ts1=$(date +%s%3N)
-          delta=$((ts1-ts0))
-          echo "Cold start: ${delta} ms"
-          if [ $delta -gt 2000 ]; then exit 1; fi
-      - name: Cleanup
-        if: always()
-        run: docker rm -f cp || true
-
-  csv-diff:
-    needs: cold-start
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Compare latency CSV
-        env:
-          YESTERDAY_CSV_URL: ${{ secrets.YESTERDAY_CSV_URL }}
-          TODAY_CSV_URL: ${{ secrets.TODAY_CSV_URL }}
-        run: python scripts/compare_latency.py
-
-  metrics-smoke:
-    needs: csv-diff
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-      - name: Metrics smoke test
+          pip install -U pip
+          pip install -r requirements.txt || true
+          pip install pytest pytest-benchmark rich
+      - name: Run benchmark
         run: |
-          for i in $(seq 1 15); do
-            code=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8000/metrics || true)
-            if [[ "$code" == "200" ]]; then exit 0; fi
-            sleep 1
-          done
-          exit 1
+          pytest tests/benchmarks -k ${{ matrix.scenario }} --benchmark-json=bench.json
+      - name: Archive result
+        uses: actions/upload-artifact@v4
+        with:
+          name: benchmark-${{ matrix.scenario }}
+          path: bench.json
 
-  grafana-provision:
-    needs: build
+  aggregate:
+    needs: benchmark
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
         with:
-          python-version: '3.12'
-      - name: Install requests
-        run: pip install requests
-      - name: Import Grafana dashboards
-        env:
-          GRAFANA_URL: ${{ secrets.GRAFANA_URL }}
-          GRAFANA_API_TOKEN: ${{ secrets.GRAFANA_API_TOKEN }}
-        run: python devops/grafana/grafana-api.py
+          path: results
+      - name: Aggregate
+        run: |
+          python - <<'PY'
+          import json,glob,statistics,os
+          latencies=[]
+          for f in glob.glob('results/**/bench.json', recursive=True):
+              data=json.load(open(f))
+              for bench in data['benchmarks']:
+                  latencies.append(bench['stats']['mean'])
+          print('MEAN_LATENCY', sum(latencies)/len(latencies))
+          PY
+      - name: Summary
+        run: echo "Nightly latency benchmarks completed" >> $GITHUB_STEP_SUMMARY

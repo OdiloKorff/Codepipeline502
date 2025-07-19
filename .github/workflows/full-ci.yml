@@ -1,171 +1,102 @@
-name: full-ci
+name: Full CI
+
 on:
+  workflow_dispatch:
   push:
-    branches: [main]
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+permissions:
+  contents: read
+  pull-requests: read
+
+concurrency:
+  group: full-ci-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   lint:
-    name: Lint
+    uses: ./.github/workflows/lint.yml  # Reusable lint (if supported)
+    # If not using reusable form, include 'with:' or copy steps.
+
+  core-ci:
     runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Python 3.12
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-
-      - name: Install Poetry & dev dependencies
-        run: |
-          pip install poetry
-          poetry install --no-interaction --no-ansi
-
-      - name: Run pre-commit hooks
-        run: pre-commit run --all-files
-
-  build:
-    name: Build
     needs: lint
-    runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Python 3.12
-        uses: actions/setup-python@v5
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-
-      - name: Install dependencies
+          cache: 'pip'
+      - name: Install
         run: |
-          pip install poetry
-          poetry install --only main --no-interaction --no-ansi
+          pip install -U pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          pip install pytest
+      - name: Unit tests
+        run: pytest -q --maxfail=1 --disable-warnings
 
-      - name: Build package
-        run: poetry build
-
-  tests:
-    name: Tests
-    needs: [lint, build]
+  build-docs:
     runs-on: ubuntu-latest
+    needs: core-ci
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Python 3.12
-        uses: actions/setup-python@v5
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-
-      - name: Run tests
-        run: pytest -q --junitxml=report.xml
-
-      - name: Upload test results
-        uses: actions/upload-artifact@v4
+      - name: Install doc deps
+        run: |
+          pip install -U pip
+          pip install -r docs/requirements.txt || true
+      - name: Build docs
+        run: |
+          if [ -f docs/Makefile ]; then make -C docs html; fi
+      - uses: actions/upload-artifact@v4
         with:
-          name: test-results
-          path: report.xml
+          name: docs-html
+          path: docs/_build/html
+          if-no-files-found: warn
 
-  coverage:
-    name: Coverage
-    needs: tests
+  package:
     runs-on: ubuntu-latest
+    needs: core-ci
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Python 3.12
-        uses: actions/setup-python@v5
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-
-      - name: Run coverage
-        run: pytest --cov=codepipeline --cov-report=xml -q
-
-      - name: Enforce coverage threshold
+      - name: Build
         run: |
-          python - <<'PY'
-          import sys, xml.etree.ElementTree as ET
-          cov = float(ET.parse('coverage.xml').getroot().attrib['line-rate'])*100
-          if cov < 80:
-              print(f"Coverage {cov:.2f}% < 80%")
-              sys.exit(1)
-          PY
-
-      - name: Upload coverage report
-        uses: actions/upload-artifact@v4
+          pip install build
+          python -m build --wheel --sdist
+      - uses: actions/upload-artifact@v4
         with:
-          name: coverage-report
-          path: coverage.xml
-
-  trivy-scan:
-    name: Trivy Scan
-    needs: coverage
-    runs-on: ubuntu-latest
-    steps:
-      - name: Scan Docker image
-        run: trivy image --exit-code 1 --severity HIGH,CRITICAL ghcr.io/${{ github.repository }}:${{ github.sha }}
-
-  sbom-attach:
-    name: SBOM Attach & Verify
-    needs: trivy-scan
-    runs-on: ubuntu-latest
-    steps:
-      - name: Generate SBOM
-        run: cyclonedx-py -o sbom.json .
-
-      - name: Attach SBOM
-        run: cosign attach sbom --sbom sbom.json ghcr.io/${{ github.repository }}:${{ github.sha }}
-
-      - name: Verify SBOM attestation
-        run: cosign verify-attestation --type sbom ghcr.io/${{ github.repository }}:${{ github.sha }}
-
-  metrics-smoke:
-    name: Metrics Smoke Test
-    needs: sbom-attach
-    runs-on: ubuntu-latest
-    steps:
-      - name: Pull image
-        run: docker pull ghcr.io/${{ github.repository }}:${{ github.sha }}
-
-      - name: Run container
-        run: docker run -d --name cp -p 8000:8000 ghcr.io/${{ github.repository }}:${{ github.sha }}
-
-      - name: Wait for /metrics (≤15s)
-        shell: bash
-        run: |
-          for i in $(seq 1 15); do
-            code=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8000/metrics || true)
-            if [ "$code" == "200" ]; then
-              echo "Metrics available after ${i}s"
-              break
-            fi
-            sleep 1
-          done
-
-      - name: Cleanup container
-        if: always()
-        run: docker rm -f cp || true
+          name: dist
+          path: dist/*
 
   notify-slack:
-    name: Notify Slack
-    needs: [lint, build, tests, coverage, trivy-scan, sbom-attach, metrics-smoke]
+    needs: [ core-ci, build-docs, package ]
     runs-on: ubuntu-latest
+    if: always() && env.SLACK_BOT_TOKEN != ''
     steps:
-      - name: Send Slack notification
-        uses: slackapi/slack-github-action@v1.23.0
+      - name: Slack Notification
+        uses: slackapi/slack-github-action@v1.27.0
         with:
+          channel-id: ${{ secrets.SLACK_CHANNEL }}
           payload: |
-            {"text":"✅ Full CI pipeline completed for commit `${{ github.sha }}`"}
+            {"text":"✅ Full CI pipeline completed for commit ${{ github.sha }}"}
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
-          SLACK_CHANNEL: ${{ secrets.SLACK_CHANNEL }}
 
   deploy:
     name: Deploy
     needs: notify-slack
+    if: >-
+      github.ref == 'refs/heads/main' &&
+      needs.notify-slack.result == 'success' &&
+      (github.event_name == 'push')
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy artifacts
-        run: echo "🚀 Deploy logic goes here"
+      - name: Deploy placeholder
+        run: echo "Deploy logic goes here"

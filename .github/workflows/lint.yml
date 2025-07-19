@@ -1,38 +1,70 @@
-name: lint
+name: Lint
+
 on:
   push:
-    branches: [main]
+    branches: [ main ]
   pull_request:
-    branches: [main]
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pull-requests: read
+
+concurrency:
+  group: lint-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   lint:
+    name: Lint & Static Analysis
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Python 3.12
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+          cache: 'pip'
 
-      - name: Install pre-commit
-        run: pip install pre-commit
+      - name: Install tooling
+        run: >-
+          pip install --upgrade pip &&
+          pip install \
+            pre-commit \
+            black \
+            ruff \
+            mypy \
+            bandit \
+            safety
 
-      - name: Run pre-commit hooks
-        run: pre-commit run --all-files
+      - name: Pre-commit (format hooks)
+        run: pre-commit run --all-files --show-diff-on-failure
 
-      - name: Check type hints
+      - name: Black (format check)
+        run: black --check --diff .
+
+      - name: Ruff (lint)
+        run: ruff check .
+
+      - name: Mypy (type check)
+        run: mypy . --strict --pretty
+
+      - name: Bandit (security)
+        run: bandit -r . -x tests
+
+      - name: Safety (dependency vulns)
+        run: pip freeze > requirements.lock && safety check -r requirements.lock || true
+        # (Set to '|| true' so non-critical findings don't fail build; adjust policy.)
+
+      - name: Compile (syntax)
+        run: python -m py_compile $(git ls-files '*.py')
+
+      - name: Summary
+        if: always()
         run: |
-          pip install mypy
-          mypy codepipeline
-
-      - name: Check formatting
-        run: |
-          pip install black ruff
-          black --check .
-          ruff .
-
-      - name: Compile check
-        run: python -m py_compile $(find . -name '*.py')
+          echo '### Lint Summary' >> $GITHUB_STEP_SUMMARY
+          echo '*Black / Ruff / Mypy / Bandit executed.*' >> $GITHUB_STEP_SUMMARY
