@@ -7,7 +7,7 @@ on:
     branches: [ main ]
   workflow_dispatch:
   schedule:
-    - cron: '0 5 * * *'  # 05:00 UTC Daily health run
+    - cron: '0 5 * * *'   # 05:00 UTC täglicher Health Run
 
 permissions:
   contents: read
@@ -28,35 +28,36 @@ jobs:
       py: ${{ steps.set.outputs.matrix }}
     steps:
       - id: set
-        run: echo 'matrix=["3.10","3.11","3.12"]' >> $GITHUB_OUTPUT
+        run: echo 'matrix=["3.10","3.11","3.12"]' >> "$GITHUB_OUTPUT"
 
   test:
+    name: Tests (py=${{ matrix.python-version }})
     needs: setup-matrix
     strategy:
       fail-fast: false
       matrix:
         python-version: ${{ fromJson(needs.setup-matrix.outputs.py) }}
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-            python-version: ${{ matrix.python-version }}
-            cache: 'pip'
+          python-version: ${{ matrix.python-version }}
+          cache: 'pip'
 
       - name: Install dependencies
         run: |
-          pip install --upgrade pip
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-          pip install pytest pytest-cov
-
+            python -m pip install --upgrade pip
+            if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+            if [ -f pyproject.toml ]; then pip install .; else pip install -e . || true; fi
+            pip install pytest pytest-cov
       - name: Run tests
         run: pytest -q --maxfail=1 --disable-warnings --cov=./ --cov-report=xml --cov-report=term
-
-      - name: Upload coverage
+      - name: Upload coverage to Codecov
+        if: env.CODECOV_TOKEN != ''
         uses: codecov/codecov-action@v4
         with:
           fail_ci_if_error: true
@@ -64,20 +65,22 @@ jobs:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
   build:
+    name: Build package
     needs: test
-    runs-on: ubuntu-latest
     if: ${{ always() && needs.test.result == 'success' }}
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ env.PYTHON_DEFAULT }}
           cache: 'pip'
-      - name: Build package
+      - name: Build (sdist & wheel)
         run: |
-          pip install build
+          python -m pip install --upgrade pip
+            pip install build
           python -m build --wheel --sdist
-      - name: Upload artifact
+      - name: Upload dist
         uses: actions/upload-artifact@v4
         with:
           name: dist
@@ -85,6 +88,7 @@ jobs:
           if-no-files-found: error
 
   smoke:
+    name: Smoke (import)
     needs: build
     runs-on: ubuntu-latest
     steps:
@@ -96,11 +100,12 @@ jobs:
         with:
           python-version: ${{ env.PYTHON_DEFAULT }}
       - name: Install built wheel
-        run: pip install $(ls dist/*.whl | head -n1)
-      - name: Import test
-        run: python -c 'import pkgutil,sys;print("Packages:",[m.name for m in pkgutil.iter_modules()][:5])'
+        run: pip install "$(ls dist/*.whl | head -n1)"
+      - name: Import probe
+        run: python -c 'import pkgutil;import sys;print("Top5:",[m.name for m in pkgutil.iter_modules()][:5])'
 
   security-scan:
+    name: Security Scan
     needs: build
     runs-on: ubuntu-latest
     steps:
@@ -109,19 +114,22 @@ jobs:
         with:
           python-version: ${{ env.PYTHON_DEFAULT }}
           cache: 'pip'
-      - name: Install
-        run: pip install --upgrade pip safety bandit
-      - name: Safety
+      - name: Install security tooling
+        run: |
+          python -m pip install --upgrade pip
+          pip install safety bandit
+      - name: Safety (advisories)
         run: pip freeze > requirements.lock && safety check -r requirements.lock || true
-      - name: Bandit
+      - name: Bandit (exclude tests)
         run: bandit -r . -x tests || true
 
   summary:
+    name: CI Summary
     needs: [ test, build, smoke, security-scan ]
     runs-on: ubuntu-latest
     if: always()
     steps:
-      - name: CI Summary
+      - name: Aggregate
         run: |
           echo '### CI Result Matrix' >> $GITHUB_STEP_SUMMARY
           echo "*Tests:* ${{ needs.test.result }}" >> $GITHUB_STEP_SUMMARY

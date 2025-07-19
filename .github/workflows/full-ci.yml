@@ -10,6 +10,7 @@ on:
 permissions:
   contents: read
   pull-requests: read
+  issues: read
 
 concurrency:
   group: full-ci-${{ github.ref }}
@@ -17,12 +18,12 @@ concurrency:
 
 jobs:
   lint:
-    uses: ./.github/workflows/lint.yml  # Reusable lint (if supported)
-    # If not using reusable form, include 'with:' or copy steps.
+    uses: ./.github/workflows/lint.yml
 
   core-ci:
-    runs-on: ubuntu-latest
+    name: Core Unit Tests
     needs: lint
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -31,15 +32,17 @@ jobs:
           cache: 'pip'
       - name: Install
         run: |
-          pip install -U pip
+          python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
           pip install pytest
+          pip install -e . || true
       - name: Unit tests
         run: pytest -q --maxfail=1 --disable-warnings
 
   build-docs:
-    runs-on: ubuntu-latest
+    name: Build Docs
     needs: core-ci
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -47,8 +50,8 @@ jobs:
           python-version: '3.12'
       - name: Install doc deps
         run: |
-          pip install -U pip
-          pip install -r docs/requirements.txt || true
+          python -m pip install --upgrade pip
+          if [ -f docs/requirements.txt ]; then pip install -r docs/requirements.txt || true; fi
       - name: Build docs
         run: |
           if [ -f docs/Makefile ]; then make -C docs html; fi
@@ -59,8 +62,9 @@ jobs:
           if-no-files-found: warn
 
   package:
-    runs-on: ubuntu-latest
+    name: Package Build
     needs: core-ci
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -68,6 +72,7 @@ jobs:
           python-version: '3.12'
       - name: Build
         run: |
+          python -m pip install --upgrade pip
           pip install build
           python -m build --wheel --sdist
       - uses: actions/upload-artifact@v4
@@ -76,26 +81,29 @@ jobs:
           path: dist/*
 
   notify-slack:
+    name: Notify Slack
     needs: [ core-ci, build-docs, package ]
-    runs-on: ubuntu-latest
     if: always() && env.SLACK_BOT_TOKEN != ''
+    runs-on: ubuntu-latest
     steps:
       - name: Slack Notification
         uses: slackapi/slack-github-action@v1.27.0
         with:
           channel-id: ${{ secrets.SLACK_CHANNEL }}
           payload: |
-            {"text":"✅ Full CI pipeline completed for commit ${{ github.sha }}"}
+            {
+              "text": "✅ Full CI pipeline completed for commit ${{ github.sha }} (core=${{ needs.core-ci.result }}, docs=${{ needs.build-docs.result }}, pkg=${{ needs.package.result }})"
+            }
         env:
           SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
 
   deploy:
     name: Deploy
     needs: notify-slack
-    if: >-
+    if: >
       github.ref == 'refs/heads/main' &&
       needs.notify-slack.result == 'success' &&
-      (github.event_name == 'push')
+      github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
       - name: Deploy placeholder

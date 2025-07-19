@@ -2,52 +2,69 @@ name: Budget Guard
 
 on:
   pull_request:
-    types: [opened, reopened, synchronize]
+    types: [ opened, reopened, synchronize ]
   workflow_dispatch:
   schedule:
-    - cron: '30 4 * * *'  # 04:30 UTC daily budget scan
+    - cron: '30 4 * * *'   # 04:30 UTC täglicher Scan
 
 permissions:
   contents: read
   pull-requests: write
+
+concurrency:
+  group: budget-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  BUDGET_THRESHOLD: '100.0'   # Monatskosten-Limit (USD oder Projektwährung)
 
 jobs:
   budget:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+            python-version: '3.12'
+
       - name: Install cost tooling
         run: |
-          pip install -U pip
+          python -m pip install --upgrade pip
           pip install infracost
+
       - name: Infracost breakdown
         env:
           INFRACOST_API_KEY: ${{ secrets.INFRACOST_API_KEY }}
         run: |
-          infracost breakdown --path . --format json --out-file infracost.json || true
+          infracost breakdown --path . \
+            --format json --out-file infracost.json || true
+
       - name: Parse & Gate
+        id: gate
         run: |
           python - <<'PY'
-          import json, os
-          THRESHOLD= float(os.getenv('BUDGET_THRESHOLD','100.0'))
+          import json, os, sys
+          THRESHOLD=float(os.getenv('BUDGET_THRESHOLD','100.0'))
           try:
               data=json.load(open('infracost.json'))
-              total = data['projects'][0]['breakdown']['totalMonthlyCost'] if data['projects'] else 0
+              total = data['projects'][0]['breakdown']['totalMonthlyCost'] if data.get('projects') else 0
           except Exception:
               total=0
-          print('Estimated monthly cost:', total)
-          if total>THRESHOLD:
-              open('comment.txt','w').write(f'⚠️ Budget überschritten: {total} > {THRESHOLD}')
-              exit(1)
-          else:
-              open('comment.txt','w').write(f'✅ Budget innerhalb Limit: {total} ≤ {THRESHOLD}')
+          print(f"Estimated monthly cost: {total}")
+          status="FAIL" if total>THRESHOLD else "PASS"
+          open('comment.txt','w').write(
+              ('⚠️ Budget überschritten: ' if status=='FAIL' else '✅ Budget innerhalb Limit: ')
+              + f"{total} vs Threshold {THRESHOLD}"
+          )
+          if status=='FAIL':
+              sys.exit(1)
           PY
+
       - name: PR comment
         if: github.event_name == 'pull_request'
         uses: thollander/actions-comment-pull-request@v2
         with:
-          message: $(cat comment.txt)
+          message: |
+            $(cat comment.txt)
           comment_tag: budget-check

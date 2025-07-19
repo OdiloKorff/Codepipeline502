@@ -2,7 +2,7 @@ name: Nightly Latency Benchmark
 
 on:
   schedule:
-    - cron: '15 2 * * *'  # 02:15 UTC nightly
+    - cron: '15 2 * * *'   # 02:15 UTC nightly
   workflow_dispatch:
 
 permissions:
@@ -17,8 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     env:
-      # Optional performance SLO thresholds (seconds); "0" = deaktiviert
-      MEAN_LATENCY_SLO: "0"
+      MEAN_LATENCY_SLO: "0"   # "0" = deaktiviert
       P90_LATENCY_SLO: "0"
     defaults:
       run:
@@ -30,9 +29,9 @@ jobs:
           fetch-depth: 0
 
       - name: Setup Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: '3.12'
           cache: 'pip'
           cache-dependency-path: |
             requirements.txt
@@ -41,9 +40,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          if [[ -f requirements.txt ]]; then
-            pip install -r requirements.txt
-          fi
+          if [[ -f requirements.txt ]]; then pip install -r requirements.txt; fi
           pip install pytest pytest-benchmark
 
       - name: Show dependency versions
@@ -66,7 +63,6 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: nightly-latency-raw
-            # results/ enthält bench.json (falls vorhanden)
           path: results
           retention-days: 14
           if-no-files-found: warn
@@ -77,23 +73,21 @@ jobs:
           python - <<'PY'
           import json, glob, statistics, os, math
           files = glob.glob("results/**/bench.json", recursive=True)
-          latencies = []
+          latencies=[]
           for f in files:
               try:
-                  with open(f, "r") as fh:
-                      data = json.load(fh)
+                  data=json.load(open(f))
               except Exception as e:
                   print(f"::warning file={f}::{e}")
                   continue
               for bench in data.get("benchmarks", []):
                   mean = bench.get("stats", {}).get("mean")
-                  if isinstance(mean, (int, float)) and not math.isnan(mean):
+                  if isinstance(mean,(int,float)) and not math.isnan(mean):
                       latencies.append(mean)
-
           out_path = os.environ.get("GITHUB_OUTPUT")
           if not latencies:
               print("::warning ::No latency samples collected.")
-              with open(out_path, "a") as gh:
+              with open(out_path,"a") as gh:
                   for k in ("mean","best","worst","p90"):
                       gh.write(f"{k}=\n")
                   gh.write("count=0\n")
@@ -102,9 +96,9 @@ jobs:
               mean = statistics.fmean(latencies)
               best = latencies[0]
               worst = latencies[-1]
-              idx = int(round(0.90 * (len(latencies) - 1)))
+              idx = int(round(0.90*(len(latencies)-1)))
               p90 = latencies[idx]
-              with open(out_path, "a") as gh:
+              with open(out_path,"a") as gh:
                   gh.write(f"mean={mean}\n")
                   gh.write(f"best={best}\n")
                   gh.write(f"worst={worst}\n")
@@ -122,7 +116,7 @@ jobs:
         run: |
           fail=0
           mean="${{ steps.aggregate.outputs.mean }}"
-          p90="${{ steps.aggregate.outputs.p90 }}"
+            p90="${{ steps.aggregate.outputs.p90 }}"
           if [[ "${MEAN_LATENCY_SLO}" != "0" && $(echo "${mean} > ${MEAN_LATENCY_SLO}" | bc -l) -eq 1 ]]; then
             echo "::error ::Mean latency ${mean}s exceeds SLO ${MEAN_LATENCY_SLO}s"
             fail=1
@@ -153,3 +147,4 @@ jobs:
               echo "Samples: ${{ steps.aggregate.outputs.count }}"
             fi
           } >> "$GITHUB_STEP_SUMMARY"
+

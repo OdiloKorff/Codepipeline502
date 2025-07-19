@@ -2,9 +2,9 @@ name: Feature Request Bot
 
 on:
   issues:
-    types: [opened, edited, labeled]
+    types: [ opened, edited, labeled ]
   issue_comment:
-    types: [created]
+    types: [ created ]
   workflow_dispatch:
 
 permissions:
@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Apply feature label
-        if: >-
+        if: >
           github.event_name == 'issues' &&
           contains(github.event.issue.title, 'feature') &&
           !contains(join(github.event.issue.labels.*.name, ','), 'feature')
@@ -31,4 +31,5 @@ jobs:
         with:
           issue-number: ${{ github.event.issue.number }}
           body: |
-            Danke für den Feature-Request! Das Team prüft ihn zeitnah. Bitte ergänze **Use Case**, **Business Impact** und **Akzeptanzkriterien**, falls noch nicht enthalten.
+            Danke für den Feature-Request! Das Team prüft ihn zeitnah.
+            Bitte ergänze **Use Case**, **Business Impact** und **Akzeptanzkriterien**, falls noch nicht enthalten.

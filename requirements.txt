@@ -29,3 +29,5 @@ tenacity
 tree-sitter
 typer
 uvicorn
+requests
+sqlalchemy
