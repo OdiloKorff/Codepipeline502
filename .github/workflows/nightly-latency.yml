@@ -2,7 +2,7 @@ name: Nightly Latency Benchmark
 
 on:
   schedule:
-    - cron: '15 2 * * *'   # 02:15 UTC nightly
+    - cron: '15 2 * * *'   # 02:15 UTC nightly (UTC!)
   workflow_dispatch:
 
 permissions:
@@ -17,11 +17,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     env:
-      MEAN_LATENCY_SLO: "0"   # "0" = deaktiviert
+      # Set non-zero values (seconds) to enforce SLO gates; "0" disables a gate
+      MEAN_LATENCY_SLO: "0"
       P90_LATENCY_SLO: "0"
-    defaults:
-      run:
-        shell: bash -euo pipefail
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -38,18 +36,24 @@ jobs:
             pyproject.toml
 
       - name: Install dependencies
+        shell: bash
         run: |
+          set -euo pipefail
           python -m pip install --upgrade pip
           if [[ -f requirements.txt ]]; then pip install -r requirements.txt; fi
           pip install pytest pytest-benchmark
 
       - name: Show dependency versions
+        shell: bash
         run: |
+          set -euo pipefail
           python -V
           pip list
 
       - name: Run latency benchmarks
+        shell: bash
         run: |
+          set -euo pipefail
           mkdir -p results
           if compgen -G "tests/benchmark/*.py" > /dev/null; then
             pytest tests/benchmark --benchmark-json=results/bench.json --maxfail=1 -q
@@ -62,14 +66,16 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: nightly-latency-raw
-          path: results
-          retention-days: 14
-          if-no-files-found: warn
+            name: nightly-latency-raw
+            path: results
+            retention-days: 14
+            if-no-files-found: warn
 
       - name: Aggregate metrics
         id: aggregate
+        shell: bash
         run: |
+          set -euo pipefail
           python - <<'PY'
           import json, glob, statistics, os, math
           files = glob.glob("results/**/bench.json", recursive=True)
@@ -113,10 +119,12 @@ jobs:
 
       - name: Enforce latency SLOs
         if: steps.aggregate.outputs.count != '0'
+        shell: bash
         run: |
+          set -euo pipefail
           fail=0
           mean="${{ steps.aggregate.outputs.mean }}"
-            p90="${{ steps.aggregate.outputs.p90 }}"
+          p90="${{ steps.aggregate.outputs.p90 }}"
           if [[ "${MEAN_LATENCY_SLO}" != "0" && $(echo "${mean} > ${MEAN_LATENCY_SLO}" | bc -l) -eq 1 ]]; then
             echo "::error ::Mean latency ${mean}s exceeds SLO ${MEAN_LATENCY_SLO}s"
             fail=1
@@ -130,7 +138,9 @@ jobs:
           fi
 
       - name: Append summary
+        shell: bash
         run: |
+          set -euo pipefail
           {
             echo "## Nightly Latency Benchmark"
             echo ""
@@ -147,4 +157,3 @@ jobs:
               echo "Samples: ${{ steps.aggregate.outputs.count }}"
             fi
           } >> "$GITHUB_STEP_SUMMARY"
-
