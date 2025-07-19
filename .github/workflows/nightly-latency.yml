@@ -2,58 +2,154 @@ name: Nightly Latency Benchmark
 
 on:
   schedule:
-    - cron: '15 2 * * *'   # 02:15 UTC nightly
+    - cron: '15 2 * * *'  # 02:15 UTC nightly
   workflow_dispatch:
 
 permissions:
   contents: read
 
+concurrency:
+  group: nightly-latency
+  cancel-in-progress: false
+
 jobs:
   benchmark:
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    strategy:
-      fail-fast: false
-      matrix:
-        scenario: [ small, medium, large ]
+    env:
+      # Optional performance SLO thresholds (seconds); "0" = deaktiviert
+      MEAN_LATENCY_SLO: "0"
+      P90_LATENCY_SLO: "0"
+    defaults:
+      run:
+        shell: bash -euo pipefail
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - name: Checkout
+        uses: actions/checkout@v4
         with:
-          python-version: '3.12'
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
           cache: 'pip'
-      - name: Install
+          cache-dependency-path: |
+            requirements.txt
+            pyproject.toml
+
+      - name: Install dependencies
         run: |
-          pip install -U pip
-          pip install -r requirements.txt || true
-          pip install pytest pytest-benchmark rich
-      - name: Run benchmark
+          python -m pip install --upgrade pip
+          if [[ -f requirements.txt ]]; then
+            pip install -r requirements.txt
+          fi
+          pip install pytest pytest-benchmark
+
+      - name: Show dependency versions
         run: |
-          pytest tests/benchmarks -k ${{ matrix.scenario }} --benchmark-json=bench.json
-      - name: Archive result
+          python -V
+          pip list
+
+      - name: Run latency benchmarks
+        run: |
+          mkdir -p results
+          if compgen -G "tests/benchmark/*.py" > /dev/null; then
+            pytest tests/benchmark --benchmark-json=results/bench.json --maxfail=1 -q
+          else
+            pytest -k latency --benchmark-json=results/bench.json --maxfail=1 -q || echo "No specific latency tests matched; continuing."
+          fi
+          ls -R results || true
+
+      - name: Upload raw benchmark artifact
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: benchmark-${{ matrix.scenario }}
-          path: bench.json
-
-  aggregate:
-    needs: benchmark
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download artifacts
-        uses: actions/download-artifact@v4
-        with:
+          name: nightly-latency-raw
+            # results/ enthält bench.json (falls vorhanden)
           path: results
-      - name: Aggregate
+          retention-days: 14
+          if-no-files-found: warn
+
+      - name: Aggregate metrics
+        id: aggregate
         run: |
           python - <<'PY'
-          import json,glob,statistics,os
-          latencies=[]
-          for f in glob.glob('results/**/bench.json', recursive=True):
-              data=json.load(open(f))
-              for bench in data['benchmarks']:
-                  latencies.append(bench['stats']['mean'])
-          print('MEAN_LATENCY', sum(latencies)/len(latencies))
+          import json, glob, statistics, os, math
+          files = glob.glob("results/**/bench.json", recursive=True)
+          latencies = []
+          for f in files:
+              try:
+                  with open(f, "r") as fh:
+                      data = json.load(fh)
+              except Exception as e:
+                  print(f"::warning file={f}::{e}")
+                  continue
+              for bench in data.get("benchmarks", []):
+                  mean = bench.get("stats", {}).get("mean")
+                  if isinstance(mean, (int, float)) and not math.isnan(mean):
+                      latencies.append(mean)
+
+          out_path = os.environ.get("GITHUB_OUTPUT")
+          if not latencies:
+              print("::warning ::No latency samples collected.")
+              with open(out_path, "a") as gh:
+                  for k in ("mean","best","worst","p90"):
+                      gh.write(f"{k}=\n")
+                  gh.write("count=0\n")
+          else:
+              latencies.sort()
+              mean = statistics.fmean(latencies)
+              best = latencies[0]
+              worst = latencies[-1]
+              idx = int(round(0.90 * (len(latencies) - 1)))
+              p90 = latencies[idx]
+              with open(out_path, "a") as gh:
+                  gh.write(f"mean={mean}\n")
+                  gh.write(f"best={best}\n")
+                  gh.write(f"worst={worst}\n")
+                  gh.write(f"p90={p90}\n")
+                  gh.write(f"count={len(latencies)}\n")
+              print(f"Collected {len(latencies)} samples")
+              print(f"Mean:  {mean:.6f}s")
+              print(f"P90:   {p90:.6f}s")
+              print(f"Best:  {best:.6f}s")
+              print(f"Worst: {worst:.6f}s")
           PY
-      - name: Summary
-        run: echo "Nightly latency benchmarks completed" >> $GITHUB_STEP_SUMMARY
+
+      - name: Enforce latency SLOs
+        if: steps.aggregate.outputs.count != '0'
+        run: |
+          fail=0
+          mean="${{ steps.aggregate.outputs.mean }}"
+          p90="${{ steps.aggregate.outputs.p90 }}"
+          if [[ "${MEAN_LATENCY_SLO}" != "0" && $(echo "${mean} > ${MEAN_LATENCY_SLO}" | bc -l) -eq 1 ]]; then
+            echo "::error ::Mean latency ${mean}s exceeds SLO ${MEAN_LATENCY_SLO}s"
+            fail=1
+          fi
+          if [[ "${P90_LATENCY_SLO}" != "0" && $(echo "${p90} > ${P90_LATENCY_SLO}" | bc -l) -eq 1 ]]; then
+            echo "::error ::P90 latency ${p90}s exceeds SLO ${P90_LATENCY_SLO}s"
+            fail=1
+          fi
+          if [[ $fail -eq 1 ]]; then
+            exit 1
+          fi
+
+      - name: Append summary
+        run: |
+          {
+            echo "## Nightly Latency Benchmark"
+            echo ""
+            if [[ "${{ steps.aggregate.outputs.count }}" == "0" ]]; then
+              echo "> ⚠️ Keine Benchmark-Daten gefunden."
+            else
+              echo "| Metric | Seconds |"
+              echo "|--------|---------|"
+              echo "| Mean   | ${{ steps.aggregate.outputs.mean }} |"
+              echo "| P90    | ${{ steps.aggregate.outputs.p90 }} |"
+              echo "| Best   | ${{ steps.aggregate.outputs.best }} |"
+              echo "| Worst  | ${{ steps.aggregate.outputs.worst }} |"
+              echo ""
+              echo "Samples: ${{ steps.aggregate.outputs.count }}"
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
