@@ -1,0 +1,28 @@
+name: Debug Structure
+on:
+  workflow_dispatch:
+
+
+jobs:
+  debug:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@4
+        with:
+          fetch-depth: 0
+      - name: Show workspace Structure
+        run: | 
+          echo "PWD: $(pwd)"
+          ls -la
+          find . -maxdepth 2 -type d -print
+          echo @--- verify ---"
+          test -f pyprojekt.toml && echo "OK pyproject.toml" || (echo "MISSING pyproject.toml" && exit 1)
+          test -f README.md && echo "OK README.md" || (echo "MISSING README.md" && exit 1)
+          test -d Codepipeline502 && echo "OK Codepipeline502 dir" || (echo "MISSING Codepipeline502 dir" && exit 1)
+          test -f Codepipeline502/__init__.py && echo "OK __init__.py" || (echo "MISSING Codepipeline502/__init__.py" && exit 1)
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+            python-version: ${{ matrix.python-version }}
+            cache: pip

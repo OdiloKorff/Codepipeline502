@@ -24,6 +24,7 @@ jobs:
         with:
           fetch-depth: 0   # notwendig für git describe in version.py (Tags sichtbar)
 
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
