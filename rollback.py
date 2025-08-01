@@ -1,8 +1,11 @@
-"""Rollback module for automatic git revert based on canary SLA checks."""
-from __future__ import annotations
-import logging, subprocess, json, time, os
-from pathlib import Path
-import git  # GitPython
+"""
+Rollback utilities for CodePipeline.
+"""
+
+import os
+import shutil
+from typing import Dict, Any, Optional
+from codepipeline.logging_config import get_logger
 
 _log = get_logger(__name__)
 

@@ -1,10 +1,18 @@
-"""Circuit Breaker primitive (Hystrix-like)."""
-from __future__ import annotations
+"""
+Circuit Breaker Pattern Implementation.
+
+Provides a circuit breaker that can be used to prevent cascading failures
+in distributed systems by temporarily stopping the execution of operations
+that are likely to fail.
+"""
+
+import os
 import time
 import threading
 import logging
 from enum import Enum, auto
-from typing import Callable, TypeVar, Any
+from typing import Callable, TypeVar, Any, Optional
+from codepipeline.logging_config import get_logger
 
 _T=TypeVar("_T")
 _log=get_logger(__name__)

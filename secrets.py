@@ -1,6 +1,11 @@
-"""HashiCorp Vault helper with GitHub/OIDC CI login fallback."""
-from __future__ import annotations
-import os, logging, hvac, json, pathlib
+"""
+Secrets management for CodePipeline.
+"""
+
+import os
+from typing import Optional
+from codepipeline.logging_config import get_logger
+import hvac, json, pathlib
 
 _log = get_logger(__name__)
 

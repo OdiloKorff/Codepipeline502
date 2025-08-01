@@ -1,9 +1,5 @@
-"""Grafana / InfluxDB time‑series writer for RL‑metrics.
-
-Designed to be dependency‑light: if `influxdb_client` is missing, we fall back to
-a simple line‑protocol HTTP request.  In dry‑run mode (default when no creds
-present) we just `print` the payload so unit‑tests can validate the flow
-without network or external service.
+"""
+Grafana metrics writer for CodePipeline.
 """
 
 from __future__ import annotations
@@ -13,6 +9,7 @@ import json
 import time
 import logging
 from typing import Any, Dict
+from codepipeline.logging_config import get_logger
 
 _log = get_logger(__name__)
 

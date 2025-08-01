@@ -9,6 +9,7 @@ import time
 from typing import Any, Dict, List, Callable, TypeVar
 from openai import OpenAI
 from codepipeline.secrets import ensure_env
+from codepipeline.logging_config import get_logger
 
 _T = TypeVar("_T")
 

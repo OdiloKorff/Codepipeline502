@@ -1,13 +1,12 @@
-"""Self‑Healing loop – reward via Coverage & Bandit, registers finetuned models in MLflow.
-
-Heavy operations (training, deployment) are mocked / pluggable hooks to keep runtime light.
 """
-from __future__ import annotations
-import subprocess
-import openai
-import mlflow, json, tempfile, os, logging, shutil, random, time
-from pathlib import Path
-from typing import Dict, Any
+Self-healing utilities for CodePipeline.
+"""
+
+import os
+import tempfile
+import json
+from typing import Dict, Any, Optional
+from codepipeline.logging_config import get_logger
 
 _log = get_logger(__name__)
 

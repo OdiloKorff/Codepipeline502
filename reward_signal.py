@@ -1,9 +1,15 @@
+"""
+Reward signal utilities for CodePipeline.
+"""
+
 import os
 import logging
 import sys
 from datetime import datetime, timedelta
 from sqlalchemy import create_engine, text
 from codepipeline.training_db import log_review_result
+from typing import Dict, Any, List
+from codepipeline.logging_config import get_logger
 
 logger = get_logger(__name__)
 DB_URL = os.getenv("DB_URL", "sqlite:///data/chroma/embeddings.db")

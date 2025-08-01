@@ -1,12 +1,11 @@
-"""Containerised test runner for post‑merge verification.
-
-Executes `pytest` inside a docker container with configurable
-CPU/Memory quotas and total timeout. Publishes result JSON to a
-webhook endpoint.
 """
-from __future__ import annotations
-import subprocess, json, time, logging, tempfile, shutil, os
-from typing import Any, Dict, Optional
+Post-merge runner for CodePipeline.
+"""
+
+import os
+import subprocess
+from typing import List, Dict, Any
+from codepipeline.logging_config import get_logger
 
 _log = get_logger(__name__)
 
