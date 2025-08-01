@@ -1,3 +1,14 @@
+"""
+Test API endpoints.
+"""
+
+import sys
+import os
+
+# Temporarily rename secrets to avoid conflict
+if 'secrets' in sys.modules:
+    del sys.modules['secrets']
+
 from fastapi.testclient import TestClient
 from codepipeline.api.app import app
 from unittest.mock import patch
