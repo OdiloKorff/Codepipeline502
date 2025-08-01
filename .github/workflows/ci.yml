@@ -42,13 +42,13 @@ jobs:
           echo "Test directory structure:"
           ls -la tests/ || echo "No tests directory found"
 
-      - name: Run minimal tests
+      - name: Run standalone tests
         env:
           JWT_SECRET: testsecret
           OPENAI_API_KEY: dummy-key-for-tests
         run: |
-          # Run only minimal tests that always work
-          python -m pytest tests/test_minimal.py \
+          # Run standalone tests that don't import the main package
+          python -m pytest test_standalone.py \
             --cov=codepipeline \
             --cov-report=xml \
             --cov-report=term-missing \
