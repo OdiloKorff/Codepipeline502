@@ -35,12 +35,20 @@ jobs:
           python -m pip install --upgrade pip setuptools wheel
           python -m pip install -e .[test]
 
+      - name: List test files
+        run: |
+          echo "Available test files:"
+          find . -name "test_*.py" -type f | head -20
+          echo "Test directory structure:"
+          ls -la tests/ || echo "No tests directory found"
+
       - name: Run tests
         env:
           JWT_SECRET: testsecret
           OPENAI_API_KEY: dummy-key-for-tests
         run: |
-          pytest --cov=codepipeline --cov-report=xml --cov-report=term-missing
+          # Run pytest with explicit test discovery
+          python -m pytest tests/ --cov=codepipeline --cov-report=xml --cov-report=term-missing -v
 
       - name: Upload coverage.xml
         if: always()
