@@ -1,8 +1,7 @@
 import subprocess
 import logging
-from codepipeline import get_logger
 
-logger = get_logger(__name__)
+logger = logging.getLogger(__name__)
 
 def get_version() -> str:
     """Retrieve version from Git tags; fallback on error."""
