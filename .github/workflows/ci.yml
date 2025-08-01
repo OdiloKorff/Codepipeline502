@@ -24,23 +24,23 @@ jobs:
         with:
           fetch-depth: 0   # notwendig für git describe in version.py (Tags sichtbar)
 
-
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
           cache: pip
 
-      - name: Install package + test deps
+      - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip
+          python -m pip install --upgrade pip setuptools wheel
           python -m pip install -e .[test]
 
       - name: Run tests
         env:
           JWT_SECRET: testsecret
+          OPENAI_API_KEY: dummy-key-for-tests
         run: |
-          pytest
+          pytest --cov=codepipeline --cov-report=xml --cov-report=term-missing
 
       - name: Upload coverage.xml
         if: always()
@@ -49,3 +49,30 @@ jobs:
           name: coverage-${{ matrix.python-version }}
           path: coverage.xml
           retention-days: 7
+
+  lint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Install linting tools
+        run: |
+          python -m pip install --upgrade pip
+          pip install flake8 black isort
+
+      - name: Run linting
+        run: |
+          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+          black --check .
+          isort --check-only .

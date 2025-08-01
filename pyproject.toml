@@ -8,7 +8,7 @@ version = "0.0.0"  # Versionierung erfolgt zur Laufzeit via version.py / git des
 requires-python = ">=3.10"
 description = "CodePipeline utilities"
 readme = "README.md"
-license = { text = "MIT" }
+license = "MIT"
 authors = [{ name = "Your Name" }]
 
 # Minimale Laufzeit-Abhängigkeiten, soweit wirklich nötig. Viele Imports sind optional/guarded.
@@ -32,7 +32,7 @@ dependencies = [
   "opentelemetry-api>=1.26",
  ]
 
-[tool.setuptools]
-# Explizites Mapping: Das Verzeichnis "Codepipeline502" wird als Paket "codepipeline" installiert
-packages = ["codepipeline"]
-package-dir = { "codepipeline" = "Codepipeline502" }
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["*"]
+exclude = ["tests*", "docs*", ".github*", "*.pyc", "__pycache__*"]
