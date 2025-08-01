@@ -47,8 +47,14 @@ jobs:
           JWT_SECRET: testsecret
           OPENAI_API_KEY: dummy-key-for-tests
         run: |
-          # Run pytest with explicit test discovery
-          python -m pytest tests/ --cov=codepipeline --cov-report=xml --cov-report=term-missing -v
+          # Run pytest with explicit options and test discovery
+          python -m pytest tests/ \
+            --cov=codepipeline \
+            --cov-report=xml \
+            --cov-report=term-missing \
+            --maxfail=1 \
+            --disable-warnings \
+            -v
 
       - name: Upload coverage.xml
         if: always()
