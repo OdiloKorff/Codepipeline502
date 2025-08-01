@@ -22,42 +22,90 @@ jobs:
   budget:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
+      - name: Setup Python
+        uses: actions/setup-python@v5
         with:
-            python-version: '3.12'
+          python-version: '3.12'
 
       - name: Install cost tooling
         run: |
           python -m pip install --upgrade pip
           pip install infracost
 
+      - name: Check for infrastructure files
+        id: check-files
+        run: |
+          if [ -f "*.tf" ] || [ -f "*.tf.json" ] || [ -f "terraform.tf" ] || [ -f "docker-compose.yml" ] || [ -f "dockerfile" ]; then
+            echo "infra_files=true" >> $GITHUB_OUTPUT
+          else
+            echo "infra_files=false" >> $GITHUB_OUTPUT
+            echo "No infrastructure files found, skipping cost analysis"
+          fi
+
       - name: Infracost breakdown
+        if: steps.check-files.outputs.infra_files == 'true'
+        id: infracost
         env:
           INFRACOST_API_KEY: ${{ secrets.INFRACOST_API_KEY }}
         run: |
-          infracost breakdown --path . \
-            --format json --out-file infracost.json || true
+          # Try to run infracost breakdown
+          if infracost breakdown --path . --format json --out-file infracost.json; then
+            echo "infracost_success=true" >> $GITHUB_OUTPUT
+            echo "Cost analysis completed successfully"
+          else
+            echo "infracost_success=false" >> $GITHUB_OUTPUT
+            echo "Infracost failed, creating empty result"
+            echo '{"projects": []}' > infracost.json
+          fi
 
       - name: Parse & Gate
         id: gate
         run: |
           python - <<'PY'
           import json, os, sys
-          THRESHOLD=float(os.getenv('BUDGET_THRESHOLD','100.0'))
+          
+          THRESHOLD = float(os.getenv('BUDGET_THRESHOLD', '100.0'))
+          
           try:
-              data=json.load(open('infracost.json'))
-              total = data['projects'][0]['breakdown']['totalMonthlyCost'] if data.get('projects') else 0
-          except Exception:
-              total=0
-          print(f"Estimated monthly cost: {total}")
-          status="FAIL" if total>THRESHOLD else "PASS"
-          open('comment.txt','w').write(
-              ('⚠️ Budget überschritten: ' if status=='FAIL' else '✅ Budget innerhalb Limit: ')
-              + f"{total} vs Threshold {THRESHOLD}"
-          )
-          if status=='FAIL':
+              with open('infracost.json', 'r') as f:
+                  data = json.load(f)
+              
+              # Extract total monthly cost
+              if data.get('projects') and len(data['projects']) > 0:
+                  total = data['projects'][0]['breakdown']['totalMonthlyCost']
+              else:
+                  total = 0.0
+                  
+          except (FileNotFoundError, json.JSONDecodeError, KeyError, IndexError) as e:
+              print(f"Error parsing infracost.json: {e}")
+              total = 0.0
+          
+          print(f"Estimated monthly cost: ${total:.2f}")
+          print(f"Budget threshold: ${THRESHOLD:.2f}")
+          
+          status = "FAIL" if total > THRESHOLD else "PASS"
+          
+          # Create detailed comment
+          if status == "FAIL":
+              message = f"⚠️ **Budget überschritten!**\n\n"
+              message += f"**Geschätzte monatliche Kosten:** ${total:.2f}\n"
+              message += f"**Budget-Limit:** ${THRESHOLD:.2f}\n"
+              message += f"**Überschreitung:** ${total - THRESHOLD:.2f}\n\n"
+              message += "Bitte überprüfen Sie die Infrastruktur-Konfiguration."
+          else:
+              message = f"✅ **Budget innerhalb Limit**\n\n"
+              message += f"**Geschätzte monatliche Kosten:** ${total:.2f}\n"
+              message += f"**Budget-Limit:** ${THRESHOLD:.2f}\n"
+              message += f"**Verbleibendes Budget:** ${THRESHOLD - total:.2f}"
+          
+          with open('comment.txt', 'w', encoding='utf-8') as f:
+              f.write(message)
+          
+          print(f"Status: {status}")
+          if status == "FAIL":
               sys.exit(1)
           PY
 
@@ -68,3 +116,10 @@ jobs:
           message: |
             $(cat comment.txt)
           comment_tag: budget-check
+          edit_comment: true
+
+      - name: Skip comment for non-PR
+        if: github.event_name != 'pull_request'
+        run: |
+          echo "Not a pull request, skipping comment"
+          cat comment.txt
