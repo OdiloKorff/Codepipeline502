@@ -32,6 +32,61 @@ jobs:
           SPEC_TEXT: ${{ inputs.spec_json }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: python tools/ai_build.py || true
+      - name: Create PR (fallback via API)
+        uses: actions/github-script@v7
+        env:
+          TARGET_BASE: main
+        with:
+          script: |
+            const {owner, repo} = context.repo;
+            // Liste aller Branches, filtere auf feat/ai-
+            const branches = await github.paginate(
+              github.rest.repos.listBranches,
+              { owner, repo, per_page: 100 }
+            );
+            const ai = branches
+              .filter(b => b.name && b.name.startsWith('feat/ai-'))
+              .map(b => ({ name: b.name, sha: b.commit?.sha }))
+              .filter(b => b.sha);
+            if (ai.length === 0) {
+              core.notice("Kein 'feat/ai-' Branch gefunden – ggf. keine Änderungen.");
+              return;
+            }
+            // Hole Commit-Daten (Datum) und nimm den jüngsten
+            const withDates = [];
+            for (const b of ai) {
+              try {
+                const commit = await github.rest.repos.getCommit({ owner, repo, ref: b.sha });
+                withDates.push({ name: b.name, date: new Date(commit.data.commit.author.date).getTime() });
+              } catch (e) {
+                core.notice(`Commit-Abfrage fehlgeschlagen für ${b.name}: ${e.message}`);
+              }
+            }
+            if (withDates.length === 0) {
+              core.notice("Keine datierten Commits gefunden.");
+              return;
+            }
+            withDates.sort((a,b) => a.date - b.date);
+            const head = withDates[withDates.length - 1].name;
+
+            // Existiert schon ein offener PR?
+            const prs = await github.paginate(github.rest.pulls.list, { owner, repo, state: 'open', head: `${owner}:${head}` });
+            if (prs.length > 0) {
+              core.summary.addRaw(`Offener PR existiert bereits für **${head}**: ${prs[0].html_url}`).write();
+              return;
+            }
+
+            // PR anlegen
+            try {
+              const pr = await github.rest.pulls.create({
+                owner, repo, head, base: process.env.TARGET_BASE || 'main',
+                title: `AI Build: ${head}`,
+                body: 'Automatischer Build (siehe PLAN.md / $GITHUB_STEP_SUMMARY). Bitte QA-Checks abwarten (Score ≥ 95).'
+              });
+              core.summary.addRaw(`PR erstellt: ${pr.data.html_url}`).write();
+            } catch (e) {
+              core.notice(`PR-Erstellung übersprungen/fehlgeschlagen: ${e.message}`);
+            }
       - name: Summary
         if: always()
         run: |
