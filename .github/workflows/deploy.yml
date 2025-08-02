@@ -1,0 +1,81 @@
+name: Deploy (Staging -> Prod)
+on:
+  release: { types: [published] }
+  workflow_dispatch:
+    inputs:
+      target:
+        description: "staging|prod"
+        required: true
+        default: "staging"
+      digest:
+        description: "ghcr...@sha256:..."
+        required: false
+permissions:
+  contents: read
+  deployments: write
+  packages: read
+concurrency:
+  group: deploy-${{ github.event.inputs.target || 'staging' }}
+  cancel-in-progress: true
+env:
+  IMAGE_NAME: ghcr.io/${{ github.repository }}/app
+jobs:
+  staging:
+    if: github.event_name == 'release' || (github.event_name == 'workflow_dispatch' && inputs.target == 'staging')
+    runs-on: ubuntu-latest
+    environment: staging
+    steps:
+      - name: Resolve digest
+        id: resolve
+        run: |
+          if [ -n "${{ inputs.digest }}" ]; then
+            echo "digest=${{ inputs.digest }}" >> $GITHUB_OUTPUT
+          else
+            echo "digest=$(echo "${{ github.event.release.body }}" | sed -n 's/.*\(ghcr\.io[^ ]*@sha256:[0-9a-f]\+\).*/\1/p')" >> $GITHUB_OUTPUT
+          fi
+      - name: Deploy via SSH (staging)
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.SSH_HOST_STG }}
+          username: ${{ secrets.SSH_USER_STG }}
+          key: ${{ secrets.SSH_KEY_STG }}
+          script: |
+            set -e
+            docker login ghcr.io -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
+            export IMAGE="${{ env.IMAGE_NAME }}@${{ steps.resolve.outputs.digest }}"
+            sed -i "s|image:.*|image: ${IMAGE}|g" /srv/app/docker-compose.yml
+            docker compose -f /srv/app/docker-compose.yml pull
+            docker compose -f /srv/app/docker-compose.yml up -d
+            sleep 3
+            curl -fsS http://localhost:8000/health
+      - name: Summary
+        if: always()
+        run: |
+          echo "### Staging Deploy" >> $GITHUB_STEP_SUMMARY
+          echo "- Image: ${{ env.IMAGE_NAME }}@${{ steps.resolve.outputs.digest }}" >> $GITHUB_STEP_SUMMARY
+  prod:
+    needs: [staging]
+    if: github.event_name == 'workflow_dispatch' && inputs.target == 'prod'
+    runs-on: ubuntu-latest
+    environment: prod
+    steps:
+      - name: Deploy via SSH (prod)
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.SSH_HOST_PROD }}
+          username: ${{ secrets.SSH_USER_PROD }}
+          key: ${{ secrets.SSH_KEY_PROD }}
+          script: |
+            set -e
+            docker login ghcr.io -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }}
+            export IMAGE="${{ env.IMAGE_NAME }}@${{ github.event.inputs.digest }}"
+            sed -i "s|image:.*|image: ${IMAGE}|g" /srv/app/docker-compose.yml
+            docker compose -f /srv/app/docker-compose.yml pull
+            docker compose -f /srv/app/docker-compose.yml up -d
+            sleep 3
+            curl -fsS http://localhost:8000/health
+      - name: Summary
+        if: always()
+        run: |
+          echo "### Prod Deploy" >> $GITHUB_STEP_SUMMARY
+          echo "- Image: ${{ env.IMAGE_NAME }}@${{ github.event.inputs.digest }}" >> $GITHUB_STEP_SUMMARY 
