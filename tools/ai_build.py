@@ -14,7 +14,15 @@ class Spec:
 def read_spec():
     spec_text = os.getenv("SPEC_TEXT")
     if spec_text:
-        data = json.loads(spec_text)
+        # GitHub Actions übergibt JSON ohne Anführungszeichen, daher müssen wir es korrigieren
+        try:
+            data = json.loads(spec_text)
+        except json.JSONDecodeError:
+            # Versuche, das JSON zu reparieren, indem wir Anführungszeichen hinzufügen
+            import re
+            # Ersetze {key:value} mit {"key":"value"}
+            fixed_json = re.sub(r'(\w+):([^,}]+)', r'"\1":"\2"', spec_text)
+            data = json.loads(fixed_json)
         return Spec(**data)
     event_path = os.getenv("GITHUB_EVENT_PATH")
     if event_path and pathlib.Path(event_path).exists():
