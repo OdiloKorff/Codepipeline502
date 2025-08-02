@@ -18,11 +18,16 @@ def read_spec():
         try:
             data = json.loads(spec_text)
         except json.JSONDecodeError:
-            # Versuche, das JSON zu reparieren, indem wir Anführungszeichen hinzufügen
-            import re
-            # Ersetze {key:value} mit {"key":"value"}
-            fixed_json = re.sub(r'(\w+):([^,}]+)', r'"\1":"\2"', spec_text)
-            data = json.loads(fixed_json)
+            # GitHub Actions übergibt JSON ohne Anführungszeichen, daher müssen wir es manuell parsen
+            print(f"Failed to parse JSON: {spec_text}")
+            # Manueller Parser für das spezielle Format
+            spec_text = spec_text.strip('{}')
+            data = {}
+            for pair in spec_text.split(','):
+                if ':' in pair:
+                    key, value = pair.split(':', 1)
+                    data[key.strip()] = value.strip()
+            print(f"Parsed data: {data}")
         return Spec(**data)
     event_path = os.getenv("GITHUB_EVENT_PATH")
     if event_path and pathlib.Path(event_path).exists():
