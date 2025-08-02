@@ -1,0 +1,73 @@
+name: QA Suite (PR Gate)
+on: { pull_request: { branches: [ main ] } }
+permissions:
+  contents: read
+  pull-requests: write
+concurrency:
+  group: qa-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: '3.11' }
+      - name: Install deps (test + tools)
+        run: |
+          python -m pip install -U pip
+          pip install -r requirements.txt || true
+          pip install pytest pytest-cov ruff mypy semgrep pip-licenses cyclonedx-bom
+      - name: Ruff (lint)
+        id: ruff
+        run: ruff check . --output-format=github
+      - name: MyPy (types)
+        id: mypy
+        run: mypy . || true
+      - name: Tests + Coverage
+        id: tests
+        run: |
+          set -e
+          pytest -q --cov=. --cov-report=xml --junitxml=reports/junit.xml || exit 1
+          echo "TESTS_GREEN=true" >> $GITHUB_ENV
+      - name: Semgrep (SAST)
+        run: semgrep ci --config p/ci --json --output semgrep.json || true
+      - name: Secret Scan (gitleaks)
+        uses: zricethezav/gitleaks-action@v2
+        with: { args: "detect --source . --report-format json --report-path gitleaks.json" }
+        continue-on-error: true
+      - name: SBOM + Licenses
+        run: |
+          cyclonedx-bom -o sbom.json -e || true
+          pip-licenses --format=json --output-file licenses.json || true
+      - name: Static OK flag
+        run: |
+          if ruff check .; then echo "STATIC_OK=true" >> $GITHUB_ENV; else echo "STATIC_OK=false" >> $GITHUB_ENV; fi
+      - name: Scorecard
+        run: python qa/scorecard.py
+      - name: Upload QA artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: qa-artifacts
+          path: |
+            coverage.xml
+            reports/junit.xml
+            semgrep.json
+            gitleaks.json
+            sbom.json
+            licenses.json
+            qa_summary.md
+      - name: PR Comment (summary)
+        if: always()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const body = fs.existsSync('qa_summary.md') ? fs.readFileSync('qa_summary.md', 'utf8') : 'No summary';
+            github.rest.issues.createComment({ owner: context.repo.owner, repo: context.repo.repo, issue_number: context.payload.pull_request.number, body });
+      - name: Write Summary
+        if: always()
+        run: |
+          echo "### QA Suite completed" >> $GITHUB_STEP_SUMMARY
+          test -f qa_summary.md && cat qa_summary.md >> $GITHUB_STEP_SUMMARY 
