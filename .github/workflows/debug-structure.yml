@@ -2,21 +2,21 @@ name: Debug Structure
 on:
   workflow_dispatch:
 
-
 jobs:
   debug:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@4
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+      
       - name: Show workspace Structure
         run: | 
           echo "PWD: $(pwd)"
           ls -la
           find . -maxdepth 2 -type d -print
-          echo @--- verify ---"
-          test -f pyprojekt.toml && echo "OK pyproject.toml" || (echo "MISSING pyproject.toml" && exit 1)
+          echo "--- verify ---"
+          test -f pyproject.toml && echo "OK pyproject.toml" || (echo "MISSING pyproject.toml" && exit 1)
           test -f README.md && echo "OK README.md" || (echo "MISSING README.md" && exit 1)
           test -d Codepipeline502 && echo "OK Codepipeline502 dir" || (echo "MISSING Codepipeline502 dir" && exit 1)
           test -f Codepipeline502/__init__.py && echo "OK __init__.py" || (echo "MISSING Codepipeline502/__init__.py" && exit 1)
@@ -24,5 +24,30 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-            python-version: ${{ matrix.python-version }}
-            cache: pip
+          python-version: '3.12'
+          cache: pip
+
+      - name: Test package structure
+        run: |
+          echo "Testing package structure..."
+          python -c "
+          import os
+          import sys
+          
+          # Check if package files exist
+          package_files = [
+              'Codepipeline502/__init__.py',
+              'Codepipeline502/logging_config.py',
+              'Codepipeline502/orchestrator.py',
+              'Codepipeline502/llm_gateway.py'
+          ]
+          
+          for file in package_files:
+              if os.path.exists(file):
+                  print(f'✅ {file} exists')
+              else:
+                  print(f'❌ {file} missing')
+                  sys.exit(1)
+          
+          print('✅ All package files present')
+          "
