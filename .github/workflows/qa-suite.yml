@@ -17,7 +17,7 @@ jobs:
         run: |
           python -m pip install -U pip
           pip install -r requirements.txt || true
-          pip install pytest pytest-cov ruff mypy semgrep pip-licenses cyclonedx-bom
+          pip install pytest pytest-cov ruff mypy semgrep pip-licenses cyclonedx-bom mutmut
       - name: Ruff (lint)
         id: ruff
         run: ruff check . --output-format=github
@@ -43,6 +43,12 @@ jobs:
       - name: Static OK flag
         run: |
           if ruff check . && mypy .; then echo "STATIC_OK=true" >> $GITHUB_ENV; else echo "STATIC_OK=false" >> $GITHUB_ENV; fi
+      - name: Mutation Testing (budgeted)
+        run: |
+          timeout 15m mutmut run || true
+          # Ergebnis lesen (mutmut report), Kennzahl in ENV schreiben:
+          RATIO=$(mutmut results | awk '/Mutants killed/ {k=$3} /Total mutants/ {t=$3} END { if (t>0) print k/t; else print 0 }')
+          echo "MUTATION_RATIO=${RATIO:-0.3}" >> $GITHUB_ENV
       - name: Scorecard
         run: python qa/scorecard.py
       - name: Upload QA artifacts
