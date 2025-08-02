@@ -33,11 +33,12 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - name: Orchestrate (tools/ai_build.py)
         env:
+          SPEC_TEXT: '${{ inputs.spec_json }}'   # JSON als String, nicht als YAML-Map
           SPEC_FILE: spec.json
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
-          printf '%s' '${{ inputs.spec_json }}' > spec.json
+          printf '%s' "$SPEC_TEXT" > "$SPEC_FILE"
           python tools/ai_build.py
       - name: Create PR (fallback via API)
         uses: actions/github-script@v7
