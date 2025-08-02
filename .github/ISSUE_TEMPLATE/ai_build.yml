@@ -1,0 +1,28 @@
+name: "AI Build Request"
+description: "Prompt -> autonomes Feature (MVP)"
+labels: ["ai:build"]
+body:
+  - type: textarea
+    id: goal
+    attributes:
+      label: Ziel / Problem
+      description: Beschreibe in Umgangssprache, was gebaut werden soll.
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Akzeptanzkriterien (testbar)
+      description: Klare, prüfbare Kriterien (gegeben/wenn/dann)
+  - type: textarea
+    id: constraints
+    attributes:
+      label: Constraints & Nicht-Ziele
+  - type: dropdown
+    id: pattern
+    attributes:
+      label: Blueprint
+      options: ["fastapi-api", "cli-tool", "worker-etl"]
+  - type: input
+    id: service_name
+    attributes:
+      label: Service/Package-Name
+      placeholder: "chem-api" 

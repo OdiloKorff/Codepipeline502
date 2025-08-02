@@ -1,0 +1,11 @@
+# --- Cursor Global Rules (Codepipeline MVP) ---
+- Prefer security-by-default: minimal GitHub Actions permissions; use upload-artifact@v4 only.
+- Always add `concurrency` to workflows to prevent double-deploys.
+- Enforce summaries: every workflow writes concise $GITHUB_STEP_SUMMARY.
+- Python only (MVP): FastAPI + pytest + ruff + mypy + coverage + semgrep + cyclonedx + pip-licenses.
+- Tests are mandatory; generate tests next to each module; target coverage >= 80 (hard-min 75).
+- No GPL-3.0/AGPL-3.0/SSPL dependencies. Prefer MIT/BSD/Apache-2.0/MPL-2.0.
+- Never commit secrets; use environment variables / GitHub Actions secrets.
+- For containers: use distroless or slim base images when possible; expose health endpoint /health.
+- Deployment must use immutable image digest; production deploy requires environment approval.
+# ---------------------------------------------- 
