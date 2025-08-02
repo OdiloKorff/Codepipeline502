@@ -1,9 +1,9 @@
 hard_musts:
-  coverage_min: 75
+  coverage_min: 80
   tests_green: true
   sast_high: 0
   secret_findings: 0
-score_threshold: 92
+score_threshold: 95
 weights:
   coverage: 25
   tests: 25

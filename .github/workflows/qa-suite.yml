@@ -23,7 +23,7 @@ jobs:
         run: ruff check . --output-format=github
       - name: MyPy (types)
         id: mypy
-        run: mypy . || true
+        run: mypy .
       - name: Tests + Coverage
         id: tests
         run: |
@@ -42,7 +42,7 @@ jobs:
           pip-licenses --format=json --output-file licenses.json || true
       - name: Static OK flag
         run: |
-          if ruff check .; then echo "STATIC_OK=true" >> $GITHUB_ENV; else echo "STATIC_OK=false" >> $GITHUB_ENV; fi
+          if ruff check . && mypy .; then echo "STATIC_OK=true" >> $GITHUB_ENV; else echo "STATIC_OK=false" >> $GITHUB_ENV; fi
       - name: Scorecard
         run: python qa/scorecard.py
       - name: Upload QA artifacts
@@ -70,4 +70,5 @@ jobs:
         if: always()
         run: |
           echo "### QA Suite completed" >> $GITHUB_STEP_SUMMARY
-          test -f qa_summary.md && cat qa_summary.md >> $GITHUB_STEP_SUMMARY 
+          test -f qa_summary.md && cat qa_summary.md >> $GITHUB_STEP_SUMMARY
+          echo "Quality bar raised: coverage >=80%, score >=95, static checks strict." >> $GITHUB_STEP_SUMMARY 
