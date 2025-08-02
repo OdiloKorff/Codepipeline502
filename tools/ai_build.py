@@ -70,6 +70,16 @@ def parse_spec_from_issue_payload(event_path: str) -> Spec | None:
     return Spec(**fields)
 
 def read_spec() -> Spec:
+    spec_file = os.getenv("SPEC_FILE")
+    if spec_file:
+        try:
+            with open(spec_file, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            return Spec(**data)
+        except Exception as e:
+            sys.stderr.write(f"[ERROR] Invalid SPEC_FILE JSON ({spec_file}): {e}\n")
+            sys.exit(1)
+    
     spec_text = os.getenv("SPEC_TEXT", "").strip()
     if spec_text:
         try:
