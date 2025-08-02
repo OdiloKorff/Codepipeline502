@@ -99,6 +99,11 @@ def main():
     git("push --set-upstream origin", branch)
     title = f"AI Build: {spec.service_name}"
     body = f"Automated scaffold. See PLAN.md\n\nGoal:\n{spec.goal}\n\nAcceptance:\n{spec.acceptance}\n"
-    run(f'gh pr create --title "{title}" --body "{body}" --base main --head {branch}', check=False)
+    try:
+        run(f'gh pr create --title "{title}" --body "{body}" --base main --head {branch}', check=False)
+        print("PR created successfully.")
+    except Exception as e:
+        print(f"Failed to create PR: {e}")
+        print("Branch created but PR creation failed. Manual PR creation required.")
     print("Done.")
 if __name__ == "__main__": main() 

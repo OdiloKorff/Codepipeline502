@@ -23,7 +23,7 @@ jobs:
   staging:
     if: github.event_name == 'release' || (github.event_name == 'workflow_dispatch' && inputs.target == 'staging')
     runs-on: ubuntu-latest
-    environment: staging
+    environment: ${{ github.repository }}/staging
     steps:
       - name: Resolve digest
         id: resolve
@@ -57,7 +57,7 @@ jobs:
     needs: [staging]
     if: github.event_name == 'workflow_dispatch' && inputs.target == 'prod'
     runs-on: ubuntu-latest
-    environment: prod
+    environment: ${{ github.repository }}/prod
     steps:
       - name: Deploy via SSH (prod)
         uses: appleboy/ssh-action@v1.2.0
