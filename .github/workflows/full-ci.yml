@@ -91,13 +91,20 @@ jobs:
   notify-slack:
     name: Notify Slack
     needs: [ core-ci, build-docs, package ]
-    if: >
-      always() &&
-      secrets.SLACK_BOT_TOKEN != '' &&
-      secrets.SLACK_CHANNEL != ''
+    if: always()
     runs-on: ubuntu-latest
     steps:
+      - name: Check Slack secrets
+        id: check-secrets
+        run: |
+          if [ -n "${{ secrets.SLACK_BOT_TOKEN }}" ] && [ -n "${{ secrets.SLACK_CHANNEL }}" ]; then
+            echo "slack_available=true" >> $GITHUB_OUTPUT
+          else
+            echo "slack_available=false" >> $GITHUB_OUTPUT
+          fi
+      
       - name: Slack Notification
+        if: steps.check-secrets.outputs.slack_available == 'true'
         uses: slackapi/slack-github-action@v1.27.0
         with:
           channel-id: ${{ secrets.SLACK_CHANNEL }}
