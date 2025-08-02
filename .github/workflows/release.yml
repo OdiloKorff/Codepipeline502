@@ -40,6 +40,24 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           provenance: false
+      - name: Trivy Scan
+        if: always()
+        uses: aquasecurity/trivy-action@v0.24.0
+        with:
+          image-ref: ${{ env.IMAGE_NAME }}@${{ steps.bp.outputs.digest }}
+          format: 'table'
+          vuln-type: 'os,library'
+          severity: 'HIGH,CRITICAL'
+          exit-code: '1'
+          ignore-unfixed: true
+        continue-on-error: false
+      - name: Trivy Summary
+        if: always()
+        run: |
+          echo "### Trivy Security Scan" >> $GITHUB_STEP_SUMMARY
+          echo "- Image: ${{ env.IMAGE_NAME }}@${{ steps.bp.outputs.digest }}" >> $GITHUB_STEP_SUMMARY
+          echo "- Scan: HIGH/CRITICAL vulnerabilities only" >> $GITHUB_STEP_SUMMARY
+          echo "- Result: ${{ job.status }}" >> $GITHUB_STEP_SUMMARY
       - name: Resolve digest
         id: digest
         run: |
