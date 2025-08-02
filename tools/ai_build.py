@@ -1,7 +1,46 @@
 #!/usr/bin/env python3
-import os, sys, json, shutil, subprocess, pathlib, textwrap, time
+"""
+Robuster AI-Build:
+- Liest SPEC aus SPEC_TEXT (JSON) oder GITHUB_EVENT_PATH (Issue).
+- Schreibt immer nach services/<service>-<ts>/ (kein Überschreiben).
+- Erzeugt Trace unter .ai-build/BUILD_<ts>.txt
+- Erstellt Branch feat/ai-<ts>, commit + push.
+- Bricht bei jedem Fehler mit Exitcode 1 ab.
+"""
+
+from __future__ import annotations
+import os, sys, json, shutil, subprocess, time, textwrap
 from dataclasses import dataclass
-ROOT = pathlib.Path(__file__).resolve().parents[1]
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+SERVICES = ROOT / "services"
+TRACE_DIR = ROOT / ".ai-build"
+
+def sh(cmd: str, check: bool = True, cwd: Path | None = None) -> int:
+    print("+", cmd, flush=True)
+    res = subprocess.run(cmd, shell=True, cwd=str(cwd) if cwd else None)
+    if check and res.returncode != 0:
+        sys.stderr.write(f"[ERROR] Command failed: {cmd}\n")
+        sys.exit(res.returncode)
+    return res.returncode
+
+def sh_out(cmd: str, check: bool = True) -> str:
+    print("+", cmd, flush=True)
+    p = subprocess.run(cmd, shell=True, text=True, capture_output=True)
+    if check and p.returncode != 0:
+        sys.stderr.write(p.stdout + p.stderr)
+        sys.stderr.write(f"[ERROR] Command failed: {cmd}\n")
+        sys.exit(p.returncode)
+    return (p.stdout or "").strip()
+
+def ensure_git_identity():
+    name = sh_out("git config --get user.name", check=False)
+    email = sh_out("git config --get user.email", check=False)
+    if not name:
+        sh('git config user.name "github-actions[bot]"')
+    if not email:
+        sh('git config user.email "41898282+github-actions[bot]@users.noreply.github.com"')
 
 @dataclass
 class Spec:
@@ -11,99 +50,130 @@ class Spec:
     pattern: str
     service_name: str
 
-def read_spec():
-    spec_text = os.getenv("SPEC_TEXT")
+def parse_spec_from_issue_payload(event_path: str) -> Spec | None:
+    p = Path(event_path)
+    if not p.exists():
+        return None
+    ev = json.loads(p.read_text(encoding="utf-8"))
+    issue = ev.get("issue") or {}
+    body = issue.get("body") or ""
+    # naive parse: lines like "goal: ..." etc.
+    fields = {"goal": "", "acceptance": "", "constraints": "", "pattern": "fastapi-api", "service_name": "app"}
+    for line in body.splitlines():
+        parts = line.split(":", 1)
+        if len(parts) == 2:
+            k, v = parts[0].strip().lower(), parts[1].strip()
+            if k in fields:
+                fields[k] = v
+    if not fields["goal"]:
+        fields["goal"] = (body[:800] or "no-goal-provided")
+    return Spec(**fields)
+
+def read_spec() -> Spec:
+    spec_text = os.getenv("SPEC_TEXT", "").strip()
     if spec_text:
-        # GitHub Actions übergibt JSON ohne Anführungszeichen, daher müssen wir es korrigieren
         try:
             data = json.loads(spec_text)
-        except json.JSONDecodeError:
-            # GitHub Actions übergibt JSON ohne Anführungszeichen, daher müssen wir es manuell parsen
-            print(f"Failed to parse JSON: {spec_text}")
-            # Manueller Parser für das spezielle Format
-            spec_text = spec_text.strip('{}')
-            data = {}
-            for pair in spec_text.split(','):
-                if ':' in pair:
-                    key, value = pair.split(':', 1)
-                    data[key.strip()] = value.strip()
-            print(f"Parsed data: {data}")
-        return Spec(**data)
-    event_path = os.getenv("GITHUB_EVENT_PATH")
-    if event_path and pathlib.Path(event_path).exists():
-        with open(event_path) as f:
-            ev = json.load(f)
-        issue = ev.get("issue", {})
-        body = issue.get("body", "") or ""
-        fields = {"goal":"", "acceptance":"", "constraints":"", "pattern":"fastapi-api", "service_name":"app"}
-        for key in fields:
-            for line in body.splitlines():
-                if line.lower().startswith(key):
-                    fields[key] = line.split(":",1)[-1].strip()
-        if not fields["goal"]: fields["goal"] = body[:800]
-        return Spec(**fields)
-    raise SystemExit("No SPEC_TEXT and no issue payload found.")
+            return Spec(**data)
+        except Exception as e:
+            sys.stderr.write(f"[ERROR] Invalid SPEC_TEXT JSON: {e}\n")
+            sys.exit(1)
+    ev_path = os.getenv("GITHUB_EVENT_PATH", "")
+    spec = parse_spec_from_issue_payload(ev_path) if ev_path else None
+    if spec:
+        return spec
+    sys.stderr.write("[ERROR] No SPEC provided (SPEC_TEXT or GITHUB_EVENT_PATH required).\n")
+    sys.exit(1)
 
-def copy_pattern(dst_dir: pathlib.Path, pattern: str, service_name: str):
+def copy_pattern(dst: Path, pattern: str):
     src = ROOT / "patterns" / pattern
     if not src.exists():
-        raise SystemExit(f"Pattern not found: {pattern}")
-    shutil.copytree(src, dst_dir, dirs_exist_ok=True)
-    (dst_dir / "app").mkdir(exist_ok=True)
+        sys.stderr.write(f"[ERROR] Pattern not found: {pattern}\n")
+        sys.exit(1)
+    shutil.copytree(src, dst, dirs_exist_ok=True)
 
-def run(cmd, cwd=None, check=True):
-    print("+", cmd); res = subprocess.run(cmd, cwd=cwd, shell=True, text=True)
-    if check and res.returncode != 0: raise SystemExit(res.returncode)
-
-def git(*args): run("git " + " ".join(args))
-
-def write_plan(s: Spec, workdir: pathlib.Path):
-    (workdir / "PLAN.md").write_text(textwrap.dedent(f"""
+def write_plan(dst: Path, spec: Spec):
+    (dst / "PLAN.md").write_text(textwrap.dedent(f"""
     # Plan
     ## Goal
-    {s.goal}
+    {spec.goal}
 
     ## Acceptance
-    {s.acceptance}
+    {spec.acceptance}
 
     ## Constraints
-    {s.constraints}
+    {spec.constraints}
 
     ## Steps
-    - Scaffold from pattern: {s.pattern}
+    - Scaffold from pattern: {spec.pattern}
     - Implement walking skeleton
     - Add tests to satisfy acceptance
-    - Run QA suite
+    - Run QA suite (CI)
     - Open PR with summary
-    """).strip()+"\n")
+    """).strip()+"\n", encoding="utf-8")
+
+def ensure_trace(ts: str, spec: Spec, branch: str, service_dir: Path):
+    TRACE_DIR.mkdir(exist_ok=True)
+    payload = {
+        "ts": ts,
+        "branch": branch,
+        "service_dir": str(service_dir.relative_to(ROOT)),
+        "spec": spec.__dict__,
+    }
+    (TRACE_DIR / f"BUILD_{ts}.txt").write_text(json.dumps(payload, indent=2), encoding="utf-8")
 
 def main():
     spec = read_spec()
-    branch = f"feat/ai-{int(time.time())}"
-    git("checkout -b", branch)
-    workdir = ROOT
-    write_plan(spec, workdir)
-    copy_pattern(workdir, spec.pattern, spec.service_name)
-    (workdir / "README.md").write_text(f"# {spec.service_name}\n\n{spec.goal}\n\n## Acceptance\n{spec.acceptance}\n")
-    req = workdir / "requirements.txt"
-    if not req.exists(): req.write_text("fastapi\nuvicorn\npydantic\npytest\npytest-cov\nhttpx\n")
+    # timestamped service dir -> no overwrites
+    ts = time.strftime("%Y%m%d%H%M%S")
+    base = f"{spec.service_name}".strip() or "service"
+    service_slug = f"{base}-{ts}"
+    service_dir = SERVICES / service_slug
+    SERVICES.mkdir(exist_ok=True)
+
+    # create branch first (makes the intent explicit)
+    ensure_git_identity()
+    branch = f"feat/ai-{ts}"
+    sh(f"git checkout -b {branch}")
+
+    # scaffold under services/<service>-<ts>/
+    copy_pattern(service_dir, spec.pattern)
+    write_plan(service_dir, spec)
+    # project-level README note (append)
+    (ROOT / "README.md").write_text(
+        f"# {base}\n\nGenerated service at `services/{service_slug}`\n\nGoal:\n{spec.goal}\n", encoding="utf-8"
+    )
+
+    # minimal deps file in service folder (if pattern didn't ship one)
+    req = service_dir / "requirements.txt"
+    if not req.exists():
+        req.write_text("fastapi\nuvicorn\npydantic\npytest\npytest-cov\nhttpx\n", encoding="utf-8")
+
+    # trace
+    ensure_trace(ts, spec, branch, service_dir)
+
+    # add & commit always (trace + plan guarantee changes)
+    sh("git add -A")
+    sh(f'git commit -m "chore(ai): scaffold {service_slug} from {spec.pattern} [ts:{ts}]"')
+
+    # push (respect GH env)
+    repo_env = os.getenv("GITHUB_REPOSITORY", "")
+    if repo_env:
+        sh("git push --set-upstream origin " + branch)
+    else:
+        # local run support: try push if origin exists, otherwise just print hint
+        remotes = sh_out("git remote", check=False)
+        if "origin" in remotes.split():
+            sh("git push --set-upstream origin " + branch, check=False)
+
+    print(f"[OK] Branch={branch} ServiceDir=services/{service_slug}")
+    return 0
+
+if __name__ == "__main__":
     try:
-        run("python -m pip install -U pip", cwd=str(workdir))
-        run("pip install -r requirements.txt", cwd=str(workdir))
-        run("pytest -q --cov=.", cwd=str(workdir), check=False)
+        sys.exit(main())
+    except SystemExit as e:
+        raise
     except Exception as e:
-        print("Local test run failed (non-fatal):", e)
-    git("add -A")
-    git("commit -m", f"chore(ai): scaffold {spec.service_name} from {spec.pattern}")
-    remote = os.getenv("GITHUB_SERVER_URL", "https://github.com") + "/" + os.getenv("GITHUB_REPOSITORY","")
-    git("push --set-upstream origin", branch)
-    title = f"AI Build: {spec.service_name}"
-    body = f"Automated scaffold. See PLAN.md\n\nGoal:\n{spec.goal}\n\nAcceptance:\n{spec.acceptance}\n"
-    try:
-        run(f'gh pr create --title "{title}" --body "{body}" --base main --head {branch}', check=False)
-        print("PR created successfully.")
-    except Exception as e:
-        print(f"Failed to create PR: {e}")
-        print("Branch created but PR creation failed. Manual PR creation required.")
-    print("Done.")
-if __name__ == "__main__": main() 
+        sys.stderr.write(f"[FATAL] {e}\n")
+        sys.exit(1)
