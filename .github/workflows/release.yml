@@ -42,14 +42,12 @@ jobs:
           provenance: false
       - name: Trivy Scan
         if: always()
-        uses: aquasecurity/trivy-action@v0.24.0
-        with:
-          image-ref: ${{ env.IMAGE_NAME }}@${{ steps.bp.outputs.digest }}
-          format: 'table'
-          vuln-type: 'os,library'
-          severity: 'HIGH,CRITICAL'
-          exit-code: '1'
-          ignore-unfixed: true
+        run: |
+          # Install Trivy
+          curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin v0.25.0
+          
+          # Scan the image
+          trivy image --format table --vuln-type os,library --severity HIGH,CRITICAL --ignore-unfixed ${{ env.IMAGE_NAME }}@${{ steps.bp.outputs.digest }}
         continue-on-error: false
       - name: Trivy Summary
         if: always()

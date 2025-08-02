@@ -3,6 +3,7 @@ hard_musts:
   tests_green: true
   sast_high: 0
   secret_findings: 0
+  budget_max: 50
 score_threshold: 95
 weights:
   coverage: 25

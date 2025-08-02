@@ -36,6 +36,17 @@ def license_violations(path: Path, allow, deny) -> int:
         if lic in deny or (allow and lic not in allow): bad += 1
     return bad
 
+def infracost_budget(path: Path) -> float:
+    if not path.exists(): return 0.0
+    try:
+        data = json.loads(path.read_text())
+        # Extrahiere totalMonthlyCost aus Infracost JSON
+        if "totalMonthlyCost" in data:
+            return float(data["totalMonthlyCost"])
+        return 0.0
+    except:
+        return 0.0
+
 def main():
     hard = QUALITY["hard_musts"]; weights = QUALITY["weights"]; threshold = QUALITY["score_threshold"]
     allow = set(QUALITY["licenses"]["allow"]); deny = set(QUALITY["licenses"]["deny"])
@@ -43,6 +54,7 @@ def main():
     sem = semgrep_findings(Path("semgrep.json"))
     secrets = gitleaks_findings(Path("gitleaks.json"))
     lic_bad = license_violations(Path("licenses.json"), allow, deny)
+    budget_cost = infracost_budget(Path("infracost.json"))
     tests_green = os.getenv("TESTS_GREEN","true").lower()=="true"
     static_ok = os.getenv("STATIC_OK","false").lower()=="true"
     # hard musts
@@ -51,6 +63,7 @@ def main():
     if not tests_green: hard_fail.append("tests not green")
     if sem["high"] > hard["sast_high"]: hard_fail.append(f"SAST high={sem['high']} > {hard['sast_high']}")
     if secrets > hard["secret_findings"]: hard_fail.append(f"secret findings={secrets} > {hard['secret_findings']}")
+    if budget_cost > hard["budget_max"]: hard_fail.append(f"budget ${budget_cost:.2f} > ${hard['budget_max']}")
     # score
     score  = weights["coverage"] * min(1.0, cov/100.0)
     score += weights["tests"] * (1.0 if tests_green else 0.0)
@@ -66,6 +79,7 @@ f"""### QA Scorecard
 - Semgrep: high={sem['high']}, med={sem['med']}, low={sem['low']}
 - Secret findings (gitleaks): {secrets}
 - License violations: {lic_bad}
+- Budget cost: ${budget_cost:.2f}/month
 - Static OK: {static_ok}
 - Mutation ratio: {os.getenv("MUTATION_RATIO","0.3")}
 - **Score:** {score:.1f} (threshold {threshold})
