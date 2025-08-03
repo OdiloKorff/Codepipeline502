@@ -24,6 +24,10 @@ on:
       service_name:
         description: 'Service/Package-Name'
         required: true
+      spec_b64:
+        description: "Spec payload (base64-encoded UTF-8 JSON)"
+        required: false
+        type: string
   issues:
     types: [labeled]
 permissions:
@@ -52,22 +56,32 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - name: Orchestrate (tools/ai_build.py)
         env:
+          SPEC_TEXT: '${{ inputs.spec_json }}'
+          SPEC_B64:  '${{ inputs.spec_b64 }}'
           SPEC_FILE: spec.json
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
-          # Baue sauberes JSON aus separaten Inputs
-          python -c "
-          import json
-          spec = {
-              'goal': '${{ inputs.goal }}',
-              'acceptance': '${{ inputs.acceptance }}',  
-              'constraints': '${{ inputs.constraints }}',
-              'pattern': '${{ inputs.pattern }}',
-              'service_name': '${{ inputs.service_name }}'
-          }
-          print(json.dumps(spec), end='')
-          " > "$SPEC_FILE"
+          if [ -n "${SPEC_B64:-}" ]; then
+            python - <<'PY' > "$SPEC_FILE"
+import os, base64, sys
+b = os.getenv('SPEC_B64','')
+try:
+    s = base64.b64decode(b).decode('utf-8-sig')
+    sys.stdout.write(s)
+except Exception as e:
+    sys.stderr.write(f"b64 decode failed: {e}\n")
+    sys.exit(1)
+PY
+          else
+            python - <<'PY' > "$SPEC_FILE"
+import os, sys
+s = os.getenv('SPEC_TEXT','')
+# Entferne evtl. BOM
+s = s.lstrip('\ufeff')
+sys.stdout.write(s)
+PY
+          fi
           python tools/ai_build.py
       - name: Create PR (fallback via API)
         uses: actions/github-script@v7
