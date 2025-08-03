@@ -70,7 +70,7 @@ def parse_spec_from_issue_payload(event_path: str) -> Spec | None:
     return Spec(**fields)
 
 def read_spec() -> Spec:
-    # 1) Datei bevorzugen (BOM tolerant)
+    # 1) Datei bevorzugt, BOM tolerant
     spec_file = os.getenv("SPEC_FILE")
     if spec_file and os.path.exists(spec_file):
         try:
@@ -81,19 +81,18 @@ def read_spec() -> Spec:
             sys.stderr.write(f"[ERROR] Invalid SPEC_FILE JSON ({spec_file}): {e}\n")
             sys.exit(1)
 
-    # 2) SPEC_TEXT als Fallback (BOM entfernen)
+    # 2) SPEC_TEXT als Fallback, BOM entfernen
     spec_text = os.getenv("SPEC_TEXT", "").strip()
     if spec_text:
         try:
-            if spec_text and spec_text[0] == "\ufeff":
-                spec_text = spec_text.lstrip("\ufeff")
+            spec_text = spec_text.lstrip("\ufeff")
             data = json.loads(spec_text)
             return Spec(**data)
         except Exception as e:
             sys.stderr.write(f"[ERROR] Invalid SPEC_TEXT JSON: {e}\n")
             sys.exit(1)
 
-    # 3) GITHUB_EVENT_PATH als letzter Fallback (falls vorhanden) – unverändert lassen
+    # 3) GITHUB_EVENT_PATH-Fallback unverändert lassen (falls vorhanden)
     ev_path = os.getenv("GITHUB_EVENT_PATH", "")
     spec = parse_spec_from_issue_payload(ev_path) if ev_path else None
     if spec:
