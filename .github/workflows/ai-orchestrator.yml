@@ -39,11 +39,11 @@ jobs:
         run: |
           set -euo pipefail
           # Schreibe SPEC als Datei und entferne optionales UTF-8 BOM
-          python - <<'PY' > "$SPEC_FILE"
-import os
-s = os.getenv('SPEC_TEXT', '')
-print(s.lstrip('\ufeff'), end='')
-PY
+          python -c "
+          import os
+          s = os.getenv('SPEC_TEXT', '')
+          print(s.lstrip('\ufeff'), end='')
+          " > "$SPEC_FILE"
           python tools/ai_build.py
       - name: Create PR (fallback via API)
         uses: actions/github-script@v7
