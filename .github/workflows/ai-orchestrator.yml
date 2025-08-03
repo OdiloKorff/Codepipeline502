@@ -62,19 +62,10 @@ jobs:
         run: |
           set -euo pipefail
           if [ -n "${SPEC_B64:-}" ]; then
-            python -c "
-            import os, base64, sys
-            b = os.environ.get(\"SPEC_B64\", \"\")
-            if not b:
-                sys.stderr.write(\"SPEC_B64 is empty\\n\")
-                sys.exit(1)
-            try:
-                s = base64.b64decode(b).decode(\"utf-8-sig\")
-                sys.stdout.write(s)
-            except Exception as e:
-                sys.stderr.write(f\"b64 decode failed: {e}\\n\")
-                sys.exit(1)
-            " > "$SPEC_FILE"
+            echo "${SPEC_B64}" | base64 -d > "$SPEC_FILE" || {
+              echo "Error: Failed to decode base64 SPEC_B64" >&2
+              exit 1
+            }
           else
             python -c "
             import json
