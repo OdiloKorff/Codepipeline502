@@ -38,11 +38,21 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
-          # Schreibe SPEC als Datei und entferne optionales UTF-8 BOM
+          # Schreibe SPEC als Datei, repariere JSON und entferne UTF-8 BOM
           python -c "
-          import os
-          s = os.getenv('SPEC_TEXT', '')
-          print(s.lstrip('\ufeff'), end='')
+          import os, re, json
+          s = os.getenv('SPEC_TEXT', '').lstrip('\ufeff')
+          
+          # Repariere JSON: füge Anführungszeichen um Property-Namen hinzu
+          # {key:value} -> {\"key\":value}
+          s = re.sub(r'([{,]\s*)([a-zA-Z_][a-zA-Z0-9_]*)\s*:', r'\1\"\2\":', s)
+          
+          # Validiere das reparierte JSON
+          try:
+              json.loads(s)
+              print(s, end='')
+          except:
+              print('{}', end='')  # Fallback zu leerem JSON
           " > "$SPEC_FILE"
           python tools/ai_build.py
       - name: Create PR (fallback via API)
