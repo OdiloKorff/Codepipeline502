@@ -2,8 +2,27 @@ name: AI Orchestrator (MVP)
 on:
   workflow_dispatch:
     inputs:
-      spec_json:
-        description: 'JSON: {goal, acceptance, constraints, pattern, service_name}'
+      goal:
+        description: 'Was soll gebaut werden?'
+        required: true
+      acceptance:
+        description: 'Akzeptanzkriterien (testbar)'
+        required: true
+      constraints:
+        description: 'Constraints & Nicht-Ziele'
+        required: false
+        default: 'Keine GPL/AGPL; Coverage >= 80%'
+      pattern:
+        description: 'Blueprint'
+        required: false
+        default: 'fastapi-api'
+        type: choice
+        options:
+          - fastapi-api
+          - cli-tool
+          - worker-etl
+      service_name:
+        description: 'Service/Package-Name'
         required: true
   issues:
     types: [labeled]
@@ -33,26 +52,21 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
       - name: Orchestrate (tools/ai_build.py)
         env:
-          SPEC_TEXT: '${{ inputs.spec_json }}'
           SPEC_FILE: spec.json
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
-          # Schreibe SPEC als Datei, repariere JSON und entferne UTF-8 BOM
+          # Baue sauberes JSON aus separaten Inputs
           python -c "
-          import os, re, json
-          s = os.getenv('SPEC_TEXT', '').lstrip('\ufeff')
-          
-          # Repariere JSON: füge Anführungszeichen um Property-Namen hinzu
-          # {key:value} -> {\"key\":value}
-          s = re.sub(r'([{,]\s*)([a-zA-Z_][a-zA-Z0-9_]*)\s*:', r'\1\"\2\":', s)
-          
-          # Validiere das reparierte JSON
-          try:
-              json.loads(s)
-              print(s, end='')
-          except:
-              print('{}', end='')  # Fallback zu leerem JSON
+          import json
+          spec = {
+              'goal': '${{ inputs.goal }}',
+              'acceptance': '${{ inputs.acceptance }}',  
+              'constraints': '${{ inputs.constraints }}',
+              'pattern': '${{ inputs.pattern }}',
+              'service_name': '${{ inputs.service_name }}'
+          }
+          print(json.dumps(spec), end='')
           " > "$SPEC_FILE"
           python tools/ai_build.py
       - name: Create PR (fallback via API)
