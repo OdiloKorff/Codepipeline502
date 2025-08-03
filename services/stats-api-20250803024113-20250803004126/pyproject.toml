@@ -1,0 +1,19 @@
+[project]
+name = "mvp-fastapi-service"
+version = "0.1.0"
+requires-python = ">=3.11"
+dependencies = ["fastapi>=0.111","uvicorn>=0.30","pydantic>=2.7","pytest","pytest-cov","requests","httpx","coverage"]
+
+[tool.pytest.ini_options]
+addopts = "-q --maxfail=1 --disable-warnings --cov=."
+
+[tool.ruff]
+line-length = 100
+
+[tool.coverage.run]
+branch = true
+source = ["app"]
+
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta" 
