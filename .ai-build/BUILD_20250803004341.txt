@@ -1,0 +1,12 @@
+{
+  "ts": "20250803004341",
+  "branch": "feat/ai-20250803004341",
+  "service_dir": "services/stats-api-20250803024331-20250803004341",
+  "spec": {
+    "goal": "Demo-Build 20250803024331: kleiner /stats-Service (count,sum,mean).",
+    "acceptance": "GET /health returns 200 {\"status\":\"ok\"}; POST /stats with {\"values\":[1,2,3]} returns 200 {\"count\":3,\"sum\":6.0,\"mean\":2.0}; POST /stats with {\"values\":[]} returns 200 {\"count\":0,\"sum\":0.0,\"mean\":0.0}",
+    "constraints": "Keine GPL/AGPL; Coverage >= 80%; strikte Lints/Types; Logs ohne Secrets.",
+    "pattern": "fastapi-api",
+    "service_name": "stats-api-20250803024331"
+  }
+}
