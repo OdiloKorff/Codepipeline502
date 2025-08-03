@@ -64,15 +64,15 @@ jobs:
           if [ -n "${SPEC_B64:-}" ]; then
             python -c "
             import os, base64, sys
-            b = os.environ.get('SPEC_B64', '')
+            b = os.environ.get(\"SPEC_B64\", \"\")
             if not b:
-                sys.stderr.write('SPEC_B64 is empty\n')
+                sys.stderr.write(\"SPEC_B64 is empty\\n\")
                 sys.exit(1)
             try:
-                s = base64.b64decode(b).decode('utf-8-sig')
+                s = base64.b64decode(b).decode(\"utf-8-sig\")
                 sys.stdout.write(s)
             except Exception as e:
-                sys.stderr.write(f'b64 decode failed: {e}\n')
+                sys.stderr.write(f\"b64 decode failed: {e}\\n\")
                 sys.exit(1)
             " > "$SPEC_FILE"
           else
