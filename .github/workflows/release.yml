@@ -30,11 +30,55 @@ jobs:
           tags: |
             type=raw,value=v0.1.${{ github.run_number }}
             type=sha
+      - name: Prepare build context (services-aware)
+        run: |
+          set -euo pipefail
+          ROOT="${GITHUB_WORKSPACE}"
+          CTX="${ROOT}/buildctx"
+          rm -rf "${CTX}"
+          mkdir -p "${CTX}/app"
+          # Kandidaten unter services/* sammeln, die app/ UND requirements.txt enthalten
+          LATEST=""
+          if [ -d "${ROOT}/services" ]; then
+            # finde alle service-Dirs mit app/ und requirements.txt
+            mapfile -t CANDS < <(find "${ROOT}/services" -mindepth 1 -maxdepth 1 -type d -print | sort)
+            for d in "${CANDS[@]}"; do
+              if [ -d "$d/app" ] && [ -f "$d/requirements.txt" ]; then
+                LATEST="$d"
+              fi
+            done
+          fi
+
+          if [ -n "${LATEST}" ]; then
+            echo "Using service dir: ${LATEST}"
+            cp -v "${ROOT}/Dockerfile" "${CTX}/Dockerfile"
+            cp -v "${LATEST}/requirements.txt" "${CTX}/requirements.txt"
+            # Inhalte von app/ kopieren
+            cp -R "${LATEST}/app/." "${CTX}/app/" 2>/dev/null || true
+          else
+            echo "No services/* with app/ & requirements.txt found; fallback to repo root"
+            cp -v "${ROOT}/Dockerfile" "${CTX}/Dockerfile"
+            # Root-Fallback (alt: app & requirements.txt am Repo-Root)
+            if [ -f "${ROOT}/requirements.txt" ]; then
+              cp -v "${ROOT}/requirements.txt" "${CTX}/requirements.txt"
+            fi
+            if [ -d "${ROOT}/app" ]; then
+              cp -R "${ROOT}/app/." "${CTX}/app/" 2>/dev/null || true
+            fi
+          fi
+
+          echo "BUILD_CONTEXT=${CTX}" >> "${GITHUB_ENV}"
+          echo "DOCKERFILE=${CTX}/Dockerfile" >> "${GITHUB_ENV}"
+          echo "=== buildctx tree ==="
+          ls -la "${CTX}"
+          echo "---------------------"
+          ls -la "${CTX}/app" || true
       - name: Build & Push
         id: bp
         uses: docker/build-push-action@v6
         with:
-          context: .
+          context: ${{ env.BUILD_CONTEXT }}
+          file:    ${{ env.DOCKERFILE }}
           push: true
           platforms: linux/amd64
           tags: ${{ steps.meta.outputs.tags }}
