@@ -17,6 +17,7 @@ Next Steps:
 
 import temporalio.client
 
+
 class PipelineCoordinator:
     """
     Zentrale Klasse zur Orchestrierung von Workflows und selbstheilenden Steuerungsmechanismen.

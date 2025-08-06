@@ -4,12 +4,14 @@ Other modules should **not** access ``openai.OpenAI`` directly.
 """
 from __future__ import annotations
 
-import logging
 import time
-from typing import Any, Dict, List, Callable, TypeVar
+from collections.abc import Callable
+from typing import Any, TypeVar
+
 from openai import OpenAI
-from codepipeline.secrets import ensure_env
+
 from codepipeline.logging_config import get_logger
+from codepipeline.secrets import ensure_env
 
 _T = TypeVar("_T")
 
@@ -44,7 +46,7 @@ class LLMGateway:
     @retry()
     def chat(
         self,
-        messages: List[Dict[str, str]],
+        messages: list[dict[str, str]],
         *,
         model: str = "gpt-4o-mini",
         **kwargs: Any,

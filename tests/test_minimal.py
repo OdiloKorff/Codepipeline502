@@ -8,8 +8,8 @@ def test_true():
 
 def test_false():
     """Test that always fails."""
-    assert False == False
+    assert not False
 
 def test_math():
     """Simple math test."""
-    assert 1 + 1 == 2 
+    assert 1 + 1 == 2

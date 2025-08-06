@@ -1,7 +1,14 @@
 
 """Canary traffic shifter and rollback watcher."""
 from __future__ import annotations
-import requests, subprocess, time, logging, os, git, shutil, pathlib
+
+import logging
+import os
+import subprocess
+import time
+
+import git
+import requests
 
 _log = logging.getLogger(__name__)
 

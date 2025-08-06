@@ -5,8 +5,11 @@ Export der Scores nach Prometheus.
 """
 
 import os
+
 from prometheus_client import CollectorRegistry, Gauge, push_to_gateway
+
 from codepipeline.datastore import DataStore
+
 
 class RewardEngine:
     def __init__(self, db_path, prometheus_gateway=None):

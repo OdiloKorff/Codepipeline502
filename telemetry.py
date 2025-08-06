@@ -7,10 +7,10 @@ side‑effects during application start‑up.
 import os
 
 from opentelemetry import trace
+from opentelemetry.exporter.otlp.proto.http.trace_exporter import OTLPSpanExporter
 from opentelemetry.sdk.resources import SERVICE_NAME, Resource
 from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import BatchSpanProcessor
-from opentelemetry.exporter.otlp.proto.http.trace_exporter import OTLPSpanExporter
 
 _endpoint = os.getenv("OTEL_EXPORTER_OTLP_ENDPOINT")
 if _endpoint:

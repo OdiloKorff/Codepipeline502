@@ -15,10 +15,12 @@ Next Steps:
     3. Ergänzung umfassender Unit-Tests zur Validierung aller neuen Methoden und Datenfelder.
 """
 
-import os
 import json
+import os
+
 from codepipeline.datastore import DataStore
 from codepipeline.github_client import GitHubClient
+
 
 class MetaPlanner:
     def __init__(self, db_path, owner, repo, llm_client, github_client=None):

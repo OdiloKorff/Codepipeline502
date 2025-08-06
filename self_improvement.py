@@ -1,6 +1,7 @@
 """Utilities to log and query self‑improvement events of the pipeline."""
 
 from __future__ import annotations
+
 import logging
 from typing import Any
 

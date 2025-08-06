@@ -1,5 +1,5 @@
-import os, json, tempfile, subprocess
-from codepipeline.sandbox_runner import run_patch, _validate_patch_file
+from codepipeline.sandbox_runner import _validate_patch_file, run_patch
+
 
 def test_validate_patch_file(tmp_path):
     f=tmp_path/'a.txt'

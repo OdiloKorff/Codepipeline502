@@ -1,12 +1,16 @@
 
-import os
 import importlib
+import os
+
 os.environ["JWT_SECRET"] = "testsecret"
 import product.security.token as token_mod
+
 importlib.reload(token_mod)
 from datetime import timedelta
-from product.security.token import create_access_token, SECRET_KEY, ALGORITHM
+
 import jwt
+from product.security.token import ALGORITHM, SECRET_KEY, create_access_token
+
 
 def test_create_access_token():
     token = create_access_token({"sub": "user@example.com"}, expires_delta=timedelta(minutes=5))

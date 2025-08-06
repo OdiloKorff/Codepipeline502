@@ -1,5 +1,6 @@
 from concurrent.futures import ThreadPoolExecutor
 
+
 def generate_parallel(tasks, max_workers=4):
     """
     Execute tasks (callables) in parallel and return list of results.

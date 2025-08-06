@@ -1,7 +1,12 @@
 #!/usr/bin/env python3
-import os, json, sys, xml.etree.ElementTree as ET
+import json
+import os
+import sys
+import xml.etree.ElementTree as ET
 from pathlib import Path
+
 import yaml
+
 QUALITY = yaml.safe_load(Path("policies/QUALITY.yml").read_text())
 
 def pct_coverage_from_xml(path: Path) -> float:
@@ -89,4 +94,4 @@ f"""### QA Scorecard
     print(Path("qa_summary.md").read_text())
     Path("qa_result.json").write_text(json.dumps({"passed": passed, "score": score, "cov": cov}))
     if not passed: sys.exit(1)
-if __name__ == "__main__": main() 
+if __name__ == "__main__": main()

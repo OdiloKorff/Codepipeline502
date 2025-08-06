@@ -1,6 +1,8 @@
 
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch
+
 from codepipeline.self_healing import self_heal
+
 
 @patch("codepipeline.self_healing.calculate_reward", return_value=0.9)
 @patch("codepipeline.self_healing._openai_fine_tune", return_value="model-abc")

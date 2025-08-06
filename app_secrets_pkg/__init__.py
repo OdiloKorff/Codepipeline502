@@ -32,7 +32,7 @@ except ModuleNotFoundError:  # pragma: no cover – runtime envs without hvac
 
 __all__ = ["get_secret"]
 
-def _build_client() -> "hvac.Client":  # type: ignore[name-defined]
+def _build_client() -> hvac.Client:  # type: ignore[name-defined]
     """Instantiate a Vault client authenticated via token or OIDC.
 
     Order of precedence:
@@ -56,7 +56,7 @@ def _build_client() -> "hvac.Client":  # type: ignore[name-defined]
     if token := os.getenv("VAULT_TOKEN"):
         return hvac.Client(token=token)  # type: ignore[call-arg]
 
-    raise EnvironmentError("Neither VAULT_JWT nor VAULT_TOKEN is set")
+    raise OSError("Neither VAULT_JWT nor VAULT_TOKEN is set")
 
 def get_secret(path: str, key: str) -> Any:  # noqa: D401
     """Return the secret value stored at *path*/*key* in Vault.
@@ -76,5 +76,5 @@ def get_secret(path: str, key: str) -> Any:  # noqa: D401
     """
     client = _build_client()
     # Vault KV v2 API ‑ single version read
-    secret_resp: Dict[str, Any] = client.secrets.kv.v2.read_secret_version(path=path)  # type: ignore[attr-defined]
+    secret_resp: dict[str, Any] = client.secrets.kv.v2.read_secret_version(path=path)  # type: ignore[attr-defined]
     return secret_resp["data"]["data"][key]

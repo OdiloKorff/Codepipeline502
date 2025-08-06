@@ -9,12 +9,11 @@ Dependency Security v0.2
 
 from __future__ import annotations
 
-import importlib.metadata as _importlib_metadata
 import html
-import subprocess
+import importlib.metadata as _importlib_metadata
 import os
+import subprocess
 from pathlib import Path
-from typing import List, Tuple
 
 __all__ = [
     "generate_sbom",
@@ -23,9 +22,9 @@ __all__ = [
     "generate_license_report_html",
 ]
 
-def _iter_packages() -> List[Tuple[str, str, str | None]]:
+def _iter_packages() -> list[tuple[str, str, str | None]]:
     """Return list of (name, version, license) for installed distributions."""
-    pkgs: List[Tuple[str, str, str | None]] = []
+    pkgs: list[tuple[str, str, str | None]] = []
     for dist in _importlib_metadata.distributions():
         name = dist.metadata.get("Name", dist.metadata.get("Summary", "unknown"))  # type: ignore[arg-type]
         version = dist.version or "unknown"

@@ -20,4 +20,4 @@ def test_list():
 
 def test_dict():
     """Simple dict test."""
-    assert {"a": 1, "b": 2} == {"a": 1, "b": 2} 
+    assert {"a": 1, "b": 2} == {"a": 1, "b": 2}

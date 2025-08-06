@@ -1,4 +1,11 @@
-from codepipeline.prompt_guard import evaluate_prompt_quality, sanitize_input, PromptTemplate, apply_fewshot_template, SoftAbort
+from codepipeline.prompt_guard import (
+    PromptTemplate,
+    SoftAbort,
+    apply_fewshot_template,
+    evaluate_prompt_quality,
+    sanitize_input,
+)
+
 
 def test_quality_scoring():
     assert evaluate_prompt_quality("Short") < 0.2
@@ -18,4 +25,4 @@ def test_template_soft_abort():
     except SoftAbort:
         assert True
     else:
-        assert False
+        raise AssertionError()

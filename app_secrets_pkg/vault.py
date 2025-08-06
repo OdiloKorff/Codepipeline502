@@ -1,6 +1,8 @@
-from hvac import Client
 import os
-from typing import Any, Dict, Optional
+from typing import Any
+
+from hvac import Client
+
 
 class VaultClient:
     def __init__(self) -> None:
@@ -10,7 +12,7 @@ class VaultClient:
         self.client: Client = Client(url=vault_addr)
         self.client.auth_approle(role_id, secret_id)
 
-    def get_secret(self, path: str, field: Optional[str] = None) -> Any:
+    def get_secret(self, path: str, field: str | None = None) -> Any:
         secret = self.client.secrets.kv.v2.read_secret_version(path=path)
-        data: Dict[str, Any] = secret['data']['data']
+        data: dict[str, Any] = secret['data']['data']
         return data if field is None else data.get(field)

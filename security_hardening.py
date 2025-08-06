@@ -15,8 +15,9 @@ Next Steps:
     3. Implementierung eines Gate-Layers in der Pipeline, der bei Policy-Verstößen die Ausführung stoppt und Reports generiert.
 """
 
-import subprocess
 import json
+import subprocess
+
 
 class SecurityHardening:
     """
@@ -31,7 +32,7 @@ class SecurityHardening:
         Führt pip-audit aus und wertet das Ergebnis aus.
         """
         result = subprocess.run(self.pip_audit_cmd, capture_output=True, text=True)
-        findings = json.loads(result.stdout) if result.returncode == 0 else []
+        json.loads(result.stdout) if result.returncode == 0 else []
         raise NotImplementedError("Implementiere Pip-Audit-Scan und Build-Breaker-Logik")
 
     def deploy_gatekeeper_policies(self):

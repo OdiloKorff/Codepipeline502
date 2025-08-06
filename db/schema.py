@@ -1,8 +1,6 @@
-from sqlalchemy import (
-    Column, Integer, String, Float, ForeignKey, DateTime, Table, MetaData
-)
-from sqlalchemy.orm import registry, relationship
+from sqlalchemy import Column, DateTime, Float, ForeignKey, Integer, MetaData, String
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import relationship
 
 Base = declarative_base(metadata=MetaData())
 

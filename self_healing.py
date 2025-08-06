@@ -2,10 +2,9 @@
 Self-healing utilities for CodePipeline.
 """
 
-import os
-import tempfile
 import json
-from typing import Dict, Any, Optional
+import tempfile
+
 from codepipeline.logging_config import get_logger
 
 _log = get_logger(__name__)

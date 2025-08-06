@@ -27,16 +27,15 @@ Usage
 
 from __future__ import annotations
 
-import re
 from pathlib import Path
-from typing import List, Literal, Dict, Any
+from typing import Any, Literal
 
 import yaml
 
 _ACTION_UPLOAD = "actions/upload-artifact@"
 
 
-def _classify(file_path: Path, yml_dict: Dict[str, Any]) -> Literal[14, 30]:
+def _classify(file_path: Path, yml_dict: dict[str, Any]) -> Literal[14, 30]:
     """Return the retention period to enforce in *days*."""
 
     file_slug = file_path.stem.lower()
@@ -55,7 +54,7 @@ def _ensure_sha_suffix(name_val: str) -> str:
     return f"{name_val}-" + "${{ github.sha }}"
 
 
-def _patch_step(step: Dict[str, Any], retention: int) -> bool:
+def _patch_step(step: dict[str, Any], retention: int) -> bool:
     """Patch an individual *step* dictionary in-place.
 
     Returns
@@ -91,7 +90,7 @@ def _patch_step(step: Dict[str, Any], retention: int) -> bool:
     return modified
 
 
-def enforce_artifact_retention(workflow_dir: str = ".github/workflows") -> List[Path]:
+def enforce_artifact_retention(workflow_dir: str = ".github/workflows") -> list[Path]:
     """Scan *workflow_dir* for upload-artifact steps without retention.
 
     Any modified YAML file is rewritten in-place with *retention-days* and the
@@ -111,7 +110,7 @@ def enforce_artifact_retention(workflow_dir: str = ".github/workflows") -> List[
     if not workflow_root.exists():
         return []
 
-    modified_files: List[Path] = []
+    modified_files: list[Path] = []
 
     for wf_file in workflow_root.glob("*.yml"):
         try:

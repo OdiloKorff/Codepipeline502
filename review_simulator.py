@@ -15,8 +15,6 @@ Next Steps:
     3. Anpassung des Diff-Parsers zur Nutzung des Regex-Musters `^diff --git` für das Erkennen von Datei-Renames.
 """
 
-import subprocess
-import re
 
 class ReviewSimulator:
     """

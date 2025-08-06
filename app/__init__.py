@@ -1,1 +1,1 @@
-# FastAPI MVP Application 
+# FastAPI MVP Application

@@ -1,7 +1,9 @@
 import logging
+
 """Initial migration script to relocate existing SQLite DB files."""
 import os
 import shutil
+
 
 def init_migration(source_dir: str, target_dir: str):
     os.makedirs(target_dir, exist_ok=True)

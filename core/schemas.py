@@ -1,13 +1,14 @@
+
 from pydantic import BaseModel
-from typing import List
+
 
 class MethodModel(BaseModel):
     name: str
 
 class ClassModel(BaseModel):
     name: str
-    methods: List[MethodModel]
-    dependencies: List[str] = []
+    methods: list[MethodModel]
+    dependencies: list[str] = []
 
 class PlanModel(BaseModel):
-    classes: List[ClassModel]
+    classes: list[ClassModel]

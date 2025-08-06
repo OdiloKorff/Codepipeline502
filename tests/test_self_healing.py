@@ -1,6 +1,8 @@
 from pathlib import Path
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch
+
 from codepipeline.self_healing import calculate_reward, self_heal
+
 
 def test_reward_zero_on_failure(tmp_path: Path, monkeypatch):
     project=tmp_path/"repo"; project.mkdir()

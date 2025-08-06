@@ -2,12 +2,14 @@
 Retry utilities for CodePipeline.
 """
 
-import time
 import random
-import logging
-from typing import Callable, TypeVar, cast, Any
+import time
+from collections.abc import Callable
 from functools import wraps
+from typing import TypeVar, cast
+
 import requests
+
 from codepipeline.logging_config import get_logger
 
 F = TypeVar("F", bound=Callable)

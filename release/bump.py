@@ -3,9 +3,8 @@
 
 from __future__ import annotations
 
-import subprocess
 import re
-from pathlib import Path
+import subprocess
 from typing import Final
 
 _CZ_CMD: Final[list[str]] = ["cz", "bump", "--yes", "--changelog"]

@@ -1,7 +1,9 @@
 import logging
+
 """Semgrep integration for static code analysis."""
 import subprocess
 import sys
+
 
 class SemgrepAnalyzer:
     def __init__(self, config=None):
