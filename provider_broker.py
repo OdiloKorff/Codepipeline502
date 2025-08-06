@@ -4,7 +4,7 @@ Provider broker for CodePipeline.
 
 from abc import ABC, abstractmethod
 
-from codepipeline.logging_config import get_logger
+from .logging_config import get_logger
 
 logger = get_logger(__name__)
 

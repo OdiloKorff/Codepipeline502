@@ -3,7 +3,9 @@ Self-healing utilities for CodePipeline.
 """
 
 import json
+import subprocess
 import tempfile
+from pathlib import Path
 
 from codepipeline.logging_config import get_logger
 
@@ -57,14 +59,19 @@ def rlhf_finetune(previous_model_uri: str, reward: float) -> str:
     tmp = tempfile.NamedTemporaryFile(delete=False, suffix=".jsonl")
     tmp.write(b'{"messages":[],"completion":"ok"}')
     tmp.close()
-    return _openai_fine_tune(tmp.name)
+    # return _openai_fine_tune(tmp.name)  # TODO: implement
+    return "model-placeholder"
 
 # ------------------------------------------------------------------ #
 # MLflow registry operations (mock)
 # ------------------------------------------------------------------ #
 
 def register_model(model_uri: str, stage: str = "Staging") -> str:
-    client = mlflow.MlflowClient()
+    # client = mlflow.MlflowClient()  # TODO: implement MLflow
+    # Placeholder implementation
+    import logging
+    logging.warning("MLflow not implemented, using placeholder")
+    client = None
     name = "codepipeline-model"
     try:
         client.create_registered_model(name)

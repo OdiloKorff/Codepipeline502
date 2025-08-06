@@ -12,8 +12,8 @@ from __future__ import annotations
 import datetime as _dt
 import logging
 import uuid
-from typing import List, Optional
 
+# from typing import Optional  # unused
 from fastapi import Depends, FastAPI, HTTPException, Security, status
 from fastapi.security import OAuth2AuthorizationCodeBearer
 from pydantic import BaseModel, Field

@@ -5,7 +5,8 @@ from codepipeline.self_healing import calculate_reward, self_heal
 
 
 def test_reward_zero_on_failure(tmp_path: Path, monkeypatch):
-    project=tmp_path/"repo"; project.mkdir()
+    project = tmp_path / "repo"
+    project.mkdir()
     monkeypatch.setattr("codepipeline.self_healing._run_coverage", lambda repo: 0.0)
     monkeypatch.setattr("codepipeline.self_healing._run_bandit", lambda repo: 0.0)
     assert calculate_reward(project)==0.0

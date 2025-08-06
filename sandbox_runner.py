@@ -37,9 +37,9 @@ def run_patch(cmd: list[str], *, timeout: int = 10) -> subprocess.CompletedProce
 def export_sbom(output_file: str = "sbom.json") -> None:
     """Export CycloneDX SBOM of installed deps using pip‑licenses."""
     try:
-        import cyclonedx_py as cdx  # type: ignore
-    except ImportError:  # pragma: no cover
-        raise RuntimeError("cyclonedx-py not installed")
+        import cyclonedx_py as cdx  # type: ignore  # noqa: F401
+    except ImportError as e:  # pragma: no cover
+        raise RuntimeError("cyclonedx-py not installed") from e
     from cyclonedx_py.factory import BomFactory, ComponentFactory, LicenseFactory  # type: ignore
 
     # Very lightweight: treat each dir in codepipeline as component

@@ -12,6 +12,7 @@ _request_counter = None
 _request_latency = None
 
 def init_telemetry():
+    import importlib
     global _meter, _tracer, _request_counter, _request_latency
     # Lazy import of OpenTelemetry modules
     otel_metrics = importlib.import_module('opentelemetry.metrics')

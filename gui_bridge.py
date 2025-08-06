@@ -21,7 +21,8 @@ class GUIBridge:
             while self._running:
                 task = self.task_queue.fetch_next()
                 if not task:
-                    import time; time.sleep(0.5)
+                    import time
+                    time.sleep(0.5)
                     continue
                 try:
                     # Map tasks to orchestrator methods

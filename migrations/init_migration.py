@@ -1,6 +1,7 @@
 import logging
 
 """Initial migration script to relocate existing SQLite DB files."""
+
 import os
 import shutil
 

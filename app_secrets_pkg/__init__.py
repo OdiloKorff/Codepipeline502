@@ -13,7 +13,7 @@ from __future__ import annotations
 
 import os
 import types
-from typing import Any, Dict
+from typing import Any
 
 # -----------------------------------------------------------------------------
 # Optional import of the heavy hvac dependency.

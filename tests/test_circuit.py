@@ -10,9 +10,13 @@ def test_circuit_opens_and_resets(monkeypatch):
         call_counter["n"]+=1
         raise ValueError("boom")
     # two failures -> open
-    with pytest.raises(ValueError): cb.call(fail)
-    with pytest.raises(ValueError): cb.call(fail)
-    with pytest.raises(RuntimeError): cb.call(lambda: None)
+    with pytest.raises(ValueError):
+        cb.call(fail)
+    with pytest.raises(ValueError):
+        cb.call(fail)
+    with pytest.raises(RuntimeError):
+        cb.call(lambda: None)
     # wait and succeed
-    import time; time.sleep(0.11)
-    assert cb.call(lambda: "ok")=="ok"
+    import time
+    time.sleep(0.11)
+    assert cb.call(lambda: "ok") == "ok"
