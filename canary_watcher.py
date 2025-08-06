@@ -38,7 +38,8 @@ def _git_revert(repo_path:str=".", commit:str="HEAD~1")->None:
     repo.git.reset("--hard",commit)
 
 def watch_and_rollback(repo:str=".", release:str="codepipeline", interval:int=10)->None:
-    err_total=0; checks=0
+    err_total = 0
+    checks = 0
     start=time.time()
     while time.time()-start < WINDOW:
         err_total += _error_rate()

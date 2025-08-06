@@ -1,6 +1,7 @@
 import logging
 
 """Semgrep integration for static code analysis."""
+
 import subprocess
 import sys
 

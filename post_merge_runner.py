@@ -4,6 +4,7 @@ Post-merge runner for CodePipeline.
 
 import os
 import subprocess
+import time
 from typing import Any
 
 from codepipeline.logging_config import get_logger
@@ -28,7 +29,7 @@ def run_tests(repo_path: str,
               timeout: int = 300,
               cpus: float = 1.0,
               memory: str = "1g",
-              webhook_url: Optional[str] = None
+              webhook_url: str | None = None
              ) -> dict[str, Any]:
     """Run tests in docker and (optionally) POST result to webhook."""
     start = time.time()

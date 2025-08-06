@@ -3,6 +3,9 @@ Rollback utilities for CodePipeline.
 """
 
 import os
+import time
+
+import git
 
 from codepipeline.logging_config import get_logger
 

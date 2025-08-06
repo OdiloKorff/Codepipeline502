@@ -52,8 +52,8 @@ def generate_license_report_html(output_file: str | os.PathLike[str] = "license_
     """
     pkgs = _iter_packages()
     rows = "\n".join(
-        f"<tr><td>{html.escape(n)}</td><td>{html.escape(v)}</td><td>{html.escape(l or 'N/A')}</td></tr>"
-        for n, v, l in pkgs
+        f"<tr><td>{html.escape(n)}</td><td>{html.escape(v)}</td><td>{html.escape(lic or 'N/A')}</td></tr>"
+        for n, v, lic in pkgs
     )
     html_doc = f"""<!DOCTYPE html>
 <html lang='en'>

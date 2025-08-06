@@ -5,11 +5,11 @@ Basic tests for CodePipeline.
 def test_imports():
     """Test that basic imports work."""
     try:
-        from codepipeline.logging_config import get_logger
-        from codepipeline.orchestrator import run
+        from codepipeline.logging_config import get_logger  # noqa: F401
+        from codepipeline.orchestrator import run  # noqa: F401
         assert True
     except ImportError as e:
-        raise AssertionError(f"Import failed: {e}")
+        raise AssertionError(f"Import failed: {e}") from e
 
 def test_logging():
     """Test that logging works."""

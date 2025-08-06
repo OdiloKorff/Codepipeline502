@@ -5,4 +5,4 @@ Internally we use `app/main.py` (FastAPI instance `app`).
 try:
     pass  # our real FastAPI app
 except Exception as e:
-    raise ImportError(f"Failed to import FastAPI app from app.main: {e}")
+    raise ImportError(f"Failed to import FastAPI app from app.main: {e}") from e
