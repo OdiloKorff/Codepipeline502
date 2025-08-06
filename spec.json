@@ -1,0 +1,7 @@
+{
+  "goal": "Permission-Test Service",
+  "acceptance": "GET /health 200 OK, automatische PR-Erstellung funktioniert",
+  "constraints": "Test nach GitHub Actions Permission-Fix",
+  "pattern": "fastapi-api",
+  "service_name": "permission-test"
+}
