@@ -1,5 +1,10 @@
-import toml, tempfile, shutil, pathlib
+import pathlib
+import shutil
+import tempfile
+
+import toml
 from scripts.bump_version import bump
+
 
 def test_bump_version():
     tmpdir = tempfile.mkdtemp()

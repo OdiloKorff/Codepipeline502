@@ -7,11 +7,12 @@ that are likely to fail.
 """
 
 import os
-import time
 import threading
-import logging
+import time
+from collections.abc import Callable
 from enum import Enum, auto
-from typing import Callable, TypeVar, Any, Optional
+from typing import Any, TypeVar
+
 from codepipeline.logging_config import get_logger
 
 _T=TypeVar("_T")
@@ -52,7 +53,7 @@ class CircuitBreaker:
 
         try:
             result=func(*args,**kwargs)
-        except Exception as exc:
+        except Exception:
             with self._lock:
                 self._failure_count+=1
                 if self._failure_count>=self.fail_max:

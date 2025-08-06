@@ -9,7 +9,14 @@ Robuster AI-Build:
 """
 
 from __future__ import annotations
-import os, sys, json, shutil, subprocess, time, textwrap
+
+import json
+import os
+import shutil
+import subprocess
+import sys
+import textwrap
+import time
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -74,7 +81,7 @@ def read_spec() -> Spec:
     spec_file = os.getenv("SPEC_FILE")
     if spec_file and os.path.exists(spec_file):
         try:
-            with open(spec_file, "r", encoding="utf-8-sig") as f:
+            with open(spec_file, encoding="utf-8-sig") as f:
                 data = json.load(f)
             return Spec(**data)
         except Exception as e:
@@ -187,7 +194,7 @@ def main():
 if __name__ == "__main__":
     try:
         sys.exit(main())
-    except SystemExit as e:
+    except SystemExit:
         raise
     except Exception as e:
         sys.stderr.write(f"[FATAL] {e}\n")

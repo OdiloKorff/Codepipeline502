@@ -1,4 +1,5 @@
 import logging
+
 """
 Token Cost Controller
 - Tracks token usage per run based on a budget file.
@@ -8,6 +9,7 @@ Token Cost Controller
 import json
 import sys
 from pathlib import Path
+
 
 class TokenController:
     def __init__(self, budget_file: str = "token_budget.json"):

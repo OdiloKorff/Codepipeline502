@@ -10,10 +10,9 @@ in the project.
 from __future__ import annotations
 
 import time
-from typing import Callable, Awaitable
 
-from starlette.types import ASGIApp, Receive, Scope, Send
 from prometheus_client import Histogram
+from starlette.types import ASGIApp, Receive, Scope, Send
 
 # Shared histogram instance – label cardinality is kept low (method+path+status)
 REQUEST_LATENCY = Histogram(

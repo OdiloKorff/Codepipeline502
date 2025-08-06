@@ -1,4 +1,5 @@
 import logging
+
 """
 Modul: codepipeline.observability_slos
 Beschreibung:
@@ -16,7 +17,6 @@ Next Steps:
     3. Definition und Deployment von Alertmanager-Regeln für Fehlerraten und Latenzüberschreitungen.
 """
 
-import requests
 
 class ObservabilitySLOs:
     """
@@ -37,7 +37,6 @@ class ObservabilitySLOs:
         """
         Erstellt das Grafana-Dashboard "Pipeline Health" über die Grafana-API.
         """
-        headers = {"Authorization": f"Bearer {self.grafana_api_key}"}
         raise NotImplementedError("Grafana-Dashboard 'Pipeline Health' erstellen")
 
     def configure_alerts(self):

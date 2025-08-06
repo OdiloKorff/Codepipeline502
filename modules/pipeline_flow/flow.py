@@ -1,9 +1,11 @@
 """
 Prefect pipeline flow integrating MLflow, W&B, and retries/backoff.
 """
-from prefect import flow, task
-from codepipeline.core.observability import Observability
 from datetime import datetime
+
+from prefect import flow, task
+
+from codepipeline.core.observability import Observability
 
 observability = Observability()
 

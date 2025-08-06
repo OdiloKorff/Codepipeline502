@@ -1,8 +1,9 @@
 import logging
-from codepipeline.tracing import tracer
-import sys
 import subprocess
+import sys
+
 from codepipeline.training_db import log_review_result
+
 
 def run_review(code_dir: str, db_url: str) -> bool:
     scores = {}

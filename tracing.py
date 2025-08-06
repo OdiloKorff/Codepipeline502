@@ -3,7 +3,6 @@
 
 We avoid importing heavy OpenTelemetry exporters which are not installed."""
 
-import types
 
 class _NoopSpan:  # noqa: D401
     def __enter__(self): return self

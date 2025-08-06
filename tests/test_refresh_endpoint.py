@@ -1,10 +1,13 @@
 import os
+
 os.environ["JWT_SECRET"] = "testsecret"
+
+from datetime import UTC, datetime, timedelta
 
 import bcrypt
 from fastapi.testclient import TestClient
-from datetime import datetime, timedelta, timezone
-from product.api.auth_router import router, LoginRequest, create_access_token
+from product.api.auth_router import router
+
 
 def test_refresh_endpoint(monkeypatch):
     class FakeUser:
@@ -14,7 +17,7 @@ def test_refresh_endpoint(monkeypatch):
     class FakeRefresh:
         token = "refresh123"
         user = FakeUser()
-        expires_at = datetime.now(timezone.utc) + timedelta(minutes=5)
+        expires_at = datetime.now(UTC) + timedelta(minutes=5)
 
     class FakeSession:
         def query(self, model):

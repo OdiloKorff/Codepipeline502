@@ -1,7 +1,7 @@
 import os
-import pytest
 
 from codepipeline.context_window_manager import token_aware_window
+
 
 def test_window_disabled():
     os.environ['ENABLE_CONTEXT_WINDOW'] = 'false'

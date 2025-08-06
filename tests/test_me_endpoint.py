@@ -1,11 +1,18 @@
 
-import os, importlib, bcrypt, jwt
+import importlib
+import os
+
+import bcrypt
+
 os.environ["JWT_SECRET"] = "testsecret"
 import product.security.token as token_mod
+
 importlib.reload(token_mod)
 from datetime import timedelta
+
 from fastapi.testclient import TestClient
-from product.api.auth_router import router, create_access_token, SECRET_KEY, ALGORITHM
+from product.api.auth_router import create_access_token, router
+
 
 def test_me_endpoint(monkeypatch):
     class FakeUser:

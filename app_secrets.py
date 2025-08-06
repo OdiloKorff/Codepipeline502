@@ -3,9 +3,11 @@ Secrets management for CodePipeline.
 """
 
 import os
-from typing import Optional
+import pathlib
+
+import hvac
+
 from codepipeline.logging_config import get_logger
-import hvac, json, pathlib
 
 _log = get_logger(__name__)
 
@@ -38,7 +40,7 @@ def _get_client() -> hvac.Client:
         _client.token = resp["auth"]["client_token"]
         _log.info("Authenticated to Vault via OIDC role %s", VAULT_ROLE)
     else:
-        raise EnvironmentError("No VAULT_TOKEN or OIDC JWT available for Vault login")
+        raise OSError("No VAULT_TOKEN or OIDC JWT available for Vault login")
     return _client
 
 # ---------------------------

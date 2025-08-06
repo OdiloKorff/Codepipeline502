@@ -1,6 +1,5 @@
-import os
-import tempfile
 from codepipeline.migrations.init_migration import init_migration
+
 
 def test_init_migration(tmp_path, capsys):
     # Setup fake db files

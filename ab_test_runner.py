@@ -4,7 +4,9 @@ AB-Test Runner v0.1
 """
 
 import random
-from typing import Callable, Any, Dict
+from collections.abc import Callable
+from typing import Any
+
 
 class ABTestRunner:
     def __init__(self, control_func: Callable[..., Any], test_func: Callable[..., Any]):
@@ -27,7 +29,7 @@ class ABTestRunner:
         self.results[group].append(result)
         return result
 
-    def metric(self) -> Dict[str, float]:
+    def metric(self) -> dict[str, float]:
         """
         Erfolgs-Metrik: Anteil erfolgreicher Runs (result=True).
         """

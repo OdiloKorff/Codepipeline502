@@ -9,7 +9,7 @@ def test_imports():
         from codepipeline.orchestrator import run
         assert True
     except ImportError as e:
-        assert False, f"Import failed: {e}"
+        raise AssertionError(f"Import failed: {e}")
 
 def test_logging():
     """Test that logging works."""
@@ -21,4 +21,4 @@ def test_orchestrator():
     """Test that orchestrator can be imported and called."""
     from codepipeline.orchestrator import run
     result = run()
-    assert result is True 
+    assert result is True

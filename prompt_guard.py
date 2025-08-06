@@ -1,9 +1,9 @@
 """Prompt templating, quality scoring and sanitizing utilities."""
 
 from __future__ import annotations
+
 import re
 from dataclasses import dataclass, field
-from typing import List, Dict, Any
 
 __all__ = [
     "PromptTemplate",
@@ -25,7 +25,7 @@ class SoftAbort(Exception):
 class PromptTemplate:
     name: str
     system: str
-    examples: List[Dict[str, str]] = field(default_factory=list)
+    examples: list[dict[str, str]] = field(default_factory=list)
     min_score: float = 0.4  # thresholds 0..1
 
 # ------------------------------------------------------------------
@@ -61,13 +61,13 @@ def sanitize_input(prompt: str) -> str:
 # ------------------------------------------------------------------
 # Template application
 # ------------------------------------------------------------------
-def apply_fewshot_template(prompt: str, tpl: PromptTemplate) -> List[Dict[str, str]]:
+def apply_fewshot_template(prompt: str, tpl: PromptTemplate) -> list[dict[str, str]]:
     """Return message list ready for Chat API."""
     score = evaluate_prompt_quality(prompt)
     if score < tpl.min_score:
         raise SoftAbort(f"Prompt score {score:.2f} below threshold {tpl.min_score}")
     sanitized = sanitize_input(prompt)
-    msgs: List[Dict[str, str]] = []
+    msgs: list[dict[str, str]] = []
     msgs.append({ "role": "system", "content": tpl.system })
     msgs.extend(tpl.examples)
     msgs.append({ "role": "user", "content": sanitized })

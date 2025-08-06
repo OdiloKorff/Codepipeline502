@@ -1,11 +1,11 @@
-import logging
-
 import json
+import logging
 import os
 import subprocess
 from datetime import datetime
-from training_db import init_db, log_record
-from codepipeline.core import metrics
+
+from training_db import init_db
+
 init_db()
 
 class SmartOrchestrator:
@@ -16,7 +16,7 @@ class SmartOrchestrator:
         os.makedirs("logs", exist_ok=True)
 
     def load_config(self):
-        with open(self.config_path, "r") as f:
+        with open(self.config_path) as f:
             self.config = json.load(f)
 
     def log(self, message):

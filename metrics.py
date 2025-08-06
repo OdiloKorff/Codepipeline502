@@ -3,8 +3,8 @@ Prometheus Metrics for Cost Dashboard
 Tracks token usage and build duration.
 """
 
+
 from prometheus_client import Counter, Histogram, start_http_server
-import time
 
 # Metrics definitions
 TOKEN_USAGE = Counter('codepipeline_tokens_total', 'Total tokens used')

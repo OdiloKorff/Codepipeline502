@@ -14,7 +14,8 @@ from __future__ import annotations
 import logging
 import os
 import sys
-from typing import Any, MutableMapping
+from collections.abc import MutableMapping
+from typing import Any
 
 # ---------------------------------------------------------------------------#
 # structlog import – fall back to lightweight stub if library unavailable
@@ -22,7 +23,8 @@ from typing import Any, MutableMapping
 try:
     import structlog  # type: ignore
 except (ModuleNotFoundError, ImportError):  # pragma: no cover
-    import types, json  # local import to avoid hard dependency
+    import json  # local import to avoid hard dependency
+    import types
 
     _processors = types.ModuleType("processors")
     class _JSONRenderer:

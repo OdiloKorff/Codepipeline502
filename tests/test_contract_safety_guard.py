@@ -1,5 +1,5 @@
-import pytest
 import importlib
+
 
 def test_import_safety_guard():
     module = importlib.import_module('codepipeline.safety_guard')

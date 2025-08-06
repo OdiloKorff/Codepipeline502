@@ -12,4 +12,4 @@ def test_math():
 
 def test_string():
     """Simple string test."""
-    assert "hello" + " world" == "hello world" 
+    assert "hello" + " world" == "hello world"

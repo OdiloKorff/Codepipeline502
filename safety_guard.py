@@ -5,9 +5,9 @@ Exit code conventions:
   2 - Forbidden module import detected
 """
 
-import sys
-import os
 import ast
+import os
+import sys
 
 REQUIRED_PYTHON = (3, 8)
 FORBIDDEN_MODULES = {"os", "sys", "subprocess"}
@@ -29,7 +29,7 @@ def run_safety_checks():
                 continue
             path = os.path.join(root, fname)
             try:
-                tree = ast.parse(open(path, 'r').read(), filename=path)
+                tree = ast.parse(open(path).read(), filename=path)
             except SyntaxError:
                 continue
             for node in ast.walk(tree):

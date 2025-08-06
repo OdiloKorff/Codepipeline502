@@ -3,10 +3,9 @@ Module: codepipeline.datastore
 Beschreibung: CRUD-API für Iterations-Daten mit CSV/JSON-Export.
 """
 
-import sqlite3
-import json
 import csv
-from contextlib import closing
+import json
+import sqlite3
 
 DB_SCHEMA = """
 CREATE TABLE IF NOT EXISTS iterations (
@@ -48,7 +47,7 @@ class DataStore:
                 (iteration_id,)
             )
             row = cursor.fetchone()
-            return dict(zip([column[0] for column in cursor.description], row)) if row else None
+            return dict(zip([column[0] for column in cursor.description], row, strict=False)) if row else None
 
     def list_iterations(self):
         """Listet alle Iterationsdatensätze."""
@@ -57,7 +56,7 @@ class DataStore:
                 "SELECT id, timestamp, patch, score, status, coverage_delta, performance, cost FROM iterations ORDER BY id"
             )
             columns = [col[0] for col in cursor.description]
-            return [dict(zip(columns, row)) for row in cursor.fetchall()]
+            return [dict(zip(columns, row, strict=False)) for row in cursor.fetchall()]
 
     def update_iteration(self, iteration_id, **fields):
         """Aktualisiert ein Iterationsdatensatz. Felder: timestamp, patch, score, status, coverage_delta, performance, cost."""

@@ -1,8 +1,10 @@
 """Command‑line interface for CodePipeline."""
-import sys, json, pathlib, typer
+import pathlib
+
+import typer
+
 from codepipeline.llm_gateway import LLMGateway
-from codepipeline.prompt_guard import apply_fewshot_template, PromptTemplate
-from codepipeline.rag_core import RAGCore
+from codepipeline.prompt_guard import PromptTemplate, apply_fewshot_template
 
 app = typer.Typer(add_completion=False, help="CodePipeline CLI")
 

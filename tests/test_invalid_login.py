@@ -1,9 +1,9 @@
 """Invalid login scenario tests."""
 
-import bcrypt
+from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from product.api.auth_router import router
-from fastapi import FastAPI
+
 
 def test_invalid_login_endpoint():
     class FakeSession:

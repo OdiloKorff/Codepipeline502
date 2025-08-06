@@ -1,6 +1,7 @@
 
 from codepipeline.task_queue import TaskQueue
 
+
 def test_status_lifecycle(tmp_path):
     q = TaskQueue(db_path=tmp_path / 'tasks.db')
     task_id = q.enqueue('dummy', {})

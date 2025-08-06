@@ -1,5 +1,6 @@
 import os
 import subprocess
+
 from tree_sitter import Language, Parser
 
 BUILD_DIR = os.path.join(os.path.dirname(__file__), "build")

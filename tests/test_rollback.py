@@ -1,5 +1,7 @@
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch
+
 from codepipeline.rollback import check_canary, git_revert
+
 
 @patch("codepipeline.rollback._fetch_metrics", return_value={"error_rate":0.01})
 def test_check_canary_pass(mock_f):
@@ -7,7 +9,7 @@ def test_check_canary_pass(mock_f):
 
 @patch("codepipeline.rollback._fetch_metrics", return_value={"error_rate":0.2})
 def test_check_canary_fail(mock_f):
-    assert check_canary("x")==False
+    assert not check_canary("x")
 
 @patch("codepipeline.rollback.git.Repo")
 def test_git_revert(mock_repo):

@@ -1,5 +1,7 @@
-from unittest.mock import patch, MagicMock
+from unittest.mock import MagicMock, patch
+
 from scripts import security_scan as ss
+
 
 @patch("scripts.security_scan.subprocess.run")
 def test_bandit_high_causes_failure(mock_run):

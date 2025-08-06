@@ -1,5 +1,6 @@
-from app.main import app
 from fastapi.testclient import TestClient
+
+from app.main import app
 
 client = TestClient(app)
 
@@ -37,4 +38,4 @@ def test_stats_negative_values():
     data = response.json()
     assert data["count"] == 3
     assert data["sum"] == 0.0
-    assert data["mean"] == 0.0 
+    assert data["mean"] == 0.0

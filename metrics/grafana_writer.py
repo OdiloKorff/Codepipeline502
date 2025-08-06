@@ -4,11 +4,11 @@ Grafana metrics writer for CodePipeline.
 
 from __future__ import annotations
 
-import os
 import json
+import os
 import time
-import logging
-from typing import Any, Dict
+from typing import Any
+
 from codepipeline.logging_config import get_logger
 
 _log = get_logger(__name__)
@@ -19,13 +19,13 @@ INFLUX_ORG = os.getenv("INFLUX_ORG", "codepipeline")
 INFLUX_BUCKET = os.getenv("INFLUX_BUCKET", "rl_metrics")
 DRY_RUN = INFLUX_URL is None or INFLUX_URL.strip() == ""
 
-def _line_protocol(metric: str, fields: Dict[str, Any], tags: Dict[str, str] | None = None) -> str:
+def _line_protocol(metric: str, fields: dict[str, Any], tags: dict[str, str] | None = None) -> str:
     tag_str = ",".join(f"{k}={v}" for k, v in (tags or {}).items())
     field_str = ",".join(f"{k}={json.dumps(v) if isinstance(v, str) else v}" for k, v in fields.items())
     ts = int(time.time() * 1_000_000_000)  # nanoseconds timestamp
     return f"{metric}{',' if tag_str else ''}{tag_str} {field_str} {ts}"
 
-def write(metrics: Dict[str, Any], run_id: str | None = None, *, prefix: str = "rl") -> bool:
+def write(metrics: dict[str, Any], run_id: str | None = None, *, prefix: str = "rl") -> bool:
     """Write *metrics* dict to InfluxDB.
 
     Returns True on success (or dry‑run), False otherwise.

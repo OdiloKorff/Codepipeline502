@@ -1,8 +1,9 @@
 import os
-from sqlalchemy import create_engine, Column, Integer, String, DateTime
+from datetime import datetime
+
+from sqlalchemy import Column, DateTime, Integer, String, create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-from datetime import datetime
 
 DB_URL = os.getenv('TRAINING_DB_URL', 'sqlite:///training_data.db')
 

@@ -3,9 +3,11 @@ Module: codepipeline.github_client
 Beschreibung: Integration mit der GitHub-API für Draft-PRs und automatisierte Merges.
 """
 
-import requests
-import hvac  # HashiCorp Vault Client
 import os
+
+import hvac  # HashiCorp Vault Client
+import requests
+
 
 class GitHubClient:
     def __init__(self, vault_url=None, vault_token_path=None, github_token_key="github-token", github_api_url="https://api.github.com"):
@@ -23,7 +25,7 @@ class GitHubClient:
 
     def _read_token_file(self):
         """Liest das Vault-Token aus einer Datei."""
-        with open(self.vault_token_path, 'r') as f:
+        with open(self.vault_token_path) as f:
             return f.read().strip()
 
     def create_draft_pr(self, owner, repo, branch, title, body, diff_path):
@@ -43,7 +45,7 @@ class GitHubClient:
         headers = {"Authorization": f"token {self.github_token}", "Accept": "application/vnd.github.v3+json"}
         data = {
             "title": title,
-            "body": body + "\n\n" + open(diff_path, 'r').read(),
+            "body": body + "\n\n" + open(diff_path).read(),
             "head": branch,
             "base": base_branch,
             "draft": True

@@ -1,9 +1,12 @@
 import logging
-from codepipeline.tracing import tracer
 import os
-import sys
 import subprocess
+import sys
+
 import requests
+
+from codepipeline.tracing import tracer
+
 
 def deploy_to_registry(image_tag: str, registry_url: str) -> bool:
     """

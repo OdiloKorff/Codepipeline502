@@ -1,5 +1,5 @@
-import pytest
 import importlib
+
 
 def test_import_rollback_manager():
     module = importlib.import_module('codepipeline.rollback_manager')

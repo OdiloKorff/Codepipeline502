@@ -43,11 +43,11 @@ import builtins as _bt; _bt.get_logger = get_logger  # global helper
 # ---------------------------------------------------------------------------#
 # Public API re‑exports
 # ---------------------------------------------------------------------------#
-from .version import __version__  # noqa: E402
-from .token_budget_manager import check_budget  # noqa: E402
-from .provider_broker import Provider, OpenAIProvider, AnthropicProvider, Broker  # noqa: E402
-from .tree_sitter import parse_python_file  # noqa: E402
 from .context_assembler import assemble_context, cosine_similarity  # noqa: E402
+from .provider_broker import AnthropicProvider, Broker, OpenAIProvider, Provider  # noqa: E402
+from .token_budget_manager import check_budget  # noqa: E402
+from .tree_sitter import parse_python_file  # noqa: E402
+from .version import __version__  # noqa: E402
 
 if TYPE_CHECKING:  # pragma: no cover – type‑only imports
     from .logging_config import get_logger  # re‑export type for type‑checkers

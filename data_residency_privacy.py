@@ -42,7 +42,7 @@ class DataResidencyPrivacy:
         raise NotImplementedError("Trainingsumgebungs-Auswahl implementieren")
 
 def main():
-    privacy = DataResidencyPrivacy(dpa_document="DPA_v1.0.pdf", on_prem=True)
+    DataResidencyPrivacy(dpa_document="DPA_v1.0.pdf", on_prem=True)
     # Beispielaufrufe
     # privacy.tag_data(batch)
     # privacy.enforce_opt_in(user_prefs)

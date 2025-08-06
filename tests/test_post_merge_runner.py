@@ -1,5 +1,7 @@
-from unittest.mock import patch, MagicMock
+from unittest.mock import MagicMock, patch
+
 from codepipeline.post_merge_runner import run_tests
+
 
 @patch("codepipeline.post_merge_runner.subprocess.run")
 def test_run_tests_success(mock_run):

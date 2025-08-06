@@ -1,9 +1,9 @@
 """
 Grafana dashboard definition for CodePipeline.
 """
-from typing import Any, Dict
+from typing import Any
 
-DASHBOARD: Dict[str, Any] = {
+DASHBOARD: dict[str, Any] = {
     "title": "Metrics Dashboard",
     "panels": [
         {

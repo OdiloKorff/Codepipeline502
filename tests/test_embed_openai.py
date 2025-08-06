@@ -1,5 +1,7 @@
 from unittest.mock import MagicMock, patch
+
 from codepipeline.rag_core import RAGCore
+
 
 def test_embed_text_uses_openai():
     with patch('codepipeline.rag_core.OpenAI') as MockClient:

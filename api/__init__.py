@@ -9,13 +9,14 @@ Endpoints
 """
 from __future__ import annotations
 
+import datetime as _dt
 import logging
+import uuid
 from typing import List, Optional
-from fastapi import FastAPI, Depends, HTTPException, status, Security
+
+from fastapi import Depends, FastAPI, HTTPException, Security, status
 from fastapi.security import OAuth2AuthorizationCodeBearer
 from pydantic import BaseModel, Field
-import uuid
-import datetime as _dt
 
 _logger = logging.getLogger(__name__)
 app = FastAPI(title="CodePipeline API", version="1.0.0")
@@ -38,7 +39,7 @@ class JobStatus(BaseModel):
     job_id: str
     status: str
     started_at: _dt.datetime
-    finished_at: Optional[_dt.datetime] = None
+    finished_at: _dt.datetime | None = None
 
 # In‑memory demo store (replace with persistent store in production)
 _jobs: dict[str, JobStatus] = {}
@@ -68,7 +69,7 @@ def status_endpoint(job_id: str, _=Depends(_authorize)) -> JobStatus:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND)
     return _jobs[job_id]
 
-@app.get("/history", response_model=List[JobStatus])
-def history(_=Depends(_authorize)) -> List[JobStatus]:
+@app.get("/history", response_model=list[JobStatus])
+def history(_=Depends(_authorize)) -> list[JobStatus]:
     """Return list of all jobs (asc)."""
     return list(_jobs.values())

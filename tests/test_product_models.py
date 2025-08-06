@@ -1,6 +1,7 @@
 
-from product.database.models import User, RefreshToken, Project
 import pytest
+from product.database.models import Project, RefreshToken, User
+
 pytestmark = pytest.mark.db_integration
 
 def test_models_attributes():

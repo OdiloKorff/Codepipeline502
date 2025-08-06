@@ -1,7 +1,10 @@
+import pathlib
+from unittest.mock import MagicMock
+
 from typer.testing import CliRunner
+
 from codepipeline.cli import app
-from unittest.mock import patch, MagicMock
-import pathlib, json, os, tempfile
+
 
 def test_synth_cli(monkeypatch):
     runner = CliRunner()

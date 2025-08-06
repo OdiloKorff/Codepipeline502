@@ -1,9 +1,11 @@
 import os
+
 os.environ["JWT_SECRET"] = "testsecret"
 
 import bcrypt
 from fastapi.testclient import TestClient
-from product.api.auth_router import router, LoginRequest
+from product.api.auth_router import router
+
 
 def test_login_endpoint(monkeypatch):
     # Setup fake user
@@ -20,7 +22,7 @@ def test_login_endpoint(monkeypatch):
             return Q(model)
     def get_session_override():
         yield FakeSession()
-    from fastapi import FastAPI, Depends
+    from fastapi import FastAPI
     app = FastAPI()
     app.include_router(router)
     app.dependency_overrides[router.get_session] = get_session_override  # type: ignore

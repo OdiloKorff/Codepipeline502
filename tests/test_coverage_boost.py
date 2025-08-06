@@ -1,6 +1,8 @@
-import importlib, pkgutil, inspect
+import importlib
+import pkgutil
 
 import codepipeline
+
 
 def test_import_all_public_modules():
     pkg=codepipeline

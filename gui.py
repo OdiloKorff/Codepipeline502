@@ -1,7 +1,9 @@
-import tkinter as tk
-import threading
 import queue
+import threading
+import tkinter as tk
+
 from codepipeline.parallel_generator import generate_parallel
+
 
 def main():
     """

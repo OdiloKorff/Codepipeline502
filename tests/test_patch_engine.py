@@ -1,5 +1,5 @@
 
-from codepipeline.patch_engine import insert_snippet, merge_three_way, CONFLICT_MID
+from codepipeline.patch_engine import CONFLICT_MID, insert_snippet, merge_three_way
 
 
 def test_insert_snippet_after():

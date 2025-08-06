@@ -1,5 +1,7 @@
-from codepipeline.circuit import CircuitBreaker
 import pytest
+
+from codepipeline.circuit import CircuitBreaker
+
 
 def test_circuit_opens_and_resets(monkeypatch):
     cb=CircuitBreaker(fail_max=2, reset_timeout=0.1)

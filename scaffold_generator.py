@@ -4,9 +4,6 @@ from __future__ import annotations
 
 import typer
 import uvicorn
-import asyncio
-import sys
-from pathlib import Path
 
 from codepipeline.api.app import app as fastapi_app
 

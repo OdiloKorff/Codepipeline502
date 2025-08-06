@@ -1,6 +1,7 @@
+import logging
 import os
 import sys
-import logging
+
 import requests
 
 MAX_TOKEN_BUDGET = float(os.getenv("MAX_TOKEN_BUDGET", "0"))
