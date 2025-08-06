@@ -36,9 +36,12 @@ except ModuleNotFoundError:  # pragma: no cover
 # ---------------------------------------------------------------------------#
 # Structured logging – always on
 # ---------------------------------------------------------------------------#
-from .logging_config import get_logger  # re-export for convenience
+import builtins as _bt
+
 from . import logging_config as _logging_config  # noqa: E402
-import builtins as _bt; _bt.get_logger = get_logger  # global helper
+from .logging_config import get_logger  # re-export for convenience
+
+_bt.get_logger = get_logger  # global helper
 
 # ---------------------------------------------------------------------------#
 # Public API re‑exports
@@ -48,6 +51,12 @@ from .provider_broker import AnthropicProvider, Broker, OpenAIProvider, Provider
 from .token_budget_manager import check_budget  # noqa: E402
 from .tree_sitter import parse_python_file  # noqa: E402
 from .version import __version__  # noqa: E402
+
+__all__ = [
+    "assemble_context", "cosine_similarity", "AnthropicProvider", "Broker",
+    "OpenAIProvider", "Provider", "check_budget", "parse_python_file",
+    "__version__", "get_logger"
+]
 
 if TYPE_CHECKING:  # pragma: no cover – type‑only imports
     from .logging_config import get_logger  # re‑export type for type‑checkers
