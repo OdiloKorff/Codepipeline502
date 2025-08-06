@@ -49,12 +49,7 @@ jobs:
           # Ergebnis lesen (mutmut report), Kennzahl in ENV schreiben:
           RATIO=$(mutmut results | awk '/Mutants killed/ {k=$3} /Total mutants/ {t=$3} END { if (t>0) print k/t; else print 0 }')
           echo "MUTATION_RATIO=${RATIO:-0.3}" >> $GITHUB_ENV
-      - name: Infracost (budget gate)
-        uses: infracost/actions@v3
-        with:
-          api-key: ${{ secrets.INFRACOST_API_KEY }}
-          path: .
-        continue-on-error: true
+
       - name: Scorecard
         run: python qa/scorecard.py
       - name: Upload QA artifacts
@@ -69,7 +64,6 @@ jobs:
             gitleaks.json
             sbom.json
             licenses.json
-            infracost.json
             qa_summary.md
       - name: PR Comment (summary)
         if: always()
