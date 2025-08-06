@@ -1,0 +1,7 @@
+{
+  "goal": "Demo-Service mit Statistics-Endpoint",
+  "acceptance": "GET /health 200 OK, POST /stats mit [1,2,3] -> {count:3,sum:6,mean:2.0}",
+  "constraints": "Nur FastAPI, pytest, statistics.mean(), Coverage >= 80%",
+  "pattern": "fastapi-api",
+  "service_name": "stats-demo"
+}
