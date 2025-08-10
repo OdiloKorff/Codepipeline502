@@ -51,13 +51,13 @@ from .context_assembler import assemble_context, cosine_similarity  # noqa: E402
 from .provider_broker import AnthropicProvider, Broker, OpenAIProvider, Provider  # noqa: E402
 from .token_budget_manager import check_budget  # noqa: E402
 from .version import __version__  # noqa: E402
+import codepipeline.telemetry  # noqa: F401  # Auto‑import for OTLP export
 
 __all__ = [
     "assemble_context", "cosine_similarity", "AnthropicProvider", "Broker",
     "OpenAIProvider", "Provider", "check_budget", "parse_python_file",
-    "__version__", "get_logger"
+    "__version__", "get_logger", "_logging_config"
 ]
 
-if TYPE_CHECKING:  # pragma: no cover – type‑only imports
+if TYPE_CHECKING:  # pragma: no cover – type‑only imports
     from .logging_config import get_logger  # re‑export type for type‑checkers
-import codepipeline.telemetry  # noqa: F401  # Auto‑import for OTLP export
