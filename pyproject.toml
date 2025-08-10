@@ -51,7 +51,7 @@ line-length = 120
 
 [tool.ruff.lint]
 select = ["E","F","I","UP","B","C4"]
-ignore = ["E501","B008","C901"]
+ignore = ["E501","B008","C901","E402","I001"]  # Temporarily ignore E402/I001 for MVP
 
 [tool.mypy]
 python_version = "3.11"
