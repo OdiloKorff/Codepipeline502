@@ -1,7 +1,8 @@
 import logging
 import sys
-from codepipeline.logging_config import get_logger
+
 from codepipeline.orchestrator import run
+
 
 def setup_logging():
     """Initialize logging configuration."""

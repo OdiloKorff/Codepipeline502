@@ -14,7 +14,6 @@ Next Steps:
     2. Anpassung des Atheris-Fuzzing-Steps, um ihn ausschließlich in der Python-3.10-Umgebung auszuführen.
 """
 
-import subprocess
 
 class TestSynthesizer:
     """

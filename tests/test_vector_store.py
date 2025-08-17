@@ -1,6 +1,7 @@
-import os
-from unittest.mock import MagicMock, patch
+from unittest.mock import patch
+
 from codepipeline.rag_core import RAGCore
+
 
 def test_backend_selection_qdrant(monkeypatch):
     monkeypatch.setenv("VECTOR_STORE", "qdrant")

@@ -1,4 +1,5 @@
 import logging
+
 """
 Modul: codepipeline.artifacts_caching
 Beschreibung:
@@ -18,7 +19,7 @@ Next Steps:
 
 import os
 import subprocess
-import boto3  # oder Artifactory-Client
+
 
 class ArtifactsCaching:
     """
@@ -39,7 +40,7 @@ class ArtifactsCaching:
         """
         Lädt das Modell als Artefakt in den konfigurierten Bucket hoch und versieht es mit dem Git-SHA als Tag.
         """
-        s3_key = f"{s3_key_prefix}{self.git_sha}-{os.path.basename(model_path)}"
+        f"{s3_key_prefix}{self.git_sha}-{os.path.basename(model_path)}"
         # s3_client = boto3.client('s3')
         # s3_client.upload_file(model_path, self.s3_bucket, s3_key)
         raise NotImplementedError("Upload-Logik für Model-Artefakte implementieren")

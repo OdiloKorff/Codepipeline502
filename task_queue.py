@@ -15,7 +15,7 @@ from __future__ import annotations
 import json
 import sqlite3
 from pathlib import Path
-from typing import Any, Dict, Optional
+from typing import Any
 
 DB_PATH = Path(__file__).parent.parent / "tasks.db"
 
@@ -31,7 +31,7 @@ class TaskQueue:
     # ---------------------------------------------------------------------#
     # Public API                                                           #
     # ---------------------------------------------------------------------#
-    def enqueue(self, task_type: str, payload: Dict[str, Any]) -> int:
+    def enqueue(self, task_type: str, payload: dict[str, Any]) -> int:
         """Insert new task and return its autoincrement id."""
         with self.conn:
             cur = self.conn.execute(
@@ -40,7 +40,7 @@ class TaskQueue:
             )
             return int(cur.lastrowid)
 
-    def fetch_next(self) -> Optional[Dict[str, Any]]:
+    def fetch_next(self) -> dict[str, Any] | None:
         """Reserve and return the next executable task.
 
         A simple *SELECT … FOR UPDATE* is not available in SQLite. We

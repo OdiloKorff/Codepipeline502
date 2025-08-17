@@ -1,4 +1,4 @@
-import os, re, io
+import re
 from pathlib import Path
 
 ROOT = Path.cwd()
@@ -36,4 +36,4 @@ for p in ROOT.rglob('*.py'):
     files += 1
 
 print(f"files_scanned={files}")
-print(f"files_changed={changed}") 
+print(f"files_changed={changed}")

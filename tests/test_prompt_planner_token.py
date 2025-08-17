@@ -1,7 +1,7 @@
 import os
-import pytest
 
 from codepipeline.prompt_planner import token_aware_plan
+
 
 def test_token_aware_plan_budget_disabled(monkeypatch):
     os.environ['ENABLE_TOKEN_BUDGET'] = 'false'

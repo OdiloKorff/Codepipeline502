@@ -16,7 +16,9 @@ Next Steps:
 """
 
 import os
+
 import hvac
+
 
 class SecretsManagement:
     """
@@ -45,7 +47,7 @@ class SecretsManagement:
         if os.path.isfile(token_path):
             with open(token_path) as f:
                 return f.read().strip()
-        raise EnvironmentError("Vault-Token nicht gefunden: weder VAULT_TOKEN env noch Datei vorhanden")
+        raise OSError("Vault-Token nicht gefunden: weder VAULT_TOKEN env noch Datei vorhanden")
 
     def get_client(self):
         """
@@ -58,7 +60,7 @@ class SecretsManagement:
 def main():
     vault_addr = os.getenv("VAULT_ADDR", "https://vault.example.com")
     secrets = SecretsManagement(vault_addr=vault_addr)
-    client = secrets.get_client()
+    secrets.get_client()
     # Beispiel: Lesen eines Secrets
     # secret = client.secrets.kv.v2.read_secret_version(path="secret/data/myapp")
     # print(secret)

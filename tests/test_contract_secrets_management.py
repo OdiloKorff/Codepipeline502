@@ -1,5 +1,5 @@
-import pytest
 import importlib
+
 
 def test_import_secrets_management():
     module = importlib.import_module('codepipeline.secrets_management')

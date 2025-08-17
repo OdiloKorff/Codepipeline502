@@ -1,7 +1,9 @@
 """Minimal FastAPI bridge for web‑UI integration."""
 from fastapi import FastAPI
 from pydantic import BaseModel
-from codepipeline.cli import _gw, apply_fewshot_template, _default_tpl
+
+from codepipeline.cli import _default_tpl, _gw, apply_fewshot_template
+
 
 class PromptIn(BaseModel):
     prompt: str
@@ -9,11 +11,11 @@ class PromptIn(BaseModel):
 class CodeOut(BaseModel):
     code: str
 
-from fastapi import Response
-from prometheus_client import generate_latest, CONTENT_TYPE_LATEST, REGISTRY
 from prometheus_fastapi_instrumentator import Instrumentator
+
 app = FastAPI(title="CodePipeline API")
 from codepipeline.asgi_latency import LatencyMiddleware
+
 app.add_middleware(LatencyMiddleware)
 
 instrumentator = Instrumentator()
@@ -37,8 +39,9 @@ async def readyz():
     return {"status": "ok"}
 
 # --- AUTH & PROJECT DEMO ENDPOINTS (Scenario 5.2) ---------------------------------
-from fastapi import HTTPException, Header
-from typing import List
+
+from fastapi import Header, HTTPException
+
 
 class LoginIn(BaseModel):
     username: str
@@ -56,7 +59,7 @@ class ProjectOut(BaseModel):
     name: str
 
 _FAKE_USER = {"username": "admin", "password": "admin"}
-_PROJECTS: List[ProjectOut] = []
+_PROJECTS: list[ProjectOut] = []
 
 @app.post("/auth/login", response_model=TokenOut)
 async def login(body: LoginIn):

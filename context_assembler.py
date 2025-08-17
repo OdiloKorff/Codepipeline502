@@ -1,8 +1,8 @@
 import math
-from typing import Dict, List
 
-def cosine_similarity(a: List[float], b: List[float]) -> float:
-    dot = sum(x * y for x, y in zip(a, b))
+
+def cosine_similarity(a: list[float], b: list[float]) -> float:
+    dot = sum(x * y for x, y in zip(a, b, strict=False))
     norm_a = math.sqrt(sum(x * x for x in a))
     norm_b = math.sqrt(sum(y * y for y in b))
     if norm_a == 0 or norm_b == 0:
@@ -10,9 +10,9 @@ def cosine_similarity(a: List[float], b: List[float]) -> float:
     return dot / (norm_a * norm_b)
 
 def assemble_context(
-    query_embedding: List[float],
-    snippet_embeddings: Dict[str, List[float]],
-    snippets: Dict[str, str],
+    query_embedding: list[float],
+    snippet_embeddings: dict[str, list[float]],
+    snippets: dict[str, str],
     top_k: int = 8,
     token_limit: int = 2048,
 ) -> str:

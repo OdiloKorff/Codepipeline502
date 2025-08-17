@@ -5,12 +5,12 @@ Basic import tests for CodePipeline.
 def test_basic_imports():
     """Test that basic modules can be imported."""
     try:
-        from codepipeline.logging_config import get_logger
-        from codepipeline.orchestrator import run
-        from codepipeline.llm_gateway import LLMGateway
+        from codepipeline.llm_gateway import LLMGateway  # noqa: F401
+        from codepipeline.logging_config import get_logger  # noqa: F401
+        from codepipeline.orchestrator import run  # noqa: F401
         assert True
     except ImportError as e:
-        assert False, f"Import failed: {e}"
+        raise AssertionError(f"Import failed: {e}") from e
 
 def test_logging_works():
     """Test that logging configuration works."""
@@ -29,4 +29,4 @@ def test_llm_gateway_import():
     """Test that LLM gateway can be imported."""
     from codepipeline.llm_gateway import LLMGateway
     gateway = LLMGateway()
-    assert gateway is not None 
+    assert gateway is not None

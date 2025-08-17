@@ -1,15 +1,16 @@
 
 import os
-import pytest
-import bcrypt
-from datetime import timedelta, datetime, timezone
+from datetime import UTC, datetime, timedelta
 
+import bcrypt
+import pytest
 from fastapi import FastAPI
 from httpx import AsyncClient
 
 os.environ["JWT_SECRET"] = "testsecret"
 
-from product.api.auth_router import router, create_access_token, LoginRequest
+from product.api.auth_router import router
+
 
 class _FakeUser:
     id = 1
@@ -21,7 +22,7 @@ class _Token:
         self.token = "valid" if not expired else "expired"
         self.user = _FakeUser()
         delta = -1 if expired else 5
-        self.expires_at = datetime.now(timezone.utc) + timedelta(minutes=delta)
+        self.expires_at = datetime.now(UTC) + timedelta(minutes=delta)
 
 class _Session:
     def __init__(self, token_obj):
@@ -41,7 +42,7 @@ def make_app():
     def _factory(token_obj):
         app = FastAPI()
         app.include_router(router)
-        def _session(): 
+        def _session():
             yield _Session(token_obj)
         app.dependency_overrides[router.get_session] = _session  # type: ignore
         return app

@@ -1,9 +1,10 @@
-from codepipeline.tracing import tracer
-from typing import Dict, Any
 import os
+from typing import Any
+
 from codepipeline.core.schemas import PlanModel
 
-def generate_code(plan: Dict[str, Any], output_dir: str = "generated_code") -> None:
+
+def generate_code(plan: dict[str, Any], output_dir: str = "generated_code") -> None:
     """
     Generate Python class files based on UML-like plan JSON.
     """

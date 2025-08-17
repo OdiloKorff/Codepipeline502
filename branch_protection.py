@@ -22,12 +22,13 @@ from __future__ import annotations
 
 import os
 import sys
-from typing import Final, Sequence
+from collections.abc import Sequence
+from typing import Final
 
 from github import Github
-from github.Repository import Repository
 from github.Branch import Branch
 from github.Protection import BranchProtection
+from github.Repository import Repository
 
 REQUIRED_STATUS_CHECKS: Final[Sequence[str]] = (
     "ruff",

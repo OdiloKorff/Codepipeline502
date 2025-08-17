@@ -2,8 +2,6 @@
 Observability utilities for CodePipeline.
 """
 
-import time
-from typing import Dict, Any
 from codepipeline.logging_config import get_logger
 
 logger = get_logger(__name__)
@@ -14,6 +12,7 @@ _request_counter = None
 _request_latency = None
 
 def init_telemetry():
+    import importlib
     global _meter, _tracer, _request_counter, _request_latency
     # Lazy import of OpenTelemetry modules
     otel_metrics = importlib.import_module('opentelemetry.metrics')

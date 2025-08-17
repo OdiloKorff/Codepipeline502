@@ -4,8 +4,10 @@ GUI ↔ Orchestrator Bridge
 
 import threading
 import tkinter as tk
+
 from codepipeline.orchestrator import Orchestrator
 from codepipeline.task_queue import TaskQueue
+
 
 class GUIBridge:
     def __init__(self, root: tk.Tk):
@@ -19,7 +21,8 @@ class GUIBridge:
             while self._running:
                 task = self.task_queue.fetch_next()
                 if not task:
-                    import time; time.sleep(0.5)
+                    import time
+                    time.sleep(0.5)
                     continue
                 try:
                     # Map tasks to orchestrator methods
@@ -30,7 +33,8 @@ class GUIBridge:
                 except Exception as exc:  # pylint: disable=broad-except
                     # Mark task as failed and persist the exception type
                     self.task_queue.mark_failed(task['id'], type(exc).__name__)
-                    import logging, traceback
+                    import logging
+                    import traceback
                     logging.error('Task %s failed: %s', task['id'], traceback.format_exc())
 
         thread = threading.Thread(target=worker, daemon=True)

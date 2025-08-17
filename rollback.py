@@ -3,8 +3,10 @@ Rollback utilities for CodePipeline.
 """
 
 import os
-import shutil
-from typing import Dict, Any, Optional
+import time
+
+import git
+
 from codepipeline.logging_config import get_logger
 
 _log = get_logger(__name__)

@@ -1,6 +1,12 @@
 """Isolated sandbox for executing shell patches (supply‑chain hardening)."""
 from __future__ import annotations
-import subprocess, tempfile, os, shutil, logging, pathlib, json
+
+import json
+import logging
+import pathlib
+import shutil
+import subprocess
+import tempfile
 
 _log = logging.getLogger(__name__)
 
@@ -31,10 +37,10 @@ def run_patch(cmd: list[str], *, timeout: int = 10) -> subprocess.CompletedProce
 def export_sbom(output_file: str = "sbom.json") -> None:
     """Export CycloneDX SBOM of installed deps using pip‑licenses."""
     try:
-        import cyclonedx_py as cdx  # type: ignore
-    except ImportError:  # pragma: no cover
-        raise RuntimeError("cyclonedx-py not installed")
-    from cyclonedx_py.factory import LicenseFactory, ComponentFactory, BomFactory  # type: ignore
+        import cyclonedx_py as cdx  # type: ignore  # noqa: F401
+    except ImportError as e:  # pragma: no cover
+        raise RuntimeError("cyclonedx-py not installed") from e
+    from cyclonedx_py.factory import BomFactory, ComponentFactory, LicenseFactory  # type: ignore
 
     # Very lightweight: treat each dir in codepipeline as component
     components = []

@@ -1,7 +1,7 @@
-from codepipeline.tracing import tracer
 import re
-from typing import List
-from codepipeline.core.schemas import PlanModel, ClassModel, MethodModel
+
+from codepipeline.core.schemas import ClassModel, MethodModel, PlanModel
+
 
 def generate_plan(prompt: str) -> dict:
     """
@@ -26,9 +26,11 @@ def generate_plan(prompt: str) -> dict:
     return plan.dict()
 
 # Token-aware prompt planning enhancements
-import os, logging
-from typing import List
+import logging
+import os
+
 from tenacity import retry, stop_after_attempt, wait_exponential
+
 from codepipeline.utils.token_counter import count_tokens
 
 ENABLE_TOKEN_BUDGET = os.getenv('ENABLE_TOKEN_BUDGET', 'false').lower() == 'true'
@@ -36,7 +38,7 @@ TOKEN_BUDGET = int(os.getenv('TOKEN_BUDGET_LIMIT', '2048'))
 RETRY_ATTEMPTS = int(os.getenv('PLANNER_RETRY_ATTEMPTS', '3'))
 
 @retry(stop=stop_after_attempt(RETRY_ATTEMPTS), wait=wait_exponential(multiplier=1, min=1, max=10))
-def token_aware_plan(prompts: List[str]) -> List[str]:
+def token_aware_plan(prompts: list[str]) -> list[str]:
     """
     Plan prompts with token budget control and retry-backoff logic.
     """

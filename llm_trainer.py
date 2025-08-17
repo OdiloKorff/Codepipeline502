@@ -15,7 +15,6 @@ Next Steps:
     3. Ergänzung eines CI-Tests mit einer Stub-Datei, um Datei-Uploads und Job-Erstellung zu mocken und abzusichern.
 """
 
-import openai
 
 class LLMTrainer:
     """

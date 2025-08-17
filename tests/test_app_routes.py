@@ -1,8 +1,11 @@
 
+import os
+
 from fastapi.testclient import TestClient
-import importlib, os
+
 os.environ["JWT_SECRET"] = "testsecret"
 from app.main import app
+
 
 def test_health_endpoint():
     client = TestClient(app)

@@ -1,7 +1,7 @@
+from statistics import mean
+
 from fastapi import FastAPI
 from pydantic import BaseModel
-from statistics import mean
-from typing import List
 
 app = FastAPI(title="MVP FastAPI Service")
 
@@ -9,7 +9,7 @@ class Health(BaseModel):
     status: str = "ok"
 
 class StatsIn(BaseModel):
-    values: List[float]
+    values: list[float]
 
 class StatsOut(BaseModel):
     count: int
@@ -24,9 +24,9 @@ def health():
 def stats(data: StatsIn):
     if not data.values:
         return StatsOut(count=0, sum=0.0, mean=0.0)
-    
+
     return StatsOut(
         count=len(data.values),
         sum=sum(data.values),
         mean=mean(data.values)
-    ) 
+    )

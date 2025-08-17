@@ -3,12 +3,38 @@ name: AI Orchestrator (MVP)
 on:
   workflow_dispatch:
     inputs:
+      goal:
+        description: "Ziel/Problem: Was soll gebaut werden?"
+        required: true
+        type: string
+        default: "FastAPI Service für Berechnungen"
+      acceptance:
+        description: "Akzeptanzkriterien (testbar)"
+        required: true
+        type: string
+        default: "GET /health returns 200; POST /calc works"
+      constraints:
+        description: "Constraints & Nicht-Ziele"
+        required: false
+        type: string
+        default: "FastAPI only, no UI, coverage ≥80%"
+      pattern:
+        description: "Blueprint/Pattern"
+        required: true
+        type: choice
+        options: [fastapi-api, cli-tool, worker-etl]
+        default: "fastapi-api"
+      service_name:
+        description: "Service/Package-Name"
+        required: true
+        type: string
+        default: "my-service"
       spec_json:
-        description: "Spec payload (raw JSON)"
+        description: "Spec payload (raw JSON) - DEPRECATED"
         required: false
         type: string
       spec_b64:
-        description: "Spec payload (base64-encoded UTF-8 JSON)"
+        description: "Spec payload (base64-encoded UTF-8 JSON) - DEPRECATED"
         required: false
         type: string
   issues:
@@ -47,17 +73,23 @@ jobs:
 
       - name: Orchestrate (tools/ai_build.py)
         env:
-          SPEC_TEXT: ${{ inputs.spec_json }}
-          SPEC_B64:  ${{ inputs.spec_b64 }}
           SPEC_FILE: spec.json
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           set -euo pipefail
-          if [ -n "${SPEC_B64:-}" ]; then
-            python -c "import os,base64,sys; b=os.getenv('SPEC_B64',''); sys.stdout.write(base64.b64decode(b).decode('utf-8-sig'))" > "$SPEC_FILE"
-          else
-            python -c "import os,sys; s=os.getenv('SPEC_TEXT','').lstrip('\ufeff'); sys.stdout.write(s)" > "$SPEC_FILE"
-          fi
+          # Build clean JSON from separate inputs
+          python -c "
+          import json, os
+          spec = {
+              'goal': '${{ inputs.goal }}',
+              'acceptance': '${{ inputs.acceptance }}', 
+              'constraints': '${{ inputs.constraints }}',
+              'pattern': '${{ inputs.pattern }}',
+              'service_name': '${{ inputs.service_name }}'
+          }
+          with open('$SPEC_FILE', 'w', encoding='utf-8') as f:
+              json.dump(spec, f, indent=2, ensure_ascii=False)
+          "
           python tools/ai_build.py
 
       - name: Create PR (fallback via API)

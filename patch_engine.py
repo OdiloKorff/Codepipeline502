@@ -3,8 +3,9 @@
 Provides snippet insertion and a simple three‑way merge resolver.
 """
 from __future__ import annotations
+
 import libcst as cst
-from typing import Optional
+
 
 # ---------------------------------------------------------------------
 # Snippet insertion

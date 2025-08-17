@@ -1,15 +1,17 @@
 """Observability utilities: OpenTelemetry tracing & Prometheus metrics."""
 
 from __future__ import annotations
+
 import os
-from prometheus_client import Counter, Histogram, start_http_server
-from opentelemetry import trace, metrics
+
+from opentelemetry import metrics, trace
+from opentelemetry.exporter.otlp.proto.http.metric_exporter import OTLPMetricExporter
+from opentelemetry.sdk.metrics import MeterProvider
+from opentelemetry.sdk.metrics.export import PeriodicExportingMetricReader
 from opentelemetry.sdk.resources import Resource
 from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import BatchSpanProcessor, OTLPSpanExporter
-from opentelemetry.sdk.metrics import MeterProvider
-from opentelemetry.sdk.metrics.export import PeriodicExportingMetricReader
-from opentelemetry.exporter.otlp.proto.http.metric_exporter import OTLPMetricExporter
+from prometheus_client import Counter, Histogram, start_http_server
 
 # --------------------------------------------------------------------
 # Tracing setup

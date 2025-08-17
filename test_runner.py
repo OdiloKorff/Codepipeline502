@@ -1,6 +1,9 @@
-from codepipeline.tracing import tracer
 import sys
+
 import pytest
+
+from codepipeline.tracing import tracer
+
 
 def main():
     with tracer.start_as_current_span("Test Phase"):

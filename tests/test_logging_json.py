@@ -1,6 +1,6 @@
-import logging
 import json
-from codepipeline import __init__ as cp_init
+import logging
+
 
 def test_logging_uses_json_formatter(caplog):
     logger = logging.getLogger()

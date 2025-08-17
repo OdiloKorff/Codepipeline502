@@ -1,6 +1,8 @@
 
-from unittest.mock import patch, MagicMock
+from unittest.mock import patch
+
 from codepipeline import canary_watcher as cw
+
 
 @patch("codepipeline.canary_watcher.requests.patch")
 def test_traffic_shift(mock_patch):
