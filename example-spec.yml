@@ -1,0 +1,34 @@
+# MVP Pipeline Test Spec
+name: "E2E Pipeline Test"
+version: "1.0"
+
+# Optional: Code-Generierung
+generate: |
+  Erstelle eine FastAPI-App mit einem /calculate Endpoint:
+  - POST /calculate mit {"x": int, "y": int, "operation": str}
+  - Unterstützte Operationen: add, subtract, multiply
+  - Response: {"result": int, "operation": str}
+  - Inklusive Pydantic Models und Error Handling
+
+# Test-Konfiguration
+tests:
+  framework: "pytest"
+  coverage_min: 80
+  timeout: 300
+
+# Quality Gates
+quality:
+  score_threshold: 85
+  static_checks: true
+  security_scan: false  # Optional für MVP
+
+# Artefakt-Konfiguration
+artifact:
+  include:
+    - "*.py"
+    - "requirements.txt"
+    - "README.md"
+  exclude:
+    - "__pycache__"
+    - "*.pyc"
+    - ".git"
