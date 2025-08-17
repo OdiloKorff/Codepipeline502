@@ -1,0 +1,59 @@
+# Feature Spec für das CLI feature-Kommando
+name: "User Authentication API"
+version: "1.0"
+
+# Feature-Beschreibung für LLM
+generate: |
+  Implementiere ein User Authentication System mit folgenden Komponenten:
+  
+  1. User Model mit Pydantic:
+     - id: UUID
+     - username: str (unique)
+     - email: str (unique) 
+     - hashed_password: str
+     - is_active: bool = True
+     - created_at: datetime
+  
+  2. FastAPI Endpoints in api/auth.py:
+     - POST /auth/register - User Registration
+     - POST /auth/login - User Login (returns JWT token)
+     - GET /auth/me - Get current user info (requires auth)
+     - POST /auth/refresh - Refresh JWT token
+  
+  3. JWT Token System:
+     - Access tokens (15 min expiry)
+     - Refresh tokens (7 days expiry)
+     - Secure token validation
+  
+  4. Password Security:
+     - bcrypt hashing
+     - Minimum 8 characters
+     - Salt rounds: 12
+  
+  5. Tests in tests/test_auth.py:
+     - Test user registration
+     - Test login with valid/invalid credentials
+     - Test protected endpoint access
+     - Test token refresh
+     - Test password hashing
+  
+  Verwende moderne FastAPI patterns mit dependency injection und proper error handling.
+
+# Optional: zusätzliche Konfiguration
+security:
+  jwt_secret_key: "your-secret-key-here"
+  algorithm: "HS256"
+  access_token_expire_minutes: 15
+  refresh_token_expire_days: 7
+
+# Test-Konfiguration
+tests:
+  framework: "pytest"
+  coverage_min: 85
+  timeout: 300
+
+# Quality Gates
+quality:
+  score_threshold: 90
+  static_checks: true
+  security_scan: true

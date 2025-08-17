@@ -7,7 +7,7 @@ import pathlib
 
 import hvac
 
-from codepipeline.logging_config import get_logger
+from logging_config import get_logger
 
 _log = get_logger(__name__)
 

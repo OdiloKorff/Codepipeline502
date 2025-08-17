@@ -10,8 +10,8 @@ from typing import Any, TypeVar
 
 from openai import OpenAI
 
-from codepipeline.logging_config import get_logger
-from codepipeline.secrets import ensure_env
+from logging_config import get_logger
+from app_secrets import ensure_env
 
 _T = TypeVar("_T")
 
