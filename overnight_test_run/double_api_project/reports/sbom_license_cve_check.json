@@ -1,0 +1,17 @@
+{
+  "sbom": {
+    "components": 4,
+    "format": "CycloneDX"
+  },
+  "license_check": {
+    "violations": []
+  },
+  "cve_check": {
+    "blockers": []
+  },
+  "summary": {
+    "license_violations": 0,
+    "cve_blockers": 0,
+    "overall_status": "pass"
+  }
+}

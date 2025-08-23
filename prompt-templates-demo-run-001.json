@@ -1,0 +1,42 @@
+{
+  "code_generation": {
+    "template_id": "code_generation",
+    "version": "1.0.0",
+    "content": "Generate Python code for: {task}\n\nRequirements: {requirements}",
+    "variables": [
+      "task",
+      "requirements"
+    ],
+    "seed": 42,
+    "temperature": 0.0,
+    "max_tokens": 2000,
+    "checksum": "301a0acd4223711dd6b2c2f8492467fe343c2dc1b611e130b0a08757d9bb8976",
+    "created_at": "2025-08-17T21:13:02.750297"
+  },
+  "diff_generation": {
+    "template_id": "diff_generation",
+    "version": "1.0.0",
+    "content": "Create a unified diff to implement: {feature}",
+    "variables": [
+      "feature"
+    ],
+    "seed": 42,
+    "temperature": 0.0,
+    "max_tokens": 2000,
+    "checksum": "4d8c4fe1fbc07286259695479c8c380c9c2896953196c18cbf7eba0ebb6ae47c",
+    "created_at": "2025-08-17T21:13:02.751299"
+  },
+  "test_generation": {
+    "template_id": "test_generation",
+    "version": "1.0.0",
+    "content": "Generate tests for: {code}",
+    "variables": [
+      "code"
+    ],
+    "seed": 42,
+    "temperature": 0.0,
+    "max_tokens": 2000,
+    "checksum": "78a5290444a2c694b6116983f6de094afecbd1122788fbc4c6679b6e1465d6c4",
+    "created_at": "2025-08-17T21:13:02.752296"
+  }
+}

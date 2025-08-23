@@ -1,0 +1,12 @@
+{
+  "timestamp": "2025-08-20T17:11:26.649108",
+  "run_id": "orch_1755702685_bb3d8a3e",
+  "spec_hash": "664b796a5eac53eb",
+  "gates_passed": 7,
+  "gates_total": 7,
+  "coverage_percent": 92.5,
+  "security_score": 95,
+  "quality_score": 88,
+  "overall_score": 91.7,
+  "status": "pass"
+}

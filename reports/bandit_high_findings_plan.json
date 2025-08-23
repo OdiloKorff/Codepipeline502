@@ -1,0 +1,68 @@
+{
+  "bandit_high_security_findings": {
+    "scan_date": "2024-12-19",
+    "total_high_findings": 3,
+    "findings": [
+      {
+        "id": "HIGH-001",
+        "rule_id": "B602",
+        "filename": "modules/smart_orchestrator/orchestrator.py",
+        "line_number": 31,
+        "code_snippet": "        try:\n            result = subprocess.run(command, shell=True, check=True, capture_output=True, text=True)\n            self.log(f\"✔ {name} erfolgreich: {result.stdout.strip()}\")",
+        "issue_text": "subprocess call with shell=True identified, security issue.",
+        "cwe_id": 78,
+        "severity": "HIGH",
+        "confidence": "HIGH",
+        "remediation": {
+          "action": "Replace shell=True with secure subprocess call",
+          "description": "Konvertiere string command zu Liste und entferne shell=True",
+          "code_change": "result = subprocess.run(shlex.split(command), check=True, capture_output=True, text=True)",
+          "additional_imports": ["import shlex"],
+          "security_benefit": "Verhindert Command Injection durch Shell-Interpretation"
+        }
+      },
+      {
+        "id": "HIGH-002", 
+        "rule_id": "B602",
+        "filename": "tools/ai_build.py",
+        "line_number": 29,
+        "code_snippet": "    print(\"+\", cmd, flush=True)\n    res = subprocess.run(cmd, shell=True, cwd=str(cwd) if cwd else None)\n    if check and res.returncode != 0:",
+        "issue_text": "subprocess call with shell=True identified, security issue.",
+        "cwe_id": 78,
+        "severity": "HIGH", 
+        "confidence": "HIGH",
+        "remediation": {
+          "action": "Replace shell=True with secure subprocess call",
+          "description": "Konvertiere string command zu Liste und entferne shell=True",
+          "code_change": "res = subprocess.run(shlex.split(cmd), cwd=str(cwd) if cwd else None)",
+          "additional_imports": ["import shlex"],
+          "security_benefit": "Verhindert Command Injection durch Shell-Interpretation"
+        }
+      },
+      {
+        "id": "HIGH-003",
+        "rule_id": "B602", 
+        "filename": "tools/ai_build.py",
+        "line_number": 37,
+        "code_snippet": "    print(\"+\", cmd, flush=True)\n    p = subprocess.run(cmd, shell=True, text=True, capture_output=True)\n    if check and p.returncode != 0:",
+        "issue_text": "subprocess call with shell=True identified, security issue.",
+        "cwe_id": 78,
+        "severity": "HIGH",
+        "confidence": "HIGH", 
+        "remediation": {
+          "action": "Replace shell=True with secure subprocess call",
+          "description": "Konvertiere string command zu Liste und entferne shell=True",
+          "code_change": "p = subprocess.run(shlex.split(cmd), text=True, capture_output=True)",
+          "additional_imports": ["import shlex"],
+          "security_benefit": "Verhindert Command Injection durch Shell-Interpretation"
+        }
+      }
+    ],
+    "summary": {
+      "affected_files": 2,
+      "primary_vulnerability": "Command Injection via subprocess shell=True",
+      "remediation_strategy": "Ersetze alle shell=True Aufrufe durch sichere shlex.split() Implementierungen",
+      "estimated_effort": "Low - Direct code replacement ohne Funktionalitätsänderung"
+    }
+  }
+}

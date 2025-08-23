@@ -1,0 +1,22 @@
+{
+  "semgrep": {
+    "high": 0,
+    "medium": 0,
+    "low": 0,
+    "status": "skip"
+  },
+  "bandit": {
+    "high": 0,
+    "medium": 0,
+    "low": 0,
+    "status": "parse_error"
+  },
+  "gitleaks": {
+    "findings": 0,
+    "status": "skip"
+  },
+  "pip_audit": {
+    "vulns": 0,
+    "status": "skip"
+  }
+}

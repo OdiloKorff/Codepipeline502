@@ -1,0 +1,49 @@
+{
+  "timestamp": "2025-08-17T20:15:57.877179",
+  "overall_passed": false,
+  "gate_results": {
+    "coverage": {
+      "value": 75.0,
+      "threshold": 95,
+      "passed": false
+    },
+    "linting": {
+      "violations": 3,
+      "max_violations": 5,
+      "passed": true
+    },
+    "type_checking": {
+      "errors": 1,
+      "passed": false
+    },
+    "security": {
+      "total_findings": 0,
+      "high_severity": 0,
+      "passed": true
+    },
+    "secret_scan": {
+      "leaks_found": 0,
+      "passed": true
+    },
+    "dependencies": {
+      "vulnerable": 0,
+      "passed": true
+    },
+    "licenses": {
+      "violations": 0,
+      "passed": true
+    },
+    "token_budget": {
+      "used": 2300,
+      "budget": 3000,
+      "passed": true
+    }
+  },
+  "gate_failures": [
+    "Coverage 75.0% < 95%"
+  ],
+  "hard_must_failures": [
+    "coverage_threshold"
+  ],
+  "secure_mode": false
+}

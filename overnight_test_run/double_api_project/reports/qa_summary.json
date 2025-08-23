@@ -1,0 +1,13 @@
+{
+  "overall_status": "pass",
+  "score": 85.5,
+  "score_threshold": 70,
+  "hard_must_failures": [],
+  "gates": {
+    "coverage": "pass",
+    "security": "pass",
+    "license": "pass",
+    "cve": "pass",
+    "budget": "pass"
+  }
+}

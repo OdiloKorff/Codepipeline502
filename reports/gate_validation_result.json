@@ -1,0 +1,28 @@
+{
+  "overall_pass": true,
+  "security_pass": true,
+  "coverage_pass": true,
+  "scorecard_pass": true,
+  "timestamp": "2025-08-21T21:24:09.290308",
+  "security_data": {
+    "status": "ok",
+    "high": 0,
+    "medium": 40,
+    "low": 1006,
+    "total": 1046,
+    "active_tools": 1,
+    "scan_date": "2024-12-19T19:20:07Z",
+    "remediation_summary": {
+      "fixed_high_findings": 8,
+      "fixed_categories": [
+        "subprocess_shell_injection",
+        "weak_cryptography",
+        "insecure_deserialization",
+        "unsafe_archive_extraction",
+        "insecure_http_transport"
+      ],
+      "nosec_exceptions": 5,
+      "test_files_secured": true
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "timestamp": "2025-08-22T11:57:17.163777Z",
+  "overall_status": "fail",
+  "gates_summary": {
+    "Prerequisites": {
+      "status": "pass",
+      "details": "Tests: ✅, Security: ✅, Coverage: ✅"
+    },
+    "Scorecard": {
+      "status": "fail",
+      "details": "Passed: ❌, Hard-Must-Failures: 0"
+    },
+    "Security Tools": {
+      "status": "pass",
+      "details": "Active Tools: 1, HIGH Findings: 0"
+    },
+    "Pipeline": {
+      "status": "simulated",
+      "details": "Mode: dry_run, Executed: ✅"
+    }
+  },
+  "metrics_summary": {
+    "coverage_percent": 20.54,
+    "security_high": 0,
+    "security_medium": 41,
+    "security_low": 1299,
+    "active_security_tools": 1
+  },
+  "pipeline_summary": {
+    "mode": "dry_run",
+    "status": "simulated",
+    "executed": true
+  },
+  "recommendations": [
+    "Address scorecard issues"
+  ]
+}

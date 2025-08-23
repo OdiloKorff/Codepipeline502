@@ -1,0 +1,495 @@
+{
+  "manifest_version": "1.0",
+  "spec_id": "REPRO-DEMO-001",
+  "build_environment": {
+    "python_version": "3.10.0",
+    "platform_system": "Windows",
+    "platform_release": "10",
+    "platform_machine": "AMD64",
+    "environment_hash": "2f8a2b263a656755",
+    "build_timestamp": "2025-08-17T19:09:28.200960",
+    "git_commit": "11e3621807324e5d28612fd72797481c9a3a53c3"
+  },
+  "dependency_locks": [
+    {
+      "name": "aiohappyeyeballs",
+      "version": "2.6.1",
+      "hash": "dc139b27eafd24bd2b3f9f972d4b8175",
+      "source": "pypi"
+    },
+    {
+      "name": "aiohttp",
+      "version": "3.12.11",
+      "hash": "8b1ea0c423f755bae4bce826d8d56350",
+      "source": "pypi"
+    },
+    {
+      "name": "aiosignal",
+      "version": "1.3.2",
+      "hash": "fa597c8878b015a0ef56332668dd7b75",
+      "source": "pypi"
+    },
+    {
+      "name": "annotated-types",
+      "version": "0.7.0",
+      "hash": "54190bf8ebd5963ea11e1f7f990fc0db",
+      "source": "pypi"
+    },
+    {
+      "name": "anyio",
+      "version": "4.9.0",
+      "hash": "2cc599cec6403f82bf2ef26b487ebd37",
+      "source": "pypi"
+    },
+    {
+      "name": "async-timeout",
+      "version": "5.0.1",
+      "hash": "09272c4a2defd5fb97a38574fe8b9d02",
+      "source": "pypi"
+    },
+    {
+      "name": "attrs",
+      "version": "25.3.0",
+      "hash": "6ee4689f3d66f7f2e55a2b509688ab26",
+      "source": "pypi"
+    },
+    {
+      "name": "Authlib",
+      "version": "1.6.1",
+      "hash": "999c41860501d8fa2e5b67cd519f3a68",
+      "source": "pypi"
+    },
+    {
+      "name": "backports-datetime-fromisoformat",
+      "version": "2.0.3",
+      "hash": "db67e979beec4d57f269c39fd0832de8",
+      "source": "pypi"
+    },
+    {
+      "name": "certifi",
+      "version": "2025.4.26",
+      "hash": "fa6b12ee8ec80d4d9af67b81d48597e1",
+      "source": "pypi"
+    },
+    {
+      "name": "cffi",
+      "version": "1.17.1",
+      "hash": "129f3de0736e972876dc824982141185",
+      "source": "pypi"
+    },
+    {
+      "name": "charset-normalizer",
+      "version": "3.4.2",
+      "hash": "17244b32751708a4fe56f69effdb2c5b",
+      "source": "pypi"
+    },
+    {
+      "name": "click",
+      "version": "8.2.2",
+      "hash": "eeb2afc4cdff6fa452b0478379886c3a",
+      "source": "pypi"
+    },
+    {
+      "name": "colorama",
+      "version": "0.4.6",
+      "hash": "a3fee0320693271d5ebe7800a9345dc3",
+      "source": "pypi"
+    },
+    {
+      "name": "coverage",
+      "version": "7.10.1",
+      "hash": "3b453ffba8e671cfa5eb3d2acf6372ee",
+      "source": "pypi"
+    },
+    {
+      "name": "cryptography",
+      "version": "45.0.6",
+      "hash": "fa74b0f3a48b540f50a8ca70ceb1a1a4",
+      "source": "pypi"
+    },
+    {
+      "name": "distro",
+      "version": "1.9.0",
+      "hash": "2f16c1627c404850452653b962752412",
+      "source": "pypi"
+    },
+    {
+      "name": "dparse",
+      "version": "0.6.4",
+      "hash": "409d8801b8842f0377ad92c745ed02c4",
+      "source": "pypi"
+    },
+    {
+      "name": "exceptiongroup",
+      "version": "1.3.0",
+      "hash": "8db1c21817ed1e8472b3a34d563efafd",
+      "source": "pypi"
+    },
+    {
+      "name": "fastapi",
+      "version": "0.116.1",
+      "hash": "844b45fc76214e4dd3bf206b3fcade6c",
+      "source": "pypi"
+    },
+    {
+      "name": "filelock",
+      "version": "3.16.1",
+      "hash": "08299d8893a29589af1317b44c6781e3",
+      "source": "pypi"
+    },
+    {
+      "name": "frozenlist",
+      "version": "1.6.2",
+      "hash": "cd753da1372d62ef1278cb0b6138211d",
+      "source": "pypi"
+    },
+    {
+      "name": "h11",
+      "version": "0.16.0",
+      "hash": "acecbafe56006944c27efe6581d71271",
+      "source": "pypi"
+    },
+    {
+      "name": "httpcore",
+      "version": "1.0.9",
+      "hash": "b76a952acfade90e254a4caa83b6b4c7",
+      "source": "pypi"
+    },
+    {
+      "name": "httpx",
+      "version": "0.28.1",
+      "hash": "fa778f2464c0858a10b8bdd4214c9b79",
+      "source": "pypi"
+    },
+    {
+      "name": "idna",
+      "version": "3.10",
+      "hash": "66d9a908781861c8f9c3076739d8b35b",
+      "source": "pypi"
+    },
+    {
+      "name": "iniconfig",
+      "version": "2.1.0",
+      "hash": "54b29bb03c7c63ac736ee4d1bc476068",
+      "source": "pypi"
+    },
+    {
+      "name": "Jinja2",
+      "version": "3.1.6",
+      "hash": "0c7403de68f3cf0cc9672b71e82eee72",
+      "source": "pypi"
+    },
+    {
+      "name": "jiter",
+      "version": "0.10.0",
+      "hash": "0d04c06c416ab34057fc993da9d09e9e",
+      "source": "pypi"
+    },
+    {
+      "name": "joblib",
+      "version": "1.5.1",
+      "hash": "b1e882e6759b3d39601e4e1230de015b",
+      "source": "pypi"
+    },
+    {
+      "name": "markdown-it-py",
+      "version": "4.0.0",
+      "hash": "deb310493da946deff124b597f11c43e",
+      "source": "pypi"
+    },
+    {
+      "name": "MarkupSafe",
+      "version": "3.0.2",
+      "hash": "66f5329c26b46e6b4c5c21a1c465f7e8",
+      "source": "pypi"
+    },
+    {
+      "name": "marshmallow",
+      "version": "4.0.0",
+      "hash": "a673fe08065995e08b8833591239b2dc",
+      "source": "pypi"
+    },
+    {
+      "name": "mdurl",
+      "version": "0.1.2",
+      "hash": "3f9319b1543a033d2830e9f61d60c40c",
+      "source": "pypi"
+    },
+    {
+      "name": "multidict",
+      "version": "6.4.4",
+      "hash": "1b80e19881f0df5bb7f05bcab4584ef6",
+      "source": "pypi"
+    },
+    {
+      "name": "nltk",
+      "version": "3.9.1",
+      "hash": "e492886692fae8ac5585a898c018d028",
+      "source": "pypi"
+    },
+    {
+      "name": "openai",
+      "version": "1.84.0",
+      "hash": "61c8cc4890a38ebfd6595f9aa81ee7cc",
+      "source": "pypi"
+    },
+    {
+      "name": "packaging",
+      "version": "25.0",
+      "hash": "977151ee79194d8a111b2e70ad372618",
+      "source": "pypi"
+    },
+    {
+      "name": "pip",
+      "version": "25.2",
+      "hash": "39d19293c6b023cd827586e524350d15",
+      "source": "pypi"
+    },
+    {
+      "name": "pluggy",
+      "version": "1.6.0",
+      "hash": "1a81001e70e1aa0952af142c9aadea45",
+      "source": "pypi"
+    },
+    {
+      "name": "propcache",
+      "version": "0.3.1",
+      "hash": "23871ae23273dd1f5c6da288236b1b40",
+      "source": "pypi"
+    },
+    {
+      "name": "psutil",
+      "version": "6.1.1",
+      "hash": "a73fa297046143da2e0526703c6d0943",
+      "source": "pypi"
+    },
+    {
+      "name": "pycparser",
+      "version": "2.22",
+      "hash": "789987c1814b52b7af57d240c2ddf774",
+      "source": "pypi"
+    },
+    {
+      "name": "pydantic",
+      "version": "2.9.2",
+      "hash": "9bc8c66f578712a1e5636e5188d69142",
+      "source": "pypi"
+    },
+    {
+      "name": "pydantic_core",
+      "version": "2.23.4",
+      "hash": "330effd8501d836a78eb7676c7d0e81f",
+      "source": "pypi"
+    },
+    {
+      "name": "Pygments",
+      "version": "2.19.2",
+      "hash": "9e287b01f257b98cdb3e8150160cdc4a",
+      "source": "pypi"
+    },
+    {
+      "name": "pytest",
+      "version": "8.4.1",
+      "hash": "97a9f787581505c788b1d2f2c898c25e",
+      "source": "pypi"
+    },
+    {
+      "name": "pytest-cov",
+      "version": "6.2.1",
+      "hash": "683bca987128b5947eaf5bdf0670af09",
+      "source": "pypi"
+    },
+    {
+      "name": "python-dotenv",
+      "version": "1.1.0",
+      "hash": "d67c4ff650b22c5aafc8aa43a540d914",
+      "source": "pypi"
+    },
+    {
+      "name": "PyYAML",
+      "version": "6.0.2",
+      "hash": "91810ba574f55e819b104a51f112070e",
+      "source": "pypi"
+    },
+    {
+      "name": "regex",
+      "version": "2025.7.34",
+      "hash": "2fd92cc3cc8f93b53e744f49c500888b",
+      "source": "pypi"
+    },
+    {
+      "name": "requests",
+      "version": "2.32.4",
+      "hash": "9e6e4b75a47604efa63186ecdb004f4b",
+      "source": "pypi"
+    },
+    {
+      "name": "rich",
+      "version": "14.1.0",
+      "hash": "111eaae8283eeb37e9b812d62299691e",
+      "source": "pypi"
+    },
+    {
+      "name": "ruamel.yaml",
+      "version": "0.18.14",
+      "hash": "f3b01b4d79cc28b18b020970da0c07b4",
+      "source": "pypi"
+    },
+    {
+      "name": "ruamel.yaml.clib",
+      "version": "0.2.12",
+      "hash": "20ce428ce5771e73caf3fc49e5310f6d",
+      "source": "pypi"
+    },
+    {
+      "name": "ruff",
+      "version": "0.12.7",
+      "hash": "4b1960f72a55a99a49008b0ce7f04479",
+      "source": "pypi"
+    },
+    {
+      "name": "safety",
+      "version": "3.6.0",
+      "hash": "50017b37bed397486154b5140874a9c9",
+      "source": "pypi"
+    },
+    {
+      "name": "safety-schemas",
+      "version": "0.0.14",
+      "hash": "e5accb668008407749e5599f41fd09c9",
+      "source": "pypi"
+    },
+    {
+      "name": "setuptools",
+      "version": "80.9.0",
+      "hash": "3514c6a744db2bc543941436b53d0b6a",
+      "source": "pypi"
+    },
+    {
+      "name": "shellingham",
+      "version": "1.5.4",
+      "hash": "27a207b767f7e4fde19af578d99f441c",
+      "source": "pypi"
+    },
+    {
+      "name": "sniffio",
+      "version": "1.3.1",
+      "hash": "0fb178ed06a42e752ebcbdf1e5dd46b2",
+      "source": "pypi"
+    },
+    {
+      "name": "starlette",
+      "version": "0.47.2",
+      "hash": "2f7c9ea60588dc277149da0ca60f1636",
+      "source": "pypi"
+    },
+    {
+      "name": "tenacity",
+      "version": "9.1.2",
+      "hash": "b865f13633589f25353981cc1715a5fd",
+      "source": "pypi"
+    },
+    {
+      "name": "tomli",
+      "version": "2.2.1",
+      "hash": "ed7939c41af76ef1d0a425946ebd3a21",
+      "source": "pypi"
+    },
+    {
+      "name": "tomlkit",
+      "version": "0.13.3",
+      "hash": "e781b5c879a2a3ac93adc7edf28084b8",
+      "source": "pypi"
+    },
+    {
+      "name": "tqdm",
+      "version": "4.67.1",
+      "hash": "afb8f4431d56ed9858d40281c68b5ab9",
+      "source": "pypi"
+    },
+    {
+      "name": "typer",
+      "version": "0.16.0",
+      "hash": "4976a7e6108a6a3e0b74f9b04171ef1e",
+      "source": "pypi"
+    },
+    {
+      "name": "typing_extensions",
+      "version": "4.14.0",
+      "hash": "deac943114e4f4b4223d0c327b472fca",
+      "source": "pypi"
+    },
+    {
+      "name": "typing-inspection",
+      "version": "0.4.1",
+      "hash": "839832b9a19e63484eda07f24e5c69cc",
+      "source": "pypi"
+    },
+    {
+      "name": "urllib3",
+      "version": "2.5.0",
+      "hash": "7051835fc77a8124841fe153f86bd1f0",
+      "source": "pypi"
+    },
+    {
+      "name": "uvicorn",
+      "version": "0.35.0",
+      "hash": "3da7ef746f5d928bffb8d95ef4e11cbd",
+      "source": "pypi"
+    },
+    {
+      "name": "yarl",
+      "version": "1.20.0",
+      "hash": "9f320f254bc21ed39c765593ae58e0ea",
+      "source": "pypi"
+    }
+  ],
+  "prompt_templates": {
+    "code_generation": {
+      "template_id": "code_generation",
+      "version": "1.0",
+      "content_hash": "4ff11f0534a30c6b95250d2ee6c313cf588eac45b877f7d075db916a55c21c22",
+      "variables": [
+        "specification",
+        "target_files",
+        "constraints"
+      ],
+      "deterministic_seed": 42
+    },
+    "test_generation": {
+      "template_id": "test_generation",
+      "version": "1.0",
+      "content_hash": "476974865eec81ba247ab13c10458a9fea47029f455580ef0744298f4f646bdf",
+      "variables": [
+        "code",
+        "coverage_target"
+      ],
+      "deterministic_seed": 123
+    },
+    "documentation": {
+      "template_id": "documentation",
+      "version": "1.0",
+      "content_hash": "fb106cd218f02fcc6ec645b2f43ae8c61824a7444854107a61fb138855574455",
+      "variables": [
+        "feature_title",
+        "feature_description",
+        "api_specification"
+      ],
+      "deterministic_seed": 456
+    }
+  },
+  "deterministic_seeds": {
+    "prompt_code_generation": 42,
+    "prompt_test_generation": 123,
+    "prompt_documentation": 456,
+    "llm_generation": 42,
+    "test_execution": 123,
+    "random_sampling": 456,
+    "hash_generation": 789,
+    "uuid_generation": 999
+  },
+  "artifact_hashes": {
+    "source_code": "c3a0f8df2e52ddfb5423b6d5bd4423f66eac5d75f53afed7e06c5e304e8723f8",
+    "test_results": "8e48c03381f495869437eb6c7da5c0e7c1c702e7a919cf363777e480df3db5ea"
+  }
+}

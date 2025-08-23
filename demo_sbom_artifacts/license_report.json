@@ -1,0 +1,40 @@
+{
+  "spec_id": "SBOM-002",
+  "timestamp": "2025-08-17T17:59:41.228624",
+  "policy": {
+    "allowed_licenses": [
+      "BSD-2-Clause",
+      "Apache-2.0",
+      "BSD-3-Clause",
+      "Python-2.0",
+      "ISC",
+      "MPL-2.0",
+      "MIT"
+    ],
+    "denied_licenses": [
+      "GPL-3.0",
+      "AGPL-3.0",
+      "SSPL",
+      "BUSL-1.1",
+      "Commons-Clause"
+    ]
+  },
+  "violations": [
+    {
+      "dependency": "bad-package",
+      "version": "1.0.0",
+      "license": "GPL-3.0",
+      "violation_type": "denied",
+      "severity": "high"
+    },
+    {
+      "dependency": "unknown-package",
+      "version": "1.0.0",
+      "license": "UNKNOWN",
+      "violation_type": "missing",
+      "severity": "medium"
+    }
+  ],
+  "total_dependencies": 75,
+  "violations_count": 2
+}

@@ -1,0 +1,23 @@
+id: "FSPEC-LOW-RISK-001"
+title: "Low-Risk Feature Test"
+version: 1
+goal: "Test low-risk feature implementation with minimal changes to existing codebase"
+description: "This is a low-risk feature for testing the complete pipeline flow including spec validation, dry-run, secure-apply, and draft PR creation with linked artifacts."
+target_paths: ["codepipeline", "tests"]
+risk_level: "low"
+model: "gpt-4o-mini"
+token_budget: 150
+reviewers: ["reviewer1"]
+constraints:
+  - "Only modify existing files"
+  - "No new dependencies"
+  - "Maintain backward compatibility"
+tests:
+  coverage_min: 30
+  pytest_args: ["-m", "mvp"]
+quality:
+  license_allowlist: ["MIT", "Apache-2.0", "BSD-3-Clause"]
+  hard_musts:
+    - "coverage >= 30%"
+    - "no high severity security findings"
+    - "token budget <= 200"

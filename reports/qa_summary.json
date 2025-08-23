@@ -1,0 +1,22 @@
+{
+  "passed": false,
+  "status": "fail",
+  "score": 54.30986696230599,
+  "threshold": 70,
+  "metrics": {
+    "coverage_percent": 21.23946784922395,
+    "sast_findings": {
+      "high": 0,
+      "med": 41,
+      "low": 1299
+    },
+    "secret_findings": 0,
+    "license_violations": 10,
+    "cve_blockers": 0,
+    "budget_cost": 19.0,
+    "tests_green": true,
+    "static_ok": true
+  },
+  "hard_must_failures": [],
+  "timestamp": 1755863353.9336894
+}

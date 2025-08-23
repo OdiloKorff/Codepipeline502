@@ -32,7 +32,8 @@ def create_github_release(token: str, repo: str, tag: str, artifacts: list):
         "draft": False,
         "prerelease": False
     }
-    resp = requests.post(url, json=data, headers=headers)
+    # SECURITY FIX: Timeout hinzugefügt für sichere HTTP-Kommunikation
+    resp = requests.post(url, json=data, headers=headers, timeout=30, verify=True)
     resp.raise_for_status()
     return resp.json()
 

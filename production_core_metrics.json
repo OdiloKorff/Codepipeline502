@@ -1,0 +1,9 @@
+{
+  "demo_duration_seconds": 2.4380195140838623,
+  "feature_spec_functional": false,
+  "prompt_guard_functional": false,
+  "e2e_stages_implemented": 0,
+  "integration_successful": true,
+  "overall_readiness": 12.5,
+  "production_ready": false
+}

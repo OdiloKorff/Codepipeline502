@@ -1,0 +1,16 @@
+{
+  "policy_type": "SECURITY",
+  "version": "1.0.0",
+  "effective_date": "2025-08-20T17:39:02.090047",
+  "description": "Default security policy",
+  "config": {
+    "high_vulnerabilities_max": 0,
+    "critical_vulnerabilities_max": 0,
+    "secrets_max": 0,
+    "license_blockers": [
+      "GPL-3.0",
+      "AGPL-3.0"
+    ],
+    "active_tools_min": 1
+  }
+}

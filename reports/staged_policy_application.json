@@ -1,0 +1,23 @@
+{
+  "staged_policy_application": {
+    "target_stage": "sprint1",
+    "thresholds": {
+      "stage": "sprint1",
+      "coverage_min": 35.0,
+      "security_high_max": 0,
+      "security_medium_max": 10,
+      "license_violations_max": 3,
+      "active_tools_min": 2,
+      "description": "Sprint 1: Erste Secure-Stufe mit realistischen Schwellwerten",
+      "target_date": "2025-01-31"
+    },
+    "dry_run": false,
+    "policy_applied": true,
+    "smoke_threshold_unchanged": 20.0,
+    "anti_greenwashing_enforced": true,
+    "upward_progression_only": true,
+    "application_date": "2025-08-23T07:56:05.868529Z"
+  },
+  "generated_at": "2025-08-23T07:56:05.868529Z",
+  "project_root": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502"
+}

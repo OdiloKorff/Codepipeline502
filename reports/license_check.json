@@ -1,0 +1,38 @@
+{
+  "passed": false,
+  "total_packages": 4,
+  "compliant_packages": 3,
+  "violations": 1,
+  "allowlist": [
+    "MIT",
+    "BSD-2-Clause",
+    "BSD-3-Clause",
+    "Apache-2.0",
+    "MPL-2.0"
+  ],
+  "detected_licenses": [
+    {
+      "package": "fastapi",
+      "license": "MIT"
+    },
+    {
+      "package": "pydantic",
+      "license": "MIT"
+    },
+    {
+      "package": "uvicorn",
+      "license": "BSD-3-Clause"
+    },
+    {
+      "package": "python",
+      "license": "PSF-2.0"
+    }
+  ],
+  "violation_details": [
+    {
+      "package": "python",
+      "license": "PSF-2.0"
+    }
+  ],
+  "timestamp": "2025-08-18T22:11:54.549469"
+}

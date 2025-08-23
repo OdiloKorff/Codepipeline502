@@ -1,0 +1,62 @@
+{
+  "security_scan": {
+    "status": "pass",
+    "active_tools": 1,
+    "tools_total": 2,
+    "high": 0,
+    "medium": 0,
+    "low": 0,
+    "total": 0,
+    "scan_date": "2025-08-22T21:27:11.292915Z",
+    "tools": [
+      {
+        "tool": "bandit",
+        "status": "warn",
+        "high": 0,
+        "medium": 0,
+        "low": 0,
+        "total": 0,
+        "scan_date": "2025-08-22T21:27:01.198321Z",
+        "details": {
+          "exit_code": 2,
+          "excludes_count": 18,
+          "parallel_jobs": 2
+        }
+      },
+      {
+        "tool": "safety",
+        "status": "ok",
+        "high": 0,
+        "medium": 0,
+        "low": 0,
+        "total": 0,
+        "scan_date": "2025-08-22T21:27:11.291914Z",
+        "details": {
+          "exit_code": 2,
+          "tool_version": "safety, version 3.6.0"
+        }
+      }
+    ],
+    "excludes": [
+      ".venv/*",
+      "venv/*",
+      "env/*",
+      ".env/*",
+      "node_modules/*",
+      ".git/*",
+      "*.pyc",
+      "__pycache__/*",
+      ".pytest_cache/*",
+      "build/*",
+      "dist/*",
+      "*.egg-info/*",
+      "htmlcov/*",
+      ".coverage*",
+      "coverage.xml",
+      "reports/*",
+      "temp/*",
+      "tmp/*"
+    ],
+    "parallel_jobs": 2
+  }
+}

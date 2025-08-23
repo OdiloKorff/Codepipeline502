@@ -1,0 +1,16 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.4",
+  "components": [
+    {
+      "name": "fastapi",
+      "version": "0.104.1",
+      "type": "library"
+    },
+    {
+      "name": "uvicorn",
+      "version": "0.24.0",
+      "type": "library"
+    }
+  ]
+}

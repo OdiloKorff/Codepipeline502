@@ -1,0 +1,781 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.4",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2025-08-22T19:01:57.067251Z",
+    "tools": [
+      {
+        "name": "pip",
+        "version": "latest"
+      },
+      {
+        "name": "sbom-mvp",
+        "version": "1.0"
+      }
+    ],
+    "component": {
+      "type": "application",
+      "name": "Codepipeline502",
+      "version": "1.0.0"
+    }
+  },
+  "components": [
+    {
+      "name": "aiohappyeyeballs",
+      "version": "2.6.1",
+      "type": "library",
+      "purl": "pkg:pypi/aiohappyeyeballs@2.6.1",
+      "license": "PSF-2.0",
+      "summary": "Happy Eyeballs for asyncio",
+      "author": "J. Nick Koston"
+    },
+    {
+      "name": "aiohttp",
+      "version": "3.12.11",
+      "type": "library",
+      "purl": "pkg:pypi/aiohttp@3.12.11",
+      "license": "Apache-2.0",
+      "summary": "Async http client/server framework (asyncio)",
+      "author": ""
+    },
+    {
+      "name": "aiosignal",
+      "version": "1.3.2",
+      "type": "library",
+      "purl": "pkg:pypi/aiosignal@1.3.2",
+      "license": "Apache 2.0",
+      "summary": "aiosignal: a list of registered asynchronous callbacks",
+      "author": ""
+    },
+    {
+      "name": "annotated-types",
+      "version": "0.7.0",
+      "type": "library",
+      "purl": "pkg:pypi/annotated-types@0.7.0",
+      "license": "",
+      "summary": "Reusable constraint types to use with typing.Annotated",
+      "author": ""
+    },
+    {
+      "name": "anyio",
+      "version": "4.9.0",
+      "type": "library",
+      "purl": "pkg:pypi/anyio@4.9.0",
+      "license": "MIT",
+      "summary": "High level compatibility layer for multiple asynchronous event loop implementations",
+      "author": ""
+    },
+    {
+      "name": "async-timeout",
+      "version": "5.0.1",
+      "type": "library",
+      "purl": "pkg:pypi/async-timeout@5.0.1",
+      "license": "Apache 2",
+      "summary": "Timeout context manager for asyncio programs",
+      "author": "Andrew Svetlov <andrew.svetlov@gmail.com>"
+    },
+    {
+      "name": "attrs",
+      "version": "25.3.0",
+      "type": "library",
+      "purl": "pkg:pypi/attrs@25.3.0",
+      "license": "UNKNOWN",
+      "summary": "Classes Without Boilerplate",
+      "author": ""
+    },
+    {
+      "name": "Authlib",
+      "version": "1.6.1",
+      "type": "library",
+      "purl": "pkg:pypi/Authlib@1.6.1",
+      "license": "BSD-3-Clause",
+      "summary": "The ultimate Python library in building OAuth and OpenID Connect servers and clients.",
+      "author": ""
+    },
+    {
+      "name": "backports-datetime-fromisoformat",
+      "version": "2.0.3",
+      "type": "library",
+      "purl": "pkg:pypi/backports-datetime-fromisoformat@2.0.3",
+      "license": "MIT License",
+      "summary": "Backport of Python 3.11's datetime.fromisoformat",
+      "author": ""
+    },
+    {
+      "name": "bandit",
+      "version": "1.8.6",
+      "type": "library",
+      "purl": "pkg:pypi/bandit@1.8.6",
+      "license": "Apache-2.0",
+      "summary": "Security oriented static analyser for python code.",
+      "author": "PyCQA"
+    },
+    {
+      "name": "build",
+      "version": "1.3.0",
+      "type": "library",
+      "purl": "pkg:pypi/build@1.3.0",
+      "license": "UNKNOWN",
+      "summary": "A simple, correct Python build frontend",
+      "author": ""
+    },
+    {
+      "name": "certifi",
+      "version": "2025.4.26",
+      "type": "library",
+      "purl": "pkg:pypi/certifi@2025.4.26",
+      "license": "MPL-2.0",
+      "summary": "Python package for providing Mozilla's CA Bundle.",
+      "author": "Kenneth Reitz"
+    },
+    {
+      "name": "cffi",
+      "version": "1.17.1",
+      "type": "library",
+      "purl": "pkg:pypi/cffi@1.17.1",
+      "license": "MIT",
+      "summary": "Foreign Function Interface for Python calling C code.",
+      "author": "Armin Rigo, Maciej Fijalkowski"
+    },
+    {
+      "name": "charset-normalizer",
+      "version": "3.4.2",
+      "type": "library",
+      "purl": "pkg:pypi/charset-normalizer@3.4.2",
+      "license": "MIT",
+      "summary": "The Real First Universal Charset Detector. Open, modern and actively maintained alternative to Chardet.",
+      "author": ""
+    },
+    {
+      "name": "click",
+      "version": "8.2.2",
+      "type": "library",
+      "purl": "pkg:pypi/click@8.2.2",
+      "license": "UNKNOWN",
+      "summary": "Composable command line interface toolkit",
+      "author": ""
+    },
+    {
+      "name": "colorama",
+      "version": "0.4.6",
+      "type": "library",
+      "purl": "pkg:pypi/colorama@0.4.6",
+      "license": "",
+      "summary": "Cross-platform colored terminal text.",
+      "author": ""
+    },
+    {
+      "name": "coverage",
+      "version": "7.10.1",
+      "type": "library",
+      "purl": "pkg:pypi/coverage@7.10.1",
+      "license": "Apache-2.0",
+      "summary": "Code coverage measurement for Python",
+      "author": "Ned Batchelder and 248 others"
+    },
+    {
+      "name": "cryptography",
+      "version": "45.0.6",
+      "type": "library",
+      "purl": "pkg:pypi/cryptography@45.0.6",
+      "license": "Apache-2.0 OR BSD-3-Clause",
+      "summary": "cryptography is a package which provides cryptographic recipes and primitives to Python developers.",
+      "author": "The cryptography developers <cryptography-dev@python.org>"
+    },
+    {
+      "name": "distro",
+      "version": "1.9.0",
+      "type": "library",
+      "purl": "pkg:pypi/distro@1.9.0",
+      "license": "Apache License, Version 2.0",
+      "summary": "Distro - an OS platform information API",
+      "author": "Nir Cohen"
+    },
+    {
+      "name": "dparse",
+      "version": "0.6.4",
+      "type": "library",
+      "purl": "pkg:pypi/dparse@0.6.4",
+      "license": "MIT license",
+      "summary": "A parser for Python dependency files",
+      "author": ""
+    },
+    {
+      "name": "exceptiongroup",
+      "version": "1.3.0",
+      "type": "library",
+      "purl": "pkg:pypi/exceptiongroup@1.3.0",
+      "license": "",
+      "summary": "Backport of PEP 654 (exception groups)",
+      "author": ""
+    },
+    {
+      "name": "fastapi",
+      "version": "0.116.1",
+      "type": "library",
+      "purl": "pkg:pypi/fastapi@0.116.1",
+      "license": "",
+      "summary": "FastAPI framework, high performance, easy to learn, fast to code, ready for production",
+      "author": ""
+    },
+    {
+      "name": "filelock",
+      "version": "3.16.1",
+      "type": "library",
+      "purl": "pkg:pypi/filelock@3.16.1",
+      "license": "",
+      "summary": "A platform independent file lock.",
+      "author": ""
+    },
+    {
+      "name": "frozenlist",
+      "version": "1.6.2",
+      "type": "library",
+      "purl": "pkg:pypi/frozenlist@1.6.2",
+      "license": "Apache-2.0",
+      "summary": "A list-like structure which implements collections.abc.MutableSequence",
+      "author": ""
+    },
+    {
+      "name": "h11",
+      "version": "0.16.0",
+      "type": "library",
+      "purl": "pkg:pypi/h11@0.16.0",
+      "license": "MIT",
+      "summary": "A pure-Python, bring-your-own-I/O implementation of HTTP/1.1",
+      "author": "Nathaniel J. Smith"
+    },
+    {
+      "name": "httpcore",
+      "version": "1.0.9",
+      "type": "library",
+      "purl": "pkg:pypi/httpcore@1.0.9",
+      "license": "UNKNOWN",
+      "summary": "A minimal low-level HTTP client.",
+      "author": ""
+    },
+    {
+      "name": "httpx",
+      "version": "0.28.1",
+      "type": "library",
+      "purl": "pkg:pypi/httpx@0.28.1",
+      "license": "BSD-3-Clause",
+      "summary": "The next generation HTTP client.",
+      "author": ""
+    },
+    {
+      "name": "idna",
+      "version": "3.10",
+      "type": "library",
+      "purl": "pkg:pypi/idna@3.10",
+      "license": "",
+      "summary": "Internationalized Domain Names in Applications (IDNA)",
+      "author": ""
+    },
+    {
+      "name": "importlib_metadata",
+      "version": "8.7.0",
+      "type": "library",
+      "purl": "pkg:pypi/importlib_metadata@8.7.0",
+      "license": "",
+      "summary": "Read metadata from Python packages",
+      "author": ""
+    },
+    {
+      "name": "iniconfig",
+      "version": "2.1.0",
+      "type": "library",
+      "purl": "pkg:pypi/iniconfig@2.1.0",
+      "license": "UNKNOWN",
+      "summary": "brain-dead simple config-ini parsing",
+      "author": ""
+    },
+    {
+      "name": "Jinja2",
+      "version": "3.1.6",
+      "type": "library",
+      "purl": "pkg:pypi/Jinja2@3.1.6",
+      "license": "",
+      "summary": "A very fast and expressive template engine.",
+      "author": ""
+    },
+    {
+      "name": "jiter",
+      "version": "0.10.0",
+      "type": "library",
+      "purl": "pkg:pypi/jiter@0.10.0",
+      "license": "MIT",
+      "summary": "Fast iterable JSON parser.",
+      "author": "Samuel Colvin <samuel@pydantic.dev>"
+    },
+    {
+      "name": "joblib",
+      "version": "1.5.1",
+      "type": "library",
+      "purl": "pkg:pypi/joblib@1.5.1",
+      "license": "BSD 3-Clause",
+      "summary": "Lightweight pipelining with Python functions",
+      "author": ""
+    },
+    {
+      "name": "markdown-it-py",
+      "version": "4.0.0",
+      "type": "library",
+      "purl": "pkg:pypi/markdown-it-py@4.0.0",
+      "license": "",
+      "summary": "Python port of markdown-it. Markdown parsing, done right!",
+      "author": ""
+    },
+    {
+      "name": "MarkupSafe",
+      "version": "3.0.2",
+      "type": "library",
+      "purl": "pkg:pypi/MarkupSafe@3.0.2",
+      "license": "Copyright 2010 Pallets",
+      "summary": "Safely add untrusted strings to HTML/XML markup.",
+      "author": ""
+    },
+    {
+      "name": "marshmallow",
+      "version": "4.0.0",
+      "type": "library",
+      "purl": "pkg:pypi/marshmallow@4.0.0",
+      "license": "",
+      "summary": "A lightweight library for converting complex datatypes to and from native Python datatypes.",
+      "author": ""
+    },
+    {
+      "name": "mdurl",
+      "version": "0.1.2",
+      "type": "library",
+      "purl": "pkg:pypi/mdurl@0.1.2",
+      "license": "",
+      "summary": "Markdown URL utilities",
+      "author": ""
+    },
+    {
+      "name": "multidict",
+      "version": "6.4.4",
+      "type": "library",
+      "purl": "pkg:pypi/multidict@6.4.4",
+      "license": "Apache 2",
+      "summary": "multidict implementation",
+      "author": "Andrew Svetlov"
+    },
+    {
+      "name": "mypy",
+      "version": "1.17.1",
+      "type": "library",
+      "purl": "pkg:pypi/mypy@1.17.1",
+      "license": "MIT",
+      "summary": "Optional static typing for Python",
+      "author": ""
+    },
+    {
+      "name": "mypy_extensions",
+      "version": "1.1.0",
+      "type": "library",
+      "purl": "pkg:pypi/mypy_extensions@1.1.0",
+      "license": "UNKNOWN",
+      "summary": "Type system extensions for programs checked with the mypy type checker.",
+      "author": ""
+    },
+    {
+      "name": "nltk",
+      "version": "3.9.1",
+      "type": "library",
+      "purl": "pkg:pypi/nltk@3.9.1",
+      "license": "Apache License, Version 2.0",
+      "summary": "Natural Language Toolkit",
+      "author": "NLTK Team"
+    },
+    {
+      "name": "openai",
+      "version": "1.84.0",
+      "type": "library",
+      "purl": "pkg:pypi/openai@1.84.0",
+      "license": "Apache-2.0",
+      "summary": "The official Python library for the openai API",
+      "author": ""
+    },
+    {
+      "name": "packaging",
+      "version": "25.0",
+      "type": "library",
+      "purl": "pkg:pypi/packaging@25.0",
+      "license": "",
+      "summary": "Core utilities for Python packages",
+      "author": ""
+    },
+    {
+      "name": "pathspec",
+      "version": "0.12.1",
+      "type": "library",
+      "purl": "pkg:pypi/pathspec@0.12.1",
+      "license": "",
+      "summary": "Utility library for gitignore style pattern matching of file paths.",
+      "author": ""
+    },
+    {
+      "name": "pbr",
+      "version": "7.0.0",
+      "type": "library",
+      "purl": "pkg:pypi/pbr@7.0.0",
+      "license": "Apache-2.0",
+      "summary": "Python Build Reasonableness",
+      "author": "OpenStack"
+    },
+    {
+      "name": "pip",
+      "version": "25.2",
+      "type": "library",
+      "purl": "pkg:pypi/pip@25.2",
+      "license": "UNKNOWN",
+      "summary": "The PyPA recommended tool for installing Python packages.",
+      "author": ""
+    },
+    {
+      "name": "pluggy",
+      "version": "1.6.0",
+      "type": "library",
+      "purl": "pkg:pypi/pluggy@1.6.0",
+      "license": "MIT",
+      "summary": "plugin and hook calling mechanisms for python",
+      "author": ""
+    },
+    {
+      "name": "propcache",
+      "version": "0.3.1",
+      "type": "library",
+      "purl": "pkg:pypi/propcache@0.3.1",
+      "license": "Apache-2.0",
+      "summary": "Accelerated property cache",
+      "author": "Andrew Svetlov"
+    },
+    {
+      "name": "psutil",
+      "version": "6.1.1",
+      "type": "library",
+      "purl": "pkg:pypi/psutil@6.1.1",
+      "license": "BSD-3-Clause",
+      "summary": "Cross-platform lib for process and system monitoring in Python.",
+      "author": "Giampaolo Rodola"
+    },
+    {
+      "name": "pycparser",
+      "version": "2.22",
+      "type": "library",
+      "purl": "pkg:pypi/pycparser@2.22",
+      "license": "BSD-3-Clause",
+      "summary": "C parser in Python",
+      "author": "Eli Bendersky"
+    },
+    {
+      "name": "pydantic",
+      "version": "2.9.2",
+      "type": "library",
+      "purl": "pkg:pypi/pydantic@2.9.2",
+      "license": "",
+      "summary": "Data validation using Python type hints",
+      "author": ""
+    },
+    {
+      "name": "pydantic_core",
+      "version": "2.23.4",
+      "type": "library",
+      "purl": "pkg:pypi/pydantic_core@2.23.4",
+      "license": "MIT",
+      "summary": "Core functionality for Pydantic validation and serialization",
+      "author": ""
+    },
+    {
+      "name": "Pygments",
+      "version": "2.19.2",
+      "type": "library",
+      "purl": "pkg:pypi/Pygments@2.19.2",
+      "license": "BSD-2-Clause",
+      "summary": "Pygments is a syntax highlighting package written in Python.",
+      "author": ""
+    },
+    {
+      "name": "pyproject_hooks",
+      "version": "1.2.0",
+      "type": "library",
+      "purl": "pkg:pypi/pyproject_hooks@1.2.0",
+      "license": "",
+      "summary": "Wrappers to call pyproject.toml-based build backend hooks.",
+      "author": ""
+    },
+    {
+      "name": "pytest",
+      "version": "8.4.1",
+      "type": "library",
+      "purl": "pkg:pypi/pytest@8.4.1",
+      "license": "MIT",
+      "summary": "pytest: simple powerful testing with Python",
+      "author": "Holger Krekel, Bruno Oliveira, Ronny Pfannschmidt, Floris Bruynooghe, Brianna Laugher, Florian Bruhin, Others (See AUTHORS)"
+    },
+    {
+      "name": "pytest-cov",
+      "version": "6.2.1",
+      "type": "library",
+      "purl": "pkg:pypi/pytest-cov@6.2.1",
+      "license": "MIT",
+      "summary": "Pytest plugin for measuring coverage.",
+      "author": "Marc Schlaich"
+    },
+    {
+      "name": "python-dotenv",
+      "version": "1.1.0",
+      "type": "library",
+      "purl": "pkg:pypi/python-dotenv@1.1.0",
+      "license": "BSD-3-Clause",
+      "summary": "Read key-value pairs from a .env file and set them as environment variables",
+      "author": "Saurabh Kumar"
+    },
+    {
+      "name": "PyYAML",
+      "version": "6.0.2",
+      "type": "library",
+      "purl": "pkg:pypi/PyYAML@6.0.2",
+      "license": "MIT",
+      "summary": "YAML parser and emitter for Python",
+      "author": "Kirill Simonov"
+    },
+    {
+      "name": "regex",
+      "version": "2025.7.34",
+      "type": "library",
+      "purl": "pkg:pypi/regex@2025.7.34",
+      "license": "UNKNOWN",
+      "summary": "Alternative regular expression module, to replace re.",
+      "author": ""
+    },
+    {
+      "name": "requests",
+      "version": "2.32.4",
+      "type": "library",
+      "purl": "pkg:pypi/requests@2.32.4",
+      "license": "Apache-2.0",
+      "summary": "Python HTTP for Humans.",
+      "author": "Kenneth Reitz"
+    },
+    {
+      "name": "rich",
+      "version": "14.1.0",
+      "type": "library",
+      "purl": "pkg:pypi/rich@14.1.0",
+      "license": "MIT",
+      "summary": "Render rich text, tables, progress bars, syntax highlighting, markdown and more to the terminal",
+      "author": "Will McGugan"
+    },
+    {
+      "name": "ruamel.yaml",
+      "version": "0.18.14",
+      "type": "library",
+      "purl": "pkg:pypi/ruamel.yaml@0.18.14",
+      "license": "MIT license",
+      "summary": "ruamel.yaml is a YAML parser/emitter that supports roundtrip preservation of comments, seq/map flow style, and map key order",
+      "author": "Anthon van der Neut"
+    },
+    {
+      "name": "ruamel.yaml.clib",
+      "version": "0.2.12",
+      "type": "library",
+      "purl": "pkg:pypi/ruamel.yaml.clib@0.2.12",
+      "license": "MIT",
+      "summary": "C version of reader, parser and emitter for ruamel.yaml derived from libyaml",
+      "author": "Anthon van der Neut"
+    },
+    {
+      "name": "ruff",
+      "version": "0.12.7",
+      "type": "library",
+      "purl": "pkg:pypi/ruff@0.12.7",
+      "license": "",
+      "summary": "An extremely fast Python linter and code formatter, written in Rust.",
+      "author": ""
+    },
+    {
+      "name": "safety",
+      "version": "3.6.0",
+      "type": "library",
+      "purl": "pkg:pypi/safety@3.6.0",
+      "license": "UNKNOWN",
+      "summary": "Scan dependencies for known vulnerabilities and licenses.",
+      "author": ""
+    },
+    {
+      "name": "safety-schemas",
+      "version": "0.0.14",
+      "type": "library",
+      "purl": "pkg:pypi/safety-schemas@0.0.14",
+      "license": "MIT",
+      "summary": "Schemas for Safety tools",
+      "author": ""
+    },
+    {
+      "name": "setuptools",
+      "version": "80.9.0",
+      "type": "library",
+      "purl": "pkg:pypi/setuptools@80.9.0",
+      "license": "UNKNOWN",
+      "summary": "Easily download, build, install, upgrade, and uninstall Python packages",
+      "author": ""
+    },
+    {
+      "name": "shellingham",
+      "version": "1.5.4",
+      "type": "library",
+      "purl": "pkg:pypi/shellingham@1.5.4",
+      "license": "ISC License",
+      "summary": "Tool to Detect Surrounding Shell",
+      "author": "Tzu-ping Chung"
+    },
+    {
+      "name": "sniffio",
+      "version": "1.3.1",
+      "type": "library",
+      "purl": "pkg:pypi/sniffio@1.3.1",
+      "license": "MIT OR Apache-2.0",
+      "summary": "Sniff out which async library your code is running under",
+      "author": ""
+    },
+    {
+      "name": "starlette",
+      "version": "0.47.2",
+      "type": "library",
+      "purl": "pkg:pypi/starlette@0.47.2",
+      "license": "UNKNOWN",
+      "summary": "The little ASGI library that shines.",
+      "author": ""
+    },
+    {
+      "name": "stevedore",
+      "version": "5.4.1",
+      "type": "library",
+      "purl": "pkg:pypi/stevedore@5.4.1",
+      "license": "",
+      "summary": "Manage dynamic plugins for Python applications",
+      "author": "OpenStack"
+    },
+    {
+      "name": "tenacity",
+      "version": "9.1.2",
+      "type": "library",
+      "purl": "pkg:pypi/tenacity@9.1.2",
+      "license": "Apache 2.0",
+      "summary": "Retry code until it succeeds",
+      "author": "Julien Danjou"
+    },
+    {
+      "name": "tomli",
+      "version": "2.2.1",
+      "type": "library",
+      "purl": "pkg:pypi/tomli@2.2.1",
+      "license": "",
+      "summary": "A lil' TOML parser",
+      "author": ""
+    },
+    {
+      "name": "tomlkit",
+      "version": "0.13.3",
+      "type": "library",
+      "purl": "pkg:pypi/tomlkit@0.13.3",
+      "license": "MIT",
+      "summary": "Style preserving TOML library",
+      "author": "Sébastien Eustace"
+    },
+    {
+      "name": "tqdm",
+      "version": "4.67.1",
+      "type": "library",
+      "purl": "pkg:pypi/tqdm@4.67.1",
+      "license": "MPL-2.0 AND MIT",
+      "summary": "Fast, Extensible Progress Meter",
+      "author": ""
+    },
+    {
+      "name": "typer",
+      "version": "0.16.0",
+      "type": "library",
+      "purl": "pkg:pypi/typer@0.16.0",
+      "license": "",
+      "summary": "Typer, build great CLIs. Easy to code. Based on Python type hints.",
+      "author": ""
+    },
+    {
+      "name": "types-PyYAML",
+      "version": "6.0.12.20250809",
+      "type": "library",
+      "purl": "pkg:pypi/types-PyYAML@6.0.12.20250809",
+      "license": "UNKNOWN",
+      "summary": "Typing stubs for PyYAML",
+      "author": ""
+    },
+    {
+      "name": "typing_extensions",
+      "version": "4.14.0",
+      "type": "library",
+      "purl": "pkg:pypi/typing_extensions@4.14.0",
+      "license": "UNKNOWN",
+      "summary": "Backported and Experimental Type Hints for Python 3.9+",
+      "author": ""
+    },
+    {
+      "name": "typing-inspection",
+      "version": "0.4.1",
+      "type": "library",
+      "purl": "pkg:pypi/typing-inspection@0.4.1",
+      "license": "UNKNOWN",
+      "summary": "Runtime typing introspection tools",
+      "author": ""
+    },
+    {
+      "name": "urllib3",
+      "version": "2.5.0",
+      "type": "library",
+      "purl": "pkg:pypi/urllib3@2.5.0",
+      "license": "UNKNOWN",
+      "summary": "HTTP library with thread-safe connection pooling, file post, and more.",
+      "author": ""
+    },
+    {
+      "name": "uvicorn",
+      "version": "0.35.0",
+      "type": "library",
+      "purl": "pkg:pypi/uvicorn@0.35.0",
+      "license": "UNKNOWN",
+      "summary": "The lightning-fast ASGI server.",
+      "author": ""
+    },
+    {
+      "name": "wheel",
+      "version": "0.45.1",
+      "type": "library",
+      "purl": "pkg:pypi/wheel@0.45.1",
+      "license": "",
+      "summary": "A built-package format for Python",
+      "author": ""
+    },
+    {
+      "name": "yarl",
+      "version": "1.20.0",
+      "type": "library",
+      "purl": "pkg:pypi/yarl@1.20.0",
+      "license": "Apache-2.0",
+      "summary": "Yet another URL library",
+      "author": "Andrew Svetlov"
+    },
+    {
+      "name": "zipp",
+      "version": "3.23.0",
+      "type": "library",
+      "purl": "pkg:pypi/zipp@3.23.0",
+      "license": "UNKNOWN",
+      "summary": "Backport of pathlib-compatible object wrapper for zip files",
+      "author": ""
+    }
+  ]
+}

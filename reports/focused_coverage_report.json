@@ -1,0 +1,61 @@
+{
+  "focused_coverage": {
+    "main_package": "codepipeline",
+    "coverage_percent": 1.76,
+    "status": "pass",
+    "lines_covered": 666,
+    "lines_valid": 37920,
+    "package_count": 2,
+    "excludes_count": 19,
+    "test_success": false,
+    "coverage_file_generated": true,
+    "measurement_date": "2025-08-23T08:34:41.193283Z"
+  },
+  "configuration": {
+    "main_package": "codepipeline",
+    "excludes": [
+      "tests/*",
+      "test_*",
+      "*_test.py",
+      "venv/*",
+      ".venv/*",
+      "env/*",
+      "build/*",
+      "dist/*",
+      "*.egg-info/*",
+      "__pycache__/*",
+      ".pytest_cache/*",
+      "htmlcov/*",
+      "reports/*",
+      "scripts/*",
+      "docs/*",
+      "examples/*",
+      "migrations/*",
+      "setup.py",
+      "conftest.py"
+    ],
+    "config_file": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\.coveragerc",
+    "created_init_files": []
+  },
+  "test_execution": {
+    "success": false,
+    "exit_code": 2,
+    "duration": "N/A",
+    "output_preview": "============================= test session starts =============================\nplatform win32 -- Python 3.10.0, pytest-8.4.1, pluggy-1.6.0 -- C:\\Users\\odilo\\AppData\\Local\\Programs\\Python\\Python310\\python.exe\ncachedir: .pytest_cache\nrootdir: C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\nconfigfile: pytest.ini\nplugins: anyio-4.9.0, cov-6.2.1\ncollecting ... collected 375 items / 43 errors / 1 skipped\n\n=================================== ERRORS ====================================\n____________ ERR",
+    "error_preview": "",
+    "coverage_file_generated": true
+  },
+  "coverage_extraction": {
+    "coverage_percent": 1.76,
+    "status": "available",
+    "line_rate": 0.01756,
+    "lines_valid": 37920,
+    "lines_covered": 666,
+    "lines_missed": 37254,
+    "package_count": 2,
+    "file_size": 1762862,
+    "generated_at": "2025-08-23T10:15:29.818087"
+  },
+  "generated_at": "2025-08-23T08:34:41.194284Z",
+  "project_root": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502"
+}

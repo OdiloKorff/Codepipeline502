@@ -1,0 +1,11 @@
+--- original/main.py
++++ generated/main.py
+@@ -0,0 +1,8 @@
++# Generated web-api
++# Prompt: Create a simple REST API for user management with ...
++
++def main():
++    print("Hello from generated application")
++
++if __name__ == "__main__":
++    main()

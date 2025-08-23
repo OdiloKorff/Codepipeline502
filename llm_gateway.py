@@ -10,8 +10,15 @@ from typing import Any, TypeVar
 
 from openai import OpenAI
 
+from app_secrets import ensure_env, validate_required_secrets
 from logging_config import get_logger
-from app_secrets import ensure_env
+
+# Optional import für Token Budget Gate
+try:
+    from token_budget_gate import TokenBudgetGate, TokenUsage
+    TOKEN_BUDGET_AVAILABLE = True
+except ImportError:
+    TOKEN_BUDGET_AVAILABLE = False
 
 _T = TypeVar("_T")
 
@@ -40,8 +47,28 @@ def retry(times: int = 3, delay: float = 1.0, backoff: float = 2.0) -> Callable[
 class LLMGateway:
     """Production‑grade thin wrapper around OpenAI Chat Completions."""
 
-    def __init__(self, client: OpenAI | None = None):
-        self._client = client or _default_client()
+    def __init__(self, client: OpenAI | None = None, validate_secrets: bool = True, token_budget_gate: 'TokenBudgetGate' = None):
+        """
+        Initialize LLM Gateway.
+        
+        Args:
+            client: Optional pre-configured OpenAI client
+            validate_secrets: If True, validates required secrets on initialization
+            token_budget_gate: Optional Token Budget Gate for tracking usage
+            
+        Raises:
+            SecretNotAvailableError: If validate_secrets=True and required secrets 
+                                   are not available
+        """
+        if client is not None:
+            self._client = client
+        else:
+            if validate_secrets:
+                # Validate secrets before creating client to fail fast
+                validate_required_secrets("OPENAI_API_KEY")
+            self._client = _default_client()
+        
+        self._token_budget_gate = token_budget_gate
 
     @retry()
     def chat(
@@ -53,4 +80,17 @@ class LLMGateway:
     ) -> str:
         """Send chat completion request and return raw content."""
         resp = self._client.chat.completions.create(model=model, messages=messages, **kwargs)
+        
+        # Token-Verbrauch erfassen falls Budget Gate verfügbar
+        if self._token_budget_gate is not None and TOKEN_BUDGET_AVAILABLE and resp.usage:
+            from datetime import datetime
+            usage = TokenUsage(
+                prompt_tokens=resp.usage.prompt_tokens,
+                completion_tokens=resp.usage.completion_tokens,
+                total_tokens=resp.usage.total_tokens,
+                model=model,
+                timestamp=datetime.now().isoformat()
+            )
+            self._token_budget_gate.record_usage(usage)
+        
         return resp.choices[0].message.content  # type: ignore[attr-defined]

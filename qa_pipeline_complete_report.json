@@ -1,0 +1,111 @@
+{
+  "spec_id": "TEST-001",
+  "timestamp": "2025-08-17T18:04:12.017785",
+  "pipeline_version": "complete-v1.0",
+  "gates": [
+    {
+      "name": "Token Budget",
+      "passed": true,
+      "score": 100,
+      "details": {
+        "budget_limit": 10000,
+        "tokens_used": 8000,
+        "utilization_percent": 80.0,
+        "calls_count": 3,
+        "estimated_cost_usd": 0.0026
+      },
+      "error_message": null
+    },
+    {
+      "name": "Test Coverage",
+      "passed": true,
+      "score": 88,
+      "details": {
+        "threshold_percent": 80,
+        "current_coverage": 88.5,
+        "coverage_gap": 0,
+        "files_count": 25,
+        "lines_total": 2000,
+        "lines_covered": 1770
+      },
+      "error_message": null
+    },
+    {
+      "name": "SBOM & License Policy",
+      "passed": false,
+      "score": 0,
+      "details": {
+        "dependencies_count": 5,
+        "license_violations": 1,
+        "vulnerability_findings": 0,
+        "sbom_generated": false,
+        "allowed_licenses": [
+          "MIT",
+          "ISC",
+          "MPL-2.0",
+          "BSD-3-Clause",
+          "BSD-2-Clause",
+          "Python-2.0",
+          "Apache-2.0"
+        ],
+        "denied_licenses": [
+          "BUSL-1.1",
+          "SSPL",
+          "GPL-3.0",
+          "Commons-Clause",
+          "AGPL-3.0"
+        ]
+      },
+      "error_message": "1 verbotene Lizenzen"
+    },
+    {
+      "name": "Static Analysis Baselines",
+      "passed": false,
+      "score": 75,
+      "details": {
+        "active_profile": "cicd",
+        "total_findings": 2,
+        "high_severity_count": 1,
+        "enforce_zero_high": true,
+        "noise_reduction": true,
+        "enabled_rules": 11
+      },
+      "error_message": "1 High-Severity Findings"
+    }
+  ],
+  "summary": {
+    "overall_passed": false,
+    "overall_score": 65.8,
+    "gates_passed": 2,
+    "gates_total": 4,
+    "token_utilization": 80.0,
+    "coverage_achieved": 88.5,
+    "dependencies_count": 5,
+    "license_violations": 1,
+    "security_findings": 2,
+    "high_severity_findings": 1
+  },
+  "pr_checks": [
+    {
+      "state": "success",
+      "description": "Coverage: 88.5% (>= 80%)",
+      "context": "ci/coverage-threshold"
+    },
+    {
+      "state": "failure",
+      "description": "SBOM & Licenses: 1 violations",
+      "context": "ci/sbom-license-policy"
+    },
+    {
+      "state": "failure",
+      "description": "Static Analysis: 1 high-severity",
+      "context": "ci/static-analysis-baseline"
+    }
+  ],
+  "artifacts": {
+    "qa_scorecard": "qa_scorecard_complete.json",
+    "sbom": "sbom_complete.json",
+    "security_scan": "security_scan_complete.json",
+    "coverage_report": "coverage_complete.xml"
+  }
+}

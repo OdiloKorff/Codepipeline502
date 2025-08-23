@@ -1,0 +1,107 @@
+{
+  "spec_id": "ENTERPRISE-FINAL-001",
+  "timestamp": "2025-08-17T19:00:34.769600",
+  "enterprise_version": "production-v1.0",
+  "compliance": {
+    "score": 62.5,
+    "passed_checks": 5,
+    "total_checks": 8,
+    "details": [
+      {
+        "check": "Security Scanning",
+        "passed": false,
+        "details": "Exit code: 1"
+      },
+      {
+        "check": "SBOM Generation",
+        "passed": true,
+        "details": "CycloneDX SBOM with 72 components"
+      },
+      {
+        "check": "License Compliance",
+        "passed": false,
+        "details": "37 violations"
+      },
+      {
+        "check": "Vulnerability Scanning",
+        "passed": true,
+        "details": "0 CVEs"
+      },
+      {
+        "check": "Token Budget Control",
+        "passed": true,
+        "details": "38.0% utilization"
+      },
+      {
+        "check": "Quality Gates",
+        "passed": false,
+        "details": "69.0/100 score"
+      },
+      {
+        "check": "Branch Protection",
+        "passed": true,
+        "details": "Required checks enforced"
+      },
+      {
+        "check": "Artifact Generation",
+        "passed": true,
+        "details": "6 artifacts generated"
+      }
+    ]
+  },
+  "security": {
+    "scanner_tools": 4,
+    "total_findings": 116,
+    "policy_violations": true,
+    "exit_code": 1
+  },
+  "sbom": {
+    "format": "CycloneDX",
+    "components": 72,
+    "vulnerabilities": 0,
+    "license_violations": 37,
+    "artifacts": [
+      "sbom",
+      "vulnerabilities",
+      "licenses"
+    ]
+  },
+  "quality": {
+    "overall_score": 69.0,
+    "gates_passed": 4,
+    "gates_total": 5,
+    "hard_must_violations": 5,
+    "exit_code": 1
+  },
+  "token_budget": {
+    "budget_limit": 20000,
+    "tokens_used": 7600,
+    "utilization": 0.38,
+    "cost_usd": 0.002535,
+    "passed": true
+  },
+  "pr_flow": {
+    "branch_protection_verified": true,
+    "quality_gates_green": false,
+    "pr_created": false,
+    "artifacts_count": 6
+  },
+  "audit_trail": {
+    "generated_artifacts": [
+      "security_report",
+      "sbom",
+      "vulnerabilities",
+      "licenses",
+      "json_report",
+      "markdown_report"
+    ],
+    "compliance_evidence": [
+      "security_scan_report.json",
+      "sbom_cyclonedx.json",
+      "license_compliance_report.json",
+      "qa_scorecard.json",
+      "token_budget_report.json",
+      "branch_protection_status.json"
+    ]
+  }
+}

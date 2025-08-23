@@ -1,0 +1,13 @@
+{
+  "package_id": "supply-chain-test-run-001",
+  "created_at": "2025-08-17T21:13:00.176291",
+  "files": [
+    "reproducibility_manifest_test-run-001.json",
+    "requirements-lock-test-run-001.txt",
+    "prompt-templates-test-run-001.json",
+    "production_qa_scorecard.py"
+  ],
+  "reproducibility_manifest": "reproducibility_manifest_test-run-001.json",
+  "requirements_lock": "requirements-lock-test-run-001.txt",
+  "prompt_templates": "prompt-templates-test-run-001.json"
+}

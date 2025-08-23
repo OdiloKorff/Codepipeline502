@@ -1,0 +1,13 @@
+{
+  "demo_duration_seconds": 1.3239891529083252,
+  "qa_scorecard_functional": false,
+  "security_scanner_functional": false,
+  "sbom_license_functional": false,
+  "branch_protection_pr_functional": false,
+  "audit_trail_functional": false,
+  "integration_successful": true,
+  "overall_readiness": 35.714285714285715,
+  "enterprise_ready": false,
+  "components_integrated": 5,
+  "artifacts_generated": 10
+}

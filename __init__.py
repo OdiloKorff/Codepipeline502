@@ -46,7 +46,12 @@ _bt.get_logger = get_logger  # global helper
 # ---------------------------------------------------------------------------#
 # Public API re‑exports
 # ---------------------------------------------------------------------------#
-from .codepipeline_tree_sitter import parse_python_file  # noqa: E402
+try:
+    from .codepipeline_tree_sitter import parse_python_file  # noqa: E402
+except ImportError:  # pragma: no cover
+    # tree_sitter not available, provide stub
+    def parse_python_file(*args, **kwargs):
+        raise ImportError("tree_sitter not installed")
 from .context_assembler import assemble_context, cosine_similarity  # noqa: E402
 from .provider_broker import AnthropicProvider, Broker, OpenAIProvider, Provider  # noqa: E402
 from .token_budget_manager import check_budget  # noqa: E402
@@ -58,6 +63,11 @@ __all__ = [
     "__version__", "get_logger"
 ]
 
-if TYPE_CHECKING:  # pragma: no cover – type‑only imports
+if TYPE_CHECKING:  # pragma: no cover – type‑only imports
     from .logging_config import get_logger  # re‑export type for type‑checkers
-import codepipeline.telemetry  # noqa: F401  # Auto‑import for OTLP export
+
+# Auto-import for OTLP export (optional)
+try:
+    import codepipeline.telemetry  # noqa: F401
+except ImportError:  # pragma: no cover
+    pass  # Telemetry not available, continue without it

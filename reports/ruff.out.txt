@@ -1,0 +1,711 @@
+__init__.py:41:33: F401 `.logging_config` imported but unused; consider removing, adding to `__all__`, or using a redundant alias
+   |
+39 | import builtins as _bt
+40 |
+41 | from . import logging_config as _logging_config  # noqa: E402
+   |                                 ^^^^^^^^^^^^^^^ F401
+42 | from .logging_config import get_logger  # re-export for convenience
+   |
+   = help: Add unused import `_logging_config` to __all__
+
+__init__.py:68:1: E402 Module level import not at top of file
+   |
+66 | if TYPE_CHECKING:  # pragma: no cover – type‑only imports
+67 |     from .logging_config import get_logger  # re‑export type for type‑checkers
+68 | import codepipeline.telemetry  # noqa: F401  # Auto‑import for OTLP export
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ E402
+   |
+
+analysis\semgrep.py:5:1: E402 Module level import not at top of file
+  |
+3 | """Semgrep integration for static code analysis."""
+4 |
+5 | import subprocess
+  | ^^^^^^^^^^^^^^^^^ E402
+6 | import sys
+  |
+
+analysis\semgrep.py:6:1: E402 Module level import not at top of file
+  |
+5 | import subprocess
+6 | import sys
+  | ^^^^^^^^^^ E402
+  |
+
+api\app.py:14:1: E402 Module level import not at top of file
+   |
+12 |     code: str
+13 |
+14 | from prometheus_fastapi_instrumentator import Instrumentator
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ E402
+15 |
+16 | app = FastAPI(title="CodePipeline API")
+   |
+
+api\app.py:17:1: E402 Module level import not at top of file
+   |
+16 | app = FastAPI(title="CodePipeline API")
+17 | from codepipeline.asgi_latency import LatencyMiddleware
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ E402
+18 |
+19 | app.add_middleware(LatencyMiddleware)
+   |
+
+api\app.py:43:1: E402 Module level import not at top of file
+   |
+41 | # --- AUTH & PROJECT DEMO ENDPOINTS (Scenario 5.2) ---------------------------------
+42 |
+43 | from fastapi import Header, HTTPException
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ E402
+   |
+
+artifacts_caching.py:20:1: E402 Module level import not at top of file
+   |
+18 | """
+19 |
+20 | import os
+   | ^^^^^^^^^ E402
+21 | import subprocess
+   |
+
+artifacts_caching.py:21:1: E402 Module level import not at top of file
+   |
+20 | import os
+21 | import subprocess
+   | ^^^^^^^^^^^^^^^^^ E402
+   |
+
+codepipeline\branch_protection.py:6:1: I001 [*] Import block is un-sorted or un-formatted
+  |
+4 |   """
+5 |
+6 | / import os
+7 | | import subprocess
+8 | | from pathlib import Path
+9 | | from typing import Dict, Any, Optional
+  | |______________________________________^ I001
+  |
+  = help: Organize imports
+
+codepipeline\branch_protection.py:8:21: F401 [*] `pathlib.Path` imported but unused
+  |
+6 | import os
+7 | import subprocess
+8 | from pathlib import Path
+  |                     ^^^^ F401
+9 | from typing import Dict, Any, Optional
+  |
+  = help: Remove unused import: `pathlib.Path`
+
+codepipeline\cli.py:8:1: I001 [*] Import block is un-sorted or un-formatted
+   |
+ 6 |   """
+ 7 |
+ 8 | / import json
+ 9 | | import pathlib
+10 | | from datetime import datetime
+11 | |
+12 | | import typer
+13 | | import yaml
+14 | |
+15 | | from . import feature_spec
+16 | | from .llm_gateway import generate_unified_diff
+17 | | from .telemetry import RunMeta, collect_tool_versions, write_run_meta
+18 | | from .unified_diff_validator import validate_and_apply_diff
+19 | | from .secret_resolver import get_secret, SecretError
+20 | | from .branch_protection import preflight, create_draft_pr
+   | |_________________________________________________________^ I001
+21 |
+22 |   app = typer.Typer(add_completion=False, help="CodePipeline CLI (Hauptpaket)")
+   |
+   = help: Organize imports
+
+codepipeline\cli.py:162:13: I001 [*] Import block is un-sorted or un-formatted
+    |
+160 |               # 2. Security-Scan Gate (mindestens ein aktives Tool)
+161 |               typer.echo("2. Security-Scan Gate...")
+162 | /             import subprocess
+163 | |             import json
+164 | |             from pathlib import Path
+    | |____________________________________^ I001
+165 |               
+166 |               # Führe Security-Scan aus
+    |
+    = help: Organize imports
+
+codepipeline\cli.py:195:13: I001 [*] Import block is un-sorted or un-formatted
+    |
+193 |               # 3. QA-Scorecard Gate (MUSS PASS sein)
+194 |               typer.echo("3. QA-Scorecard Gate...")
+195 | /             from qa.scorecard import run as scorecard_run
+196 | |             
+197 | |             # Setze Secure-Mode für Scorecard
+198 | |             import os
+    | |_____________________^ I001
+199 |               os.environ['SECURE_MODE'] = 'true'
+    |
+    = help: Organize imports
+
+codepipeline\cli.py:225:26: F823 Local variable `validate_and_apply_diff` referenced before assignment
+    |
+223 |             # 5. Diff validieren + sichere Anwendung (Write-Allow-List)
+224 |             typer.echo("5. Diff validieren und sicher anwenden...")
+225 |             ok, errors = validate_and_apply_diff(llm_result.content, spec_obj.target_paths)
+    |                          ^^^^^^^^^^^^^^^^^^^^^^^ F823
+226 |             if not ok:
+227 |                 for err in errors:
+    |
+
+codepipeline\feature_spec.py:18:5: F403 `from feature_spec import *` used; unable to detect undefined names
+   |
+16 | # Importiere alle Symbole aus der Root feature_spec.py
+17 | try:
+18 |     from feature_spec import *
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^ F403
+19 |     from feature_spec import FeatureSpec, QualityOverrides, TestConfig, create_feature_spec, load_feature_spec
+20 | except ImportError as e:
+   |
+
+codepipeline\feature_spec.py:19:43: F401 `feature_spec.QualityOverrides` imported but unused; consider using `importlib.util.find_spec` to test for availability
+   |
+17 | try:
+18 |     from feature_spec import *
+19 |     from feature_spec import FeatureSpec, QualityOverrides, TestConfig, create_feature_spec, load_feature_spec
+   |                                           ^^^^^^^^^^^^^^^^ F401
+20 | except ImportError as e:
+21 |     # Fallback: Minimale Implementierung
+   |
+   = help: Remove unused import
+
+codepipeline\feature_spec.py:19:61: F401 `feature_spec.TestConfig` imported but unused; consider using `importlib.util.find_spec` to test for availability
+   |
+17 | try:
+18 |     from feature_spec import *
+19 |     from feature_spec import FeatureSpec, QualityOverrides, TestConfig, create_feature_spec, load_feature_spec
+   |                                                             ^^^^^^^^^^ F401
+20 | except ImportError as e:
+21 |     # Fallback: Minimale Implementierung
+   |
+   = help: Remove unused import
+
+codepipeline\feature_spec.py:19:73: F401 `feature_spec.create_feature_spec` imported but unused; consider using `importlib.util.find_spec` to test for availability
+   |
+17 | try:
+18 |     from feature_spec import *
+19 |     from feature_spec import FeatureSpec, QualityOverrides, TestConfig, create_feature_spec, load_feature_spec
+   |                                                                         ^^^^^^^^^^^^^^^^^^^ F401
+20 | except ImportError as e:
+21 |     # Fallback: Minimale Implementierung
+   |
+   = help: Remove unused import
+
+codepipeline\feature_spec.py:19:94: F401 `feature_spec.load_feature_spec` imported but unused; consider using `importlib.util.find_spec` to test for availability
+   |
+17 | try:
+18 |     from feature_spec import *
+19 |     from feature_spec import FeatureSpec, QualityOverrides, TestConfig, create_feature_spec, load_feature_spec
+   |                                                                                              ^^^^^^^^^^^^^^^^^ F401
+20 | except ImportError as e:
+21 |     # Fallback: Minimale Implementierung
+   |
+   = help: Remove unused import
+
+codepipeline\llm_gateway.py:9:1: I001 [*] Import block is un-sorted or un-formatted
+   |
+ 7 |   """
+ 8 |
+ 9 | / from __future__ import annotations
+10 | |
+11 | | import random
+12 | | from dataclasses import dataclass
+13 | | from typing import Dict, Any
+14 | |
+15 | | from .secret_resolver import get_secret, SecretError
+   | |____________________________________________________^ I001
+   |
+   = help: Organize imports
+
+codepipeline\llm_gateway.py:13:20: F401 [*] `typing.Dict` imported but unused
+   |
+11 | import random
+12 | from dataclasses import dataclass
+13 | from typing import Dict, Any
+   |                    ^^^^ F401
+14 |
+15 | from .secret_resolver import get_secret, SecretError
+   |
+   = help: Remove unused import
+
+codepipeline\llm_gateway.py:13:26: F401 [*] `typing.Any` imported but unused
+   |
+11 | import random
+12 | from dataclasses import dataclass
+13 | from typing import Dict, Any
+   |                          ^^^ F401
+14 |
+15 | from .secret_resolver import get_secret, SecretError
+   |
+   = help: Remove unused import
+
+codepipeline\telemetry.py:1:1: I001 [*] Import block is un-sorted or un-formatted
+  |
+1 | / from __future__ import annotations
+2 | |
+3 | | import json
+4 | | import platform
+5 | | import shutil
+6 | | import subprocess
+7 | | import time
+8 | | from dataclasses import dataclass, asdict
+9 | | from typing import Any
+  | |______________________^ I001
+  |
+  = help: Organize imports
+
+codepipeline\template_catalog.py:8:1: I001 [*] Import block is un-sorted or un-formatted
+   |
+ 6 |   """
+ 7 |
+ 8 | / from __future__ import annotations
+ 9 | |
+10 | | import re
+11 | | from dataclasses import dataclass
+12 | | from typing import Dict, List, Optional, Any
+13 | | from enum import Enum
+   | |_____________________^ I001
+   |
+   = help: Organize imports
+
+codepipeline\unified_diff_validator.py:6:1: I001 [*] Import block is un-sorted or un-formatted
+   |
+ 4 |   """
+ 5 |
+ 6 | / import re
+ 7 | | import os
+ 8 | | import logging
+ 9 | | from pathlib import Path
+10 | | from typing import List, Dict, Tuple, Optional, Set, Any
+11 | | from dataclasses import dataclass
+   | |_________________________________^ I001
+   |
+   = help: Organize imports
+
+codepipeline\unified_diff_validator.py:10:32: F401 [*] `typing.Tuple` imported but unused
+   |
+ 8 | import logging
+ 9 | from pathlib import Path
+10 | from typing import List, Dict, Tuple, Optional, Set, Any
+   |                                ^^^^^ F401
+11 | from dataclasses import dataclass
+   |
+   = help: Remove unused import: `typing.Tuple`
+
+codepipeline\unified_diff_validator.py:296:9: F841 Local variable `normalized_path` is assigned to but never used
+    |
+294 |             violation_type: str = ""
+295 |         
+296 |         normalized_path = Path(file_path)
+    |         ^^^^^^^^^^^^^^^ F841
+297 |         
+298 |         # Prüfe absolute Pfade
+    |
+    = help: Remove assignment to unused variable `normalized_path`
+
+demo_final_production_core_system.py:367:5: E722 Do not use bare `except`
+    |
+365 |     try:
+366 |         Path(integration_spec_file).unlink()
+367 |     except:
+    |     ^^^^^^ E722
+368 |         pass
+    |
+
+demo_final_production_ready_complete.py:435:5: E722 Do not use bare `except`
+    |
+433 |     try:
+434 |         Path(integration_spec_file).unlink()
+435 |     except:
+    |     ^^^^^^ E722
+436 |         pass
+    |
+
+demo_final_production_ready_system.py:73:9: E722 Do not use bare `except`
+   |
+71 |             rate_line = [line for line in safety_output.split('\n') if "Erfolgsrate:" in line][0]
+72 |             safety_success_rate = float(rate_line.split("Erfolgsrate: ")[1].split("%")[0])
+73 |         except:
+   |         ^^^^^^ E722
+74 |             pass
+   |
+
+demo_final_production_ready_system.py:97:9: E722 Do not use bare `except`
+   |
+95 |             successful, total = stages_info.split("/")
+96 |             pipeline_stages = int(total)
+97 |         except:
+   |         ^^^^^^ E722
+98 |             pass
+   |
+
+demo_final_production_ready_system.py:140:9: E722 Do not use bare `except`
+    |
+138 |             compliance_line = [line for line in governance_output.split('\n') if "Compliance Score:" in line][0]
+139 |             governance_compliance = float(compliance_line.split("Compliance Score: ")[1].split("%")[0])
+140 |         except:
+    |         ^^^^^^ E722
+141 |             pass
+    |
+
+demo_final_technical_core_system.py:456:5: E722 Do not use bare `except`
+    |
+454 |         if "TECH_INTEGRATION_SECRET" in os.environ:
+455 |             del os.environ["TECH_INTEGRATION_SECRET"]
+456 |     except:
+    |     ^^^^^^ E722
+457 |         pass
+    |
+
+production_e2e_orchestrator.py:42:39: F401 `hardened_secrets_flow.HardenedSecretManager` imported but unused; consider using `importlib.util.find_spec` to test for availability
+   |
+41 | try:
+42 |     from hardened_secrets_flow import HardenedSecretManager, SecretSeverity
+   |                                       ^^^^^^^^^^^^^^^^^^^^^ F401
+43 |     SECRETS_AVAILABLE = True
+44 | except ImportError:
+   |
+   = help: Remove unused import
+
+production_e2e_orchestrator.py:42:62: F401 `hardened_secrets_flow.SecretSeverity` imported but unused; consider using `importlib.util.find_spec` to test for availability
+   |
+41 | try:
+42 |     from hardened_secrets_flow import HardenedSecretManager, SecretSeverity
+   |                                                              ^^^^^^^^^^^^^^ F401
+43 |     SECRETS_AVAILABLE = True
+44 | except ImportError:
+   |
+   = help: Remove unused import
+
+production_e2e_orchestrator.py:48:65: F401 `audit_trail_observability.RunStatus` imported but unused; consider using `importlib.util.find_spec` to test for availability
+   |
+47 | try:
+48 |     from audit_trail_observability import ObservabilityManager, RunStatus
+   |                                                                 ^^^^^^^^^ F401
+49 |     OBSERVABILITY_AVAILABLE = True
+50 | except ImportError:
+   |
+   = help: Remove unused import: `audit_trail_observability.RunStatus`
+
+production_e2e_orchestrator.py:1187:9: E722 Do not use bare `except`
+     |
+1185 |         try:
+1186 |             Path(file_path).unlink()
+1187 |         except:
+     |         ^^^^^^ E722
+1188 |             pass
+     |
+
+production_feature_spec.py:592:9: E722 Do not use bare `except`
+    |
+590 |         try:
+591 |             Path(file_path).unlink()
+592 |         except:
+    |         ^^^^^^ E722
+593 |             pass
+    |
+
+production_gui_backend.py:295:17: E722 Do not use bare `except`
+    |
+293 |                     end = datetime.fromisoformat(run.end_time)
+294 |                     run_dict["duration_seconds"] = (end - start).total_seconds()
+295 |                 except:
+    |                 ^^^^^^ E722
+296 |                     pass
+    |
+
+production_gui_backend.py:322:13: E722 Do not use bare `except`
+    |
+320 |                 end = datetime.fromisoformat(run.end_time)
+321 |                 duration_seconds = (end - start).total_seconds()
+322 |             except:
+    |             ^^^^^^ E722
+323 |                 pass
+    |
+
+production_hardened_sandbox.py:427:17: E722 Do not use bare `except`
+    |
+425 |                 try:
+426 |                     file_path.unlink()
+427 |                 except:
+    |                 ^^^^^^ E722
+428 |                     pass
+429 |                 return False
+    |
+
+prompt_planner.py:29:1: E402 Module level import not at top of file
+   |
+28 | # Token-aware prompt planning enhancements
+29 | import logging
+   | ^^^^^^^^^^^^^^ E402
+30 | import os
+   |
+
+prompt_planner.py:30:1: E402 Module level import not at top of file
+   |
+28 | # Token-aware prompt planning enhancements
+29 | import logging
+30 | import os
+   | ^^^^^^^^^ E402
+31 |
+32 | from tenacity import retry, stop_after_attempt, wait_exponential
+   |
+
+prompt_planner.py:32:1: E402 Module level import not at top of file
+   |
+30 | import os
+31 |
+32 | from tenacity import retry, stop_after_attempt, wait_exponential
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ E402
+33 |
+34 | from codepipeline.utils.token_counter import count_tokens
+   |
+
+prompt_planner.py:34:1: E402 Module level import not at top of file
+   |
+32 | from tenacity import retry, stop_after_attempt, wait_exponential
+33 |
+34 | from codepipeline.utils.token_counter import count_tokens
+   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ E402
+35 |
+36 | ENABLE_TOKEN_BUDGET = os.getenv('ENABLE_TOKEN_BUDGET', 'false').lower() == 'true'
+   |
+
+qa\scorecard.py:145:13: F841 Local variable `license_allowlist` is assigned to but never used
+    |
+143 |             weights = quality_config.get("weights", {})
+144 |             threshold = quality_config.get("score_threshold", 90.0)
+145 |             license_allowlist = set(quality_config.get("licenses", {}).get("allow", []))
+    |             ^^^^^^^^^^^^^^^^^ F841
+146 |             license_denylist = set(quality_config.get("licenses", {}).get("deny", []))
+    |
+    = help: Remove assignment to unused variable `license_allowlist`
+
+qa\scorecard.py:146:13: F841 Local variable `license_denylist` is assigned to but never used
+    |
+144 |             threshold = quality_config.get("score_threshold", 90.0)
+145 |             license_allowlist = set(quality_config.get("licenses", {}).get("allow", []))
+146 |             license_denylist = set(quality_config.get("licenses", {}).get("deny", []))
+    |             ^^^^^^^^^^^^^^^^ F841
+147 |             
+148 |             # Validiere kritische Policy-Parameter
+    |
+    = help: Remove assignment to unused variable `license_denylist`
+
+qa_scorecard_comprehensive.py:33:41: F401 `coverage_threshold_gate.CoverageThresholdGate` imported but unused; consider using `importlib.util.find_spec` to test for availability
+   |
+31 | # Optional imports für Gate-Integration
+32 | try:
+33 |     from coverage_threshold_gate import CoverageThresholdGate
+   |                                         ^^^^^^^^^^^^^^^^^^^^^ F401
+34 |     from token_budget_gate import TokenBudgetGate
+35 |     GATES_AVAILABLE = True
+   |
+   = help: Remove unused import: `coverage_threshold_gate.CoverageThresholdGate`
+
+qa_scorecard_comprehensive.py:34:35: F401 `token_budget_gate.TokenBudgetGate` imported but unused; consider using `importlib.util.find_spec` to test for availability
+   |
+32 | try:
+33 |     from coverage_threshold_gate import CoverageThresholdGate
+34 |     from token_budget_gate import TokenBudgetGate
+   |                                   ^^^^^^^^^^^^^^^ F401
+35 |     GATES_AVAILABLE = True
+36 | except ImportError:
+   |
+   = help: Remove unused import: `token_budget_gate.TokenBudgetGate`
+
+real_security_scanner.py:648:13: F402 Import `field` from line 14 shadowed by loop variable
+    |
+646 |         cwe_fields = ["cwe", "cwe_id", "category", "owasp"]
+647 |         
+648 |         for field in cwe_fields:
+    |             ^^^^^ F402
+649 |             if field in metadata:
+650 |                 value = str(metadata[field])
+    |
+
+run_feature_spec_tests.py:21:16: F401 `json` imported but unused; consider using `importlib.util.find_spec` to test for availability
+   |
+20 |     try:
+21 |         import json
+   |                ^^^^ F401
+22 |         import tempfile
+   |
+   = help: Remove unused import: `json`
+
+run_feature_spec_tests.py:24:16: F401 `yaml` imported but unused; consider using `importlib.util.find_spec` to test for availability
+   |
+22 |         import tempfile
+23 |
+24 |         import yaml
+   |                ^^^^ F401
+25 |         from pydantic import ValidationError
+   |
+   = help: Remove unused import: `yaml`
+
+run_feature_spec_tests.py:27:65: F401 `feature_spec.TestConfig` imported but unused; consider using `importlib.util.find_spec` to test for availability
+   |
+25 |         from pydantic import ValidationError
+26 |
+27 |         from feature_spec import FeatureSpec, QualityOverrides, TestConfig, create_feature_spec
+   |                                                                 ^^^^^^^^^^ F401
+28 |         
+29 |         test_results = []
+   |
+   = help: Remove unused import
+
+run_feature_spec_tests.py:27:77: F401 `feature_spec.create_feature_spec` imported but unused; consider using `importlib.util.find_spec` to test for availability
+   |
+25 |         from pydantic import ValidationError
+26 |
+27 |         from feature_spec import FeatureSpec, QualityOverrides, TestConfig, create_feature_spec
+   |                                                                             ^^^^^^^^^^^^^^^^^^^ F401
+28 |         
+29 |         test_results = []
+   |
+   = help: Remove unused import
+
+scripts\local_ci_all_tests.py:2:1: I001 [*] Import block is un-sorted or un-formatted
+   |
+ 1 |   #!/usr/bin/env python3
+ 2 | / from __future__ import annotations
+ 3 | |
+ 4 | | import importlib
+ 5 | | import os
+ 6 | | import importlib.util
+ 7 | | import json
+ 8 | | import pathlib
+ 9 | | import shutil
+10 | | import subprocess
+11 | | import sys
+12 | | import time
+   | |___________^ I001
+13 |
+14 |   ROOT = pathlib.Path.cwd()
+   |
+   = help: Organize imports
+
+scripts\security_scan.py:87:5: E722 Do not use bare `except`
+   |
+86 |         return {'high': high, 'medium': medium, 'low': low, 'status': 'completed'}
+87 |     except:
+   |     ^^^^^^ E722
+88 |         return {'high': 0, 'medium': 0, 'low': 0, 'status': 'parse_error'}
+   |
+
+scripts\security_scan.py:185:9: E722 Do not use bare `except`
+    |
+183 |         try:
+184 |             findings = len(json.loads(gitleaks_result['stdout'])) if gitleaks_result['stdout'].strip() else 0
+185 |         except:
+    |         ^^^^^^ E722
+186 |             findings = 0
+187 |         report['gitleaks'] = {'findings': findings, 'status': 'completed'}
+    |
+
+scripts\security_scan.py:197:9: E722 Do not use bare `except`
+    |
+195 |             data = json.loads(pip_audit_result['stdout'])
+196 |             vulns = len(data.get('vulnerabilities', []))
+197 |         except:
+    |         ^^^^^^ E722
+198 |             vulns = 0
+199 |         report['pip_audit'] = {'vulns': vulns, 'status': 'completed'}
+    |
+
+scripts\security_scan_minimal.py:2:1: E401 [*] Multiple imports on one line
+  |
+1 | #!/usr/bin/env python3
+2 | import sys, json
+  | ^^^^^^^^^^^^^^^^ E401
+3 | report = {
+4 |  'semgrep': {'high': 0, 'medium': 0, 'low': 0, 'status': 'skip'},
+  |
+  = help: Split imports
+
+scripts\security_scan_minimal.py:2:1: I001 [*] Import block is un-sorted or un-formatted
+  |
+1 | #!/usr/bin/env python3
+2 | import sys, json
+  | ^^^^^^^^^^^^^^^^ I001
+3 | report = {
+4 |  'semgrep': {'high': 0, 'medium': 0, 'low': 0, 'status': 'skip'},
+  |
+  = help: Organize imports
+
+test_suite_proof_of_safety.py:24:65: F401 `audit_trail_observability.RunStatus` imported but unused; consider using `importlib.util.find_spec` to test for availability
+   |
+23 | try:
+24 |     from audit_trail_observability import ObservabilityManager, RunStatus
+   |                                                                 ^^^^^^^^^ F401
+25 |     from codepipeline.feature_spec import FeatureSpec
+26 |     from hardened_secrets_flow import HardenedSecretManager, SecretNotFoundError, SecretSeverity
+   |
+   = help: Remove unused import: `audit_trail_observability.RunStatus`
+
+test_suite_proof_of_safety.py:26:62: F401 `hardened_secrets_flow.SecretNotFoundError` imported but unused; consider using `importlib.util.find_spec` to test for availability
+   |
+24 |     from audit_trail_observability import ObservabilityManager, RunStatus
+25 |     from codepipeline.feature_spec import FeatureSpec
+26 |     from hardened_secrets_flow import HardenedSecretManager, SecretNotFoundError, SecretSeverity
+   |                                                              ^^^^^^^^^^^^^^^^^^^ F401
+27 |     from reproducibility_supply_chain import SupplyChainManager
+28 |     IMPORTS_AVAILABLE = True
+   |
+   = help: Remove unused import: `hardened_secrets_flow.SecretNotFoundError`
+
+token_controller.py:9:1: E402 Module level import not at top of file
+   |
+ 7 | """
+ 8 |
+ 9 | import json
+   | ^^^^^^^^^^^ E402
+10 | import sys
+11 | from pathlib import Path
+   |
+
+token_controller.py:10:1: E402 Module level import not at top of file
+   |
+ 9 | import json
+10 | import sys
+   | ^^^^^^^^^^ E402
+11 | from pathlib import Path
+   |
+
+token_controller.py:11:1: E402 Module level import not at top of file
+   |
+ 9 | import json
+10 | import sys
+11 | from pathlib import Path
+   | ^^^^^^^^^^^^^^^^^^^^^^^^ E402
+   |
+
+unified_cicd_pipeline.py:340:21: E722 Do not use bare `except`
+    |
+338 |                     try:
+339 |                         test_count = int(line.split()[0])
+340 |                     except:
+    |                     ^^^^^^ E722
+341 |                         pass
+    |
+
+unified_cicd_pipeline.py:472:13: E722 Do not use bare `except`
+    |
+470 |                 safety_data = json.loads(stdout)
+471 |                 vulnerability_count = len(safety_data)
+472 |             except:
+    |             ^^^^^^ E722
+473 |                 # Safety-Output ist manchmal nicht JSON
+474 |                 vulnerability_count = stdout.count("vulnerability") if stdout else 0
+    |
+
+Found 68 errors.
+[*] 15 fixable with the `--fix` option (3 hidden fixes can be enabled with the `--unsafe-fixes` option).

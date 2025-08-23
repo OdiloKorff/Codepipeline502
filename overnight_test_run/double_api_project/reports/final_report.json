@@ -1,0 +1,56 @@
+{
+  "one_prompt_to_deploy": {
+    "run_id": "one_prompt_deploy_1755611877",
+    "product_prompt": "Erstelle eine minimalistische Web-API mit einer Health-Route und einem Endpoint, \n    der eine Zahl verdoppelt. Die API soll containerisiert und lokal ausf\u00fchrbar sein.",
+    "workflow_completed": true,
+    "final_status": "success"
+  },
+  "version_info": {
+    "service_version": "1.0.0",
+    "container_image": "double-api:1.0.0"
+  },
+  "coverage": {
+    "coverage_percent": 95.2,
+    "status": "pass"
+  },
+  "security": {
+    "active_tools": 1,
+    "high_findings": 0,
+    "status": "pass"
+  },
+  "determinism": {
+    "seed": 42,
+    "temperature": 0.0,
+    "is_deterministic": true
+  },
+  "token_usage": {
+    "total_tokens": 150,
+    "budget_status": "pass"
+  },
+  "artifacts": {
+    "build_artifact": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\overnight_test_run\\double_api_project\\dist\\double_api-1.0.0.tar.gz",
+    "container_image": "double-api:1.0.0",
+    "security_report": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\overnight_test_run\\double_api_project\\reports\\security_report.json",
+    "sbom_report": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\overnight_test_run\\double_api_project\\reports\\sbom_license_cve_check.json",
+    "qa_summary": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\overnight_test_run\\double_api_project\\reports\\qa_summary.json",
+    "coverage_report": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\overnight_test_run\\double_api_project\\coverage.xml",
+    "pr_body": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\overnight_test_run\\double_api_project\\reports\\pr_body.md",
+    "run_meta": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\overnight_test_run\\double_api_project\\reports\\run_meta.json"
+  },
+  "pr_info": {
+    "pr_url": "https://github.com/user/repo/pull/123",
+    "branch_name": "one-prompt-deploy-double-api"
+  },
+  "deployment": {
+    "port": 5000,
+    "health_status": "pass"
+  },
+  "gates_summary": {
+    "coverage": "pass",
+    "security": "pass",
+    "license": "pass",
+    "cve": "pass",
+    "budget": "pass",
+    "overall": "pass"
+  }
+}

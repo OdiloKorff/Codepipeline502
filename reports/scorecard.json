@@ -1,0 +1,88 @@
+{
+  "scorecard": {
+    "profile": "secure",
+    "status": "fail",
+    "overall_passing": false,
+    "coverage_percent": 20.54,
+    "security_high": 0,
+    "security_medium": 0,
+    "security_low": 0,
+    "license_violations": 0,
+    "active_tools": 2,
+    "critical_failures": [
+      "coverage"
+    ],
+    "warnings": [],
+    "gates": {
+      "coverage": {
+        "status": "fail",
+        "actual": 20.54,
+        "threshold": 75.0,
+        "message": "Coverage 20.54% < 75.0%"
+      },
+      "security_high": {
+        "status": "pass",
+        "actual": 0,
+        "threshold": 0,
+        "message": "Security HIGH 0 ≤ 0"
+      },
+      "security_medium": {
+        "status": "pass",
+        "actual": 0,
+        "threshold": 5,
+        "message": "Security MEDIUM 0 ≤ 5"
+      },
+      "license": {
+        "status": "pass",
+        "actual": 0,
+        "threshold": 0,
+        "message": "License violations 0 ≤ 0"
+      },
+      "active_tools": {
+        "status": "pass",
+        "actual": 2,
+        "threshold": 2,
+        "message": "Active tools 2 ≥ 2"
+      }
+    },
+    "thresholds": {
+      "profile": "secure",
+      "coverage_min": 75.0,
+      "security_high_max": 0,
+      "security_medium_max": 5,
+      "license_violations_max": 0,
+      "active_tools_min": 2,
+      "hard_must_failures_max": 0
+    },
+    "evaluation_date": "2025-08-22T21:37:23.080371Z"
+  },
+  "data_sources": {
+    "coverage": {
+      "status": "available",
+      "file_path": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\coverage.xml",
+      "line_rate": 0.2054,
+      "lines_valid": 45114,
+      "lines_covered": 9266,
+      "coverage_percent": 20.54,
+      "file_size": 1707677,
+      "file_modified": 1755863696.3671794
+    },
+    "security": {
+      "status": "available",
+      "source": "consolidated",
+      "file_path": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\security_consolidated_report.json",
+      "scan_date": "2025-08-22T21:28:29.166922Z",
+      "total_findings": 0
+    },
+    "license": {
+      "status": "available",
+      "source": "allowlist",
+      "file_path": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\license_gate_allowlist_report.json",
+      "total_packages": 84,
+      "compliance_rate": 100.0,
+      "check_date": "2025-08-22T21:30:57.053933Z"
+    }
+  },
+  "generated_at": "2025-08-22T21:37:23.080371Z",
+  "project_root": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502"
+}

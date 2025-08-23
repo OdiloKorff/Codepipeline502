@@ -1,0 +1,115 @@
+{
+  "spec_id": "PROD-DEMO-001",
+  "timestamp": "2025-08-17T18:31:00.012536",
+  "pipeline_version": "production-v1.0",
+  "gates": [
+    {
+      "name": "Token Budget",
+      "passed": true,
+      "score": 100,
+      "details": {
+        "budget_limit": 15000,
+        "tokens_used": 9000,
+        "utilization_percent": 60.0,
+        "calls_count": 2,
+        "estimated_cost_usd": 0.375
+      },
+      "error_message": null
+    },
+    {
+      "name": "Test Coverage",
+      "passed": true,
+      "score": 92,
+      "details": {
+        "threshold_percent": 85,
+        "current_coverage": 92.3,
+        "coverage_gap": 0,
+        "files_count": 15,
+        "lines_total": 1500,
+        "lines_covered": 1384
+      },
+      "error_message": null
+    },
+    {
+      "name": "SBOM & License Policy",
+      "passed": false,
+      "score": 0,
+      "details": {
+        "dependencies_count": 72,
+        "license_violations": 39,
+        "vulnerability_findings": 0,
+        "sbom_generated": true,
+        "allowed_licenses": [
+          "Apache-2.0",
+          "BSD-2-Clause",
+          "ISC",
+          "MPL-2.0",
+          "Python-2.0",
+          "BSD-3-Clause",
+          "MIT"
+        ],
+        "denied_licenses": [
+          "BUSL-1.1",
+          "AGPL-3.0",
+          "GPL-3.0",
+          "Commons-Clause",
+          "SSPL"
+        ]
+      },
+      "error_message": "39 unbekannte Lizenzen"
+    },
+    {
+      "name": "Static Analysis Baselines",
+      "passed": false,
+      "score": 75,
+      "details": {
+        "active_profile": "security-focused",
+        "total_findings": 2,
+        "high_severity_count": 1,
+        "enforce_zero_high": true,
+        "noise_reduction": true,
+        "enabled_rules": 11
+      },
+      "error_message": "1 High-Severity Findings"
+    }
+  ],
+  "overall_passed": false,
+  "overall_score": 66.75,
+  "token_usage": {
+    "spec_id": "PROD-DEMO-001",
+    "budget_limit": 15000,
+    "total_tokens_used": 9000,
+    "budget_remaining": 6000,
+    "budget_utilization_percent": 60.0,
+    "gate_passed": true,
+    "calls_count": 2,
+    "estimated_cost_usd": 0.375,
+    "failure_reason": null,
+    "usage_breakdown": [
+      {
+        "model": "gpt-4o",
+        "prompt_tokens": 3000,
+        "completion_tokens": 2000,
+        "total_tokens": 5000,
+        "cost_usd": 0.21,
+        "timestamp": "2025-08-17T18:29:06.131874"
+      },
+      {
+        "model": "gpt-4o",
+        "prompt_tokens": 2500,
+        "completion_tokens": 1500,
+        "total_tokens": 4000,
+        "cost_usd": 0.165,
+        "timestamp": "2025-08-17T18:29:06.131874"
+      }
+    ]
+  },
+  "coverage_achieved": 92.3,
+  "security_incidents": 0,
+  "artifacts": {
+    "qa_report": "production_qa_report.json",
+    "diff_patch": "generated_diff_PROD-DEMO-001.patch",
+    "security_log": "sandbox_security.log",
+    "coverage_report": "coverage_production.xml"
+  }
+}

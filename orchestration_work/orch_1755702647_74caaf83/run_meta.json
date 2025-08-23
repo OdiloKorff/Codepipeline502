@@ -1,0 +1,50 @@
+{
+  "run_id": "orch_1755702647_74caaf83",
+  "spec": {
+    "prompt": "System tool that uses rm -rf for cleanup operations",
+    "branch": "main",
+    "secure": true,
+    "dry_run": true,
+    "template_type": "cli-app",
+    "policy_version": "1.0.0",
+    "seed": 9847,
+    "token_budget": 2000
+  },
+  "start_time": "2025-08-20T17:10:47.716466",
+  "end_time": null,
+  "duration_seconds": 0.002971,
+  "overall_status": "failure",
+  "total_tokens_used": 0,
+  "gates": [
+    {
+      "name": "Spec-Validation",
+      "status": "pass",
+      "start_time": "2025-08-20T17:10:47.716466",
+      "end_time": "2025-08-20T17:10:47.718442",
+      "duration_seconds": 0.001976,
+      "artifacts": [
+        "orchestration_work\\orch_1755702647_74caaf83\\spec.json"
+      ],
+      "tokens_used": 0,
+      "error_message": "",
+      "metadata": {
+        "spec_hash": "fc668f21165e681b"
+      }
+    },
+    {
+      "name": "Guard",
+      "status": "fail",
+      "start_time": "2025-08-20T17:10:47.718442",
+      "end_time": "2025-08-20T17:10:47.718442",
+      "duration_seconds": 0.0,
+      "artifacts": [],
+      "tokens_used": 0,
+      "error_message": "Risky pattern detected: rm -rf",
+      "metadata": {}
+    }
+  ],
+  "policy_version": "1.0.0",
+  "seed": 9847,
+  "spec_hash": "fc668f21165e681b",
+  "orchestrator_version": "1.0.0"
+}

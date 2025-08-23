@@ -1,0 +1,185 @@
+{
+  "artifact_discovery": {
+    "total_artifacts": 11,
+    "found_artifacts": 11,
+    "missing_required": 0,
+    "invalid_artifacts": 0,
+    "discovery_success_rate": 100.0,
+    "required_artifacts_met": true,
+    "artifacts": {
+      "coverage_report": {
+        "type": "coverage_report",
+        "canonical_path": "coverage.xml",
+        "description": "Code coverage report in XML format",
+        "required": true,
+        "status": "found",
+        "actual_path": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\coverage.xml",
+        "alternative_paths": [
+          "htmlcov/coverage.xml",
+          "reports/coverage.xml"
+        ],
+        "metadata": {
+          "size": 1707677,
+          "modified": 1755863696.3671794
+        }
+      },
+      "security_report": {
+        "type": "security_report",
+        "canonical_path": "reports/security_gate_report.json",
+        "description": "Consolidated security scan results",
+        "required": true,
+        "status": "found",
+        "actual_path": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\security_gate_report.json",
+        "alternative_paths": [
+          "security_report.json",
+          "reports/security_report.json"
+        ],
+        "metadata": {
+          "size": 642,
+          "modified": 1755889116.2215219
+        }
+      },
+      "sbom_report": {
+        "type": "sbom_report",
+        "canonical_path": "reports/sbom.json",
+        "description": "Software Bill of Materials in CycloneDX format",
+        "required": true,
+        "status": "found",
+        "actual_path": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\sbom.json",
+        "alternative_paths": [
+          "sbom.json",
+          "reports/sbom_license_report.json"
+        ],
+        "metadata": {
+          "size": 22777,
+          "modified": 1755889317.0702903
+        }
+      },
+      "license_report": {
+        "type": "license_report",
+        "canonical_path": "reports/sbom_license_report.json",
+        "description": "License compliance check results",
+        "required": true,
+        "status": "found",
+        "actual_path": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\sbom_license_report.json",
+        "alternative_paths": [],
+        "metadata": {
+          "size": 6629,
+          "modified": 1755889317.0752454
+        }
+      },
+      "scorecard_report": {
+        "type": "scorecard_report",
+        "canonical_path": "reports/scorecard.json",
+        "description": "Aggregated quality scorecard",
+        "required": true,
+        "status": "found",
+        "actual_path": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\scorecard.json",
+        "alternative_paths": [],
+        "metadata": {
+          "size": 1480,
+          "modified": 1755889522.238648
+        }
+      },
+      "branch_protection_report": {
+        "type": "branch_protection_report",
+        "canonical_path": "reports/branch_protection_preflight.json",
+        "description": "Branch protection preflight results",
+        "required": false,
+        "status": "found",
+        "actual_path": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\branch_protection_preflight.json",
+        "alternative_paths": [],
+        "metadata": {
+          "size": 588,
+          "modified": 1755889734.2795277
+        }
+      },
+      "secrets_gate_report": {
+        "type": "secrets_gate_report",
+        "canonical_path": "reports/secrets_gate_report.json",
+        "description": "Secrets validation results",
+        "required": false,
+        "status": "found",
+        "actual_path": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\secrets_gate_report.json",
+        "alternative_paths": [],
+        "metadata": {
+          "size": 2491,
+          "modified": 1755893228.0751858
+        }
+      },
+      "policy_hardening_report": {
+        "type": "policy_hardening_report",
+        "canonical_path": "reports/policy_hardening_report.json",
+        "description": "Policy compliance and anti-greenwashing check",
+        "required": false,
+        "status": "found",
+        "actual_path": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\policy_hardening_report.json",
+        "alternative_paths": [],
+        "metadata": {
+          "size": 1817,
+          "modified": 1755893328.8591042
+        }
+      },
+      "e2e_test_report": {
+        "type": "e2e_test_report",
+        "canonical_path": "reports/e2e_smoketest_report.json",
+        "description": "End-to-end pipeline test results",
+        "required": false,
+        "status": "found",
+        "actual_path": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\e2e_smoketest_report.json",
+        "alternative_paths": [],
+        "metadata": {
+          "size": 2891,
+          "modified": 1755893137.759595
+        }
+      },
+      "qa_summary": {
+        "type": "qa_summary",
+        "canonical_path": "qa_summary.json",
+        "description": "Overall QA pipeline summary",
+        "required": false,
+        "status": "found",
+        "actual_path": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\qa_summary.json",
+        "alternative_paths": [
+          "reports/qa_summary.json"
+        ],
+        "metadata": {
+          "size": 900,
+          "modified": 1755863266.735887
+        }
+      },
+      "config_file": {
+        "type": "config_file",
+        "canonical_path": "policies/QUALITY.yml",
+        "description": "Quality policy configuration",
+        "required": false,
+        "status": "found",
+        "actual_path": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\policies\\QUALITY.yml",
+        "alternative_paths": [
+          "QUALITY.yml",
+          ".quality.yml"
+        ],
+        "metadata": {
+          "size": 639,
+          "modified": 1755861138.9903672
+        }
+      }
+    },
+    "discovery_timestamp": "2025-08-22T20:14:55.702862Z"
+  },
+  "normalized_paths": {
+    "coverage_report": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\coverage.xml",
+    "security_report": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\security_gate_report.json",
+    "sbom_report": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\sbom.json",
+    "license_report": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\sbom_license_report.json",
+    "scorecard_report": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\scorecard.json",
+    "branch_protection_report": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\branch_protection_preflight.json",
+    "secrets_gate_report": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\secrets_gate_report.json",
+    "policy_hardening_report": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\policy_hardening_report.json",
+    "e2e_test_report": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\e2e_smoketest_report.json",
+    "qa_summary": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\qa_summary.json",
+    "config_file": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\policies\\QUALITY.yml"
+  },
+  "generated_at": "2025-08-22T20:14:55.702862Z",
+  "project_root": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502"
+}

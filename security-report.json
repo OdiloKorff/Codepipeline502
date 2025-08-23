@@ -1,0 +1,203 @@
+{
+  "scan_id": "DEMO-SECURITY-001",
+  "timestamp": "2025-08-17T20:54:01.807300",
+  "total_findings": 11,
+  "findings_by_severity": {
+    "info": 0,
+    "low": 0,
+    "medium": 0,
+    "high": 10,
+    "critical": 1
+  },
+  "findings": [
+    {
+      "tool": "secret_scan",
+      "severity": "critical",
+      "rule_id": "secret-private-key",
+      "title": "Potential Private Key",
+      "description": "Detected potential private key in source code",
+      "file_path": "production_security_scanner.py",
+      "line_number": 259,
+      "confidence": null,
+      "cwe_id": null,
+      "owasp_category": null,
+      "details": {
+        "pattern": "-----BEGIN PRIVATE KEY-----",
+        "line_content": "(r\"-----BEGIN PRIVATE KEY-----\", \"Private Key\", SecuritySeverity.CRITICAL),"
+      }
+    },
+    {
+      "tool": "secret_scan",
+      "severity": "high",
+      "rule_id": "secret-openai-api-key",
+      "title": "Potential OpenAI API Key",
+      "description": "Detected potential openai api key in source code",
+      "file_path": "test_security_violations.py",
+      "line_number": 45,
+      "confidence": null,
+      "cwe_id": null,
+      "owasp_category": null,
+      "details": {
+        "pattern": "sk-[a-zA-Z0-9]{48}",
+        "line_content": "OPENAI_API_KEY = \"sk-1234567890abcdef1234567890abcdef1234567890abcdef12\""
+      }
+    },
+    {
+      "tool": "secret_scan",
+      "severity": "high",
+      "rule_id": "secret-api-key",
+      "title": "Potential API Key",
+      "description": "Detected potential api key in source code",
+      "file_path": "test_security_violations.py",
+      "line_number": 45,
+      "confidence": null,
+      "cwe_id": null,
+      "owasp_category": null,
+      "details": {
+        "pattern": "api[_-]?key\\s*=\\s*['\\\"][^'\\\"]{16,}",
+        "line_content": "OPENAI_API_KEY = \"sk-1234567890abcdef1234567890abcdef1234567890abcdef12\""
+      }
+    },
+    {
+      "tool": "secret_scan",
+      "severity": "high",
+      "rule_id": "secret-secret-key",
+      "title": "Potential Secret Key",
+      "description": "Detected potential secret key in source code",
+      "file_path": "test_security_violations.py",
+      "line_number": 46,
+      "confidence": null,
+      "cwe_id": null,
+      "owasp_category": null,
+      "details": {
+        "pattern": "secret[_-]?key\\s*=\\s*['\\\"][^'\\\"]{16,}",
+        "line_content": "AWS_SECRET_KEY = \"wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY\""
+      }
+    },
+    {
+      "tool": "secret_scan",
+      "severity": "high",
+      "rule_id": "secret-hardcoded-password",
+      "title": "Potential Hardcoded Password",
+      "description": "Detected potential hardcoded password in source code",
+      "file_path": "test_security_violations.py",
+      "line_number": 47,
+      "confidence": null,
+      "cwe_id": null,
+      "owasp_category": null,
+      "details": {
+        "pattern": "password\\s*=\\s*['\\\"][^'\\\"]{8,}",
+        "line_content": "DATABASE_PASSWORD = \"super_secret_password_123!\""
+      }
+    },
+    {
+      "tool": "secret_scan",
+      "severity": "high",
+      "rule_id": "secret-github-personal-access-token",
+      "title": "Potential GitHub Personal Access Token",
+      "description": "Detected potential github personal access token in source code",
+      "file_path": "test_security_violations.py",
+      "line_number": 51,
+      "confidence": null,
+      "cwe_id": null,
+      "owasp_category": null,
+      "details": {
+        "pattern": "ghp_[a-zA-Z0-9]{36}",
+        "line_content": "\"api_token\": \"ghp_1234567890abcdef1234567890abcdef123456\","
+      }
+    },
+    {
+      "tool": "secret_scan",
+      "severity": "high",
+      "rule_id": "secret-openai-api-key",
+      "title": "Potential OpenAI API Key",
+      "description": "Detected potential openai api key in source code",
+      "file_path": "test_security_violations\\vulnerable_secrets.py",
+      "line_number": 5,
+      "confidence": null,
+      "cwe_id": null,
+      "owasp_category": null,
+      "details": {
+        "pattern": "sk-[a-zA-Z0-9]{48}",
+        "line_content": "OPENAI_API_KEY = \"sk-1234567890abcdef1234567890abcdef1234567890abcdef12\""
+      }
+    },
+    {
+      "tool": "secret_scan",
+      "severity": "high",
+      "rule_id": "secret-api-key",
+      "title": "Potential API Key",
+      "description": "Detected potential api key in source code",
+      "file_path": "test_security_violations\\vulnerable_secrets.py",
+      "line_number": 5,
+      "confidence": null,
+      "cwe_id": null,
+      "owasp_category": null,
+      "details": {
+        "pattern": "api[_-]?key\\s*=\\s*['\\\"][^'\\\"]{16,}",
+        "line_content": "OPENAI_API_KEY = \"sk-1234567890abcdef1234567890abcdef1234567890abcdef12\""
+      }
+    },
+    {
+      "tool": "secret_scan",
+      "severity": "high",
+      "rule_id": "secret-secret-key",
+      "title": "Potential Secret Key",
+      "description": "Detected potential secret key in source code",
+      "file_path": "test_security_violations\\vulnerable_secrets.py",
+      "line_number": 6,
+      "confidence": null,
+      "cwe_id": null,
+      "owasp_category": null,
+      "details": {
+        "pattern": "secret[_-]?key\\s*=\\s*['\\\"][^'\\\"]{16,}",
+        "line_content": "AWS_SECRET_KEY = \"wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY\""
+      }
+    },
+    {
+      "tool": "secret_scan",
+      "severity": "high",
+      "rule_id": "secret-hardcoded-password",
+      "title": "Potential Hardcoded Password",
+      "description": "Detected potential hardcoded password in source code",
+      "file_path": "test_security_violations\\vulnerable_secrets.py",
+      "line_number": 7,
+      "confidence": null,
+      "cwe_id": null,
+      "owasp_category": null,
+      "details": {
+        "pattern": "password\\s*=\\s*['\\\"][^'\\\"]{8,}",
+        "line_content": "DATABASE_PASSWORD = \"super_secret_password_123!\""
+      }
+    },
+    {
+      "tool": "secret_scan",
+      "severity": "high",
+      "rule_id": "secret-github-personal-access-token",
+      "title": "Potential GitHub Personal Access Token",
+      "description": "Detected potential github personal access token in source code",
+      "file_path": "test_security_violations\\vulnerable_secrets.py",
+      "line_number": 11,
+      "confidence": null,
+      "cwe_id": null,
+      "owasp_category": null,
+      "details": {
+        "pattern": "ghp_[a-zA-Z0-9]{36}",
+        "line_content": "\"api_token\": \"ghp_1234567890abcdef1234567890abcdef123456\","
+      }
+    }
+  ],
+  "scan_duration_seconds": 7.216634273529053,
+  "tools_used": [
+    "semgrep",
+    "bandit",
+    "secret_scan",
+    "dependency_audit"
+  ],
+  "exit_code": 1,
+  "passed": false,
+  "policy_violations": [
+    "1 critical findings > threshold 0",
+    "10 high findings > threshold 0"
+  ]
+}

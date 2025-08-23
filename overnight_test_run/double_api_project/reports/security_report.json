@@ -1,0 +1,15 @@
+{
+  "summary": {
+    "total_findings": 0,
+    "high_severity": 0,
+    "active_tools": 1,
+    "scan_duration_seconds": 15.2
+  },
+  "tools": {
+    "bandit": {
+      "status": "completed",
+      "findings": 0
+    }
+  },
+  "findings": []
+}

@@ -1,0 +1,167 @@
+{
+  "export_timestamp": "2025-08-17T21:05:26.187035",
+  "runs": {
+    "91c57bc9": {
+      "run_id": "91c57bc9",
+      "spec_id": "DEMO-FEATURE-001",
+      "spec_hash": "abc123def456",
+      "model": "gpt-4o-mini",
+      "token_budget": 2000,
+      "start_time": "2025-08-17T21:05:25.831023",
+      "end_time": "2025-08-17T21:05:26.182044",
+      "status": "failed",
+      "exit_code": 1,
+      "gates": {
+        "spec_validation": {
+          "result": "passed",
+          "execution_time": 0.5,
+          "details": {
+            "spec_valid": true
+          },
+          "timestamp": "2025-08-17T21:05:25.857024"
+        },
+        "prompt_guard": {
+          "result": "passed",
+          "execution_time": 1.2,
+          "details": {
+            "safety_score": 95
+          },
+          "timestamp": "2025-08-17T21:05:25.889036"
+        },
+        "llm_generation": {
+          "result": "passed",
+          "execution_time": 15.8,
+          "details": {
+            "tokens_used": 1850
+          },
+          "timestamp": "2025-08-17T21:05:25.921065"
+        },
+        "diff_validation": {
+          "result": "passed",
+          "execution_time": 0.3,
+          "details": {
+            "hunks": 3,
+            "files": 2
+          },
+          "timestamp": "2025-08-17T21:05:25.953025"
+        },
+        "sandbox_application": {
+          "result": "passed",
+          "execution_time": 2.1,
+          "details": {
+            "files_modified": 2
+          },
+          "timestamp": "2025-08-17T21:05:25.985033"
+        },
+        "test_coverage": {
+          "result": "passed",
+          "execution_time": 12.3,
+          "details": {
+            "coverage": 87.5
+          },
+          "timestamp": "2025-08-17T21:05:26.017026"
+        },
+        "linting": {
+          "result": "passed",
+          "execution_time": 1.8,
+          "details": {
+            "violations": 0
+          },
+          "timestamp": "2025-08-17T21:05:26.048024"
+        },
+        "type_checking": {
+          "result": "passed",
+          "execution_time": 3.5,
+          "details": {
+            "errors": 0
+          },
+          "timestamp": "2025-08-17T21:05:26.080022"
+        },
+        "security_scan": {
+          "result": "failed",
+          "execution_time": 8.7,
+          "details": {
+            "critical": 1,
+            "high": 3
+          },
+          "timestamp": "2025-08-17T21:05:26.112043"
+        },
+        "license_check": {
+          "result": "passed",
+          "execution_time": 2.1,
+          "details": {
+            "violations": 0
+          },
+          "timestamp": "2025-08-17T21:05:26.144032"
+        },
+        "token_budget": {
+          "result": "passed",
+          "execution_time": 0.1,
+          "details": {
+            "used": 1850,
+            "budget": 2000
+          },
+          "timestamp": "2025-08-17T21:05:26.176026"
+        }
+      },
+      "metrics": {
+        "total_tokens": 1850,
+        "estimated_cost": 0.00925,
+        "gates_passed": 10,
+        "gates_failed": 1,
+        "total_duration": 48.400000000000006,
+        "artifacts_generated": 7
+      },
+      "artifacts": [
+        {
+          "name": "qa-scorecard.json",
+          "path": "qa-scorecard.json",
+          "size": 1632,
+          "timestamp": "2025-08-17T21:05:26.177027"
+        },
+        {
+          "name": "qa-scorecard.md",
+          "path": "qa-scorecard.md",
+          "size": 578,
+          "timestamp": "2025-08-17T21:05:26.177027"
+        },
+        {
+          "name": "security-report.json",
+          "path": "security-report.json",
+          "size": 6938,
+          "timestamp": "2025-08-17T21:05:26.178029"
+        },
+        {
+          "name": "security-report.md",
+          "path": "security-report.md",
+          "size": 2505,
+          "timestamp": "2025-08-17T21:05:26.179026"
+        },
+        {
+          "name": "sbom-license-report.json",
+          "path": "sbom-license-report.json",
+          "size": 21467,
+          "timestamp": "2025-08-17T21:05:26.179026"
+        },
+        {
+          "name": "sbom-license-report.md",
+          "path": "sbom-license-report.md",
+          "size": 4093,
+          "timestamp": "2025-08-17T21:05:26.180030"
+        },
+        {
+          "name": "branch-protection-pr-report.md",
+          "path": "branch-protection-pr-report.md",
+          "size": 1277,
+          "timestamp": "2025-08-17T21:05:26.181029"
+        }
+      ]
+    }
+  },
+  "statistics": {
+    "total_runs": 1,
+    "completed_runs": 0,
+    "failed_runs": 1,
+    "success_rate": 0.0
+  }
+}

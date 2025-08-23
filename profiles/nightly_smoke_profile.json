@@ -1,0 +1,17 @@
+{
+  "name": "nightly_smoke",
+  "description": "Minimal nightly smoke test profile for early warning system",
+  "dry_run": true,
+  "timeout_minutes": 15,
+  "coverage_threshold": 20.0,
+  "security_high_max": 0,
+  "license_violations_max": 5,
+  "active_tools_min": 1,
+  "components": [
+    "feature_spec_validation",
+    "prompt_guard_check",
+    "security_scan",
+    "coverage_check",
+    "scorecard_generation"
+  ]
+}

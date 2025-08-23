@@ -1,0 +1,82 @@
+# CodePipeline Development Dependencies
+# ====================================
+# 
+# Diese Datei enthält optionale Entwicklungstools für das CodePipeline-Projekt.
+# Der lokale CI kann ohne diese Tools durchlaufen ('skip' Status ist zulässig),
+# aber 'fail' Status sollte vermieden werden.
+#
+# Installation:
+# pip install -r requirements-dev.txt
+#
+# Oder einzeln installieren nach Bedarf:
+# pip install ruff mypy pytest pytest-cov
+
+# === Core Testing & Quality Tools ===
+pytest>=7.0.0
+pytest-cov>=4.0.0
+pytest-anyio>=0.7.0
+
+# === Linting & Type Checking ===
+ruff>=0.1.0
+mypy>=1.0.0
+
+# === Security Scanning Tools (optional) ===
+# Hinweis: Diese Tools sind optional und können system-weit installiert werden
+# oder über andere Paketmanager (npm, go, etc.)
+
+# Python Security Scanner
+bandit>=1.7.0
+
+# Semgrep (Static Analysis)
+# Installationshinweise:
+# - Via pip: pip install semgrep
+# - Via homebrew: brew install semgrep  
+# - Via npm: npm install -g @semgrep/cli
+# - Siehe: https://semgrep.dev/docs/getting-started/
+semgrep>=1.0.0
+
+# Secret Scanner
+# gitleaks ist ein Go-Tool, Installation:
+# - Via homebrew: brew install gitleaks
+# - Via go: go install github.com/gitleaks/gitleaks/v8@latest
+# - Binary download: https://github.com/gitleaks/gitleaks/releases
+# gitleaks (nicht via pip verfügbar)
+
+# Dependency Vulnerability Scanner
+# pip-audit>=2.0.0
+# oder
+# safety>=2.0.0
+
+# === Zusätzliche Entwicklungstools ===
+typer>=0.9.0
+pydantic>=2.0.0
+fastapi>=0.100.0
+uvicorn>=0.20.0
+pyyaml>=6.0.0
+requests>=2.28.0
+
+# === Hinweise ===
+# 
+# 1. Lokaler CI Status:
+#    - 'skip' Status: Zulässig wenn Tool nicht installiert
+#    - 'fail' Status: Sollte vermieden werden (bedeutet Tool-Fehler)
+#    - 'pass' Status: Ideal, Tool läuft erfolgreich
+#
+# 2. Mindestanforderungen für lokalen CI:
+#    - Python 3.10+
+#    - Hauptpaket 'codepipeline' muss importierbar sein
+#    - Grundlegende Tests sollten laufen können
+#
+# 3. Tool-spezifische Hinweise:
+#    - ruff: Linter für Python Code, konfiguriert in pyproject.toml
+#    - mypy: Type Checker, konfiguriert in mypy.ini (falls vorhanden)
+#    - pytest: Test Runner mit Coverage, konfiguriert in pyproject.toml
+#    - semgrep: SAST Scanner, erfordert separate Installation
+#    - bandit: Python Security Scanner
+#    - gitleaks: Git Secret Scanner, erfordert separate Installation
+#    - pip-audit: Python Dependency Vulnerability Scanner
+#
+# 4. MVP-Verhalten:
+#    Das System ist so konzipiert, dass es auch ohne alle Tools funktioniert.
+#    Fehlende Tools werden als 'skip' markiert und beeinträchtigen nicht
+#    den Gesamtstatus 'overall: pass' des lokalen CI.

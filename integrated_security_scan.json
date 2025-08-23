@@ -1,0 +1,529 @@
+{
+  "timestamp": "2025-08-17T18:02:48.048716",
+  "scan_duration_seconds": 8.882111,
+  "threshold": "high",
+  "passed": false,
+  "exit_code": 1,
+  "semgrep": {
+    "status": "not_installed",
+    "error": "Semgrep not found"
+  },
+  "bandit": {
+    "status": "not_installed",
+    "error": "Bandit not found"
+  },
+  "secrets": {
+    "status": "completed",
+    "tool": "regex_secrets",
+    "findings_count": 15,
+    "raw_data": [
+      {
+        "tool": "regex_secrets",
+        "rule_id": "secret_secret",
+        "severity": "high",
+        "message": "Potential secret found in code",
+        "file": "demo_secret_flow.py",
+        "line": 48,
+        "column": null,
+        "cwe": null,
+        "confidence": null,
+        "raw_output": {
+          "match": "secret = \"sk-demo-secret-12345-not-real\"..."
+        }
+      },
+      {
+        "tool": "regex_secrets",
+        "rule_id": "secret_api_key",
+        "severity": "high",
+        "message": "Potential api_key found in code",
+        "file": "test_security_violations.py",
+        "line": 45,
+        "column": null,
+        "cwe": null,
+        "confidence": null,
+        "raw_output": {
+          "match": "API_KEY = \"sk-1234567890abcdef1234567890abcdef1234..."
+        }
+      },
+      {
+        "tool": "regex_secrets",
+        "rule_id": "secret_api_key",
+        "severity": "high",
+        "message": "Potential api_key found in code",
+        "file": "test_security_violations.py",
+        "line": 60,
+        "column": null,
+        "cwe": null,
+        "confidence": null,
+        "raw_output": {
+          "match": "API-Key\": \"AIzaSyDdVgKwhZl-aNLqx4MIIZkMTj2F_123456..."
+        }
+      },
+      {
+        "tool": "regex_secrets",
+        "rule_id": "secret_password",
+        "severity": "high",
+        "message": "Potential password found in code",
+        "file": "test_security_violations.py",
+        "line": 47,
+        "column": null,
+        "cwe": null,
+        "confidence": null,
+        "raw_output": {
+          "match": "PASSWORD = \"super_secret_password_123!\"..."
+        }
+      },
+      {
+        "tool": "regex_secrets",
+        "rule_id": "secret_token",
+        "severity": "high",
+        "message": "Potential token found in code",
+        "file": "test_security_violations.py",
+        "line": 51,
+        "column": null,
+        "cwe": null,
+        "confidence": null,
+        "raw_output": {
+          "match": "token\": \"ghp_1234567890abcdef1234567890abcdef12345..."
+        }
+      },
+      {
+        "tool": "regex_secrets",
+        "rule_id": "secret_secret",
+        "severity": "high",
+        "message": "Potential secret found in code",
+        "file": "test_security_violations.py",
+        "line": 52,
+        "column": null,
+        "cwe": null,
+        "confidence": null,
+        "raw_output": {
+          "match": "secret\": \"my-super-secret-jwt-key-that-should-not-..."
+        }
+      },
+      {
+        "tool": "regex_secrets",
+        "rule_id": "secret_password",
+        "severity": "high",
+        "message": "Potential password found in code",
+        "file": ".venv\\Lib\\site-packages\\pip\\_internal\\network\\auth.py",
+        "line": 232,
+        "column": null,
+        "cwe": null,
+        "confidence": null,
+        "raw_output": {
+          "match": "Password: \")\n        return username, password, Tr..."
+        }
+      },
+      {
+        "tool": "regex_secrets",
+        "rule_id": "secret_password",
+        "severity": "high",
+        "message": "Potential password found in code",
+        "file": ".venv\\Lib\\site-packages\\pip\\_internal\\utils\\misc.py",
+        "line": 642,
+        "column": null,
+        "cwe": null,
+        "confidence": null,
+        "raw_output": {
+          "match": "password = \"\"\n    else:\n        user = urllib.pars..."
+        }
+      },
+      {
+        "tool": "regex_secrets",
+        "rule_id": "secret_password",
+        "severity": "high",
+        "message": "Potential password found in code",
+        "file": ".venv\\Lib\\site-packages\\setuptools\\_distutils\\command\\register.py",
+        "line": 158,
+        "column": null,
+        "cwe": null,
+        "confidence": null,
+        "raw_output": {
+          "match": "Password: ')\n\n            # set up the authenticat..."
+        }
+      },
+      {
+        "tool": "regex_secrets",
+        "rule_id": "secret_password",
+        "severity": "high",
+        "message": "Potential password found in code",
+        "file": ".venv\\Lib\\site-packages\\setuptools\\_distutils\\command\\register.py",
+        "line": 197,
+        "column": null,
+        "cwe": null,
+        "confidence": null,
+        "raw_output": {
+          "match": "Password: ')\n                while not data['..."
+        }
+      },
+      {
+        "tool": "regex_secrets",
+        "rule_id": "secret_api_key",
+        "severity": "high",
+        "message": "Potential api_key found in code",
+        "file": "test_security_violations\\vulnerable_secrets.py",
+        "line": 5,
+        "column": null,
+        "cwe": null,
+        "confidence": null,
+        "raw_output": {
+          "match": "API_KEY = \"sk-1234567890abcdef1234567890abcdef1234..."
+        }
+      },
+      {
+        "tool": "regex_secrets",
+        "rule_id": "secret_api_key",
+        "severity": "high",
+        "message": "Potential api_key found in code",
+        "file": "test_security_violations\\vulnerable_secrets.py",
+        "line": 20,
+        "column": null,
+        "cwe": null,
+        "confidence": null,
+        "raw_output": {
+          "match": "API-Key\": \"AIzaSyDdVgKwhZl-aNLqx4MIIZkMTj2F_123456..."
+        }
+      },
+      {
+        "tool": "regex_secrets",
+        "rule_id": "secret_password",
+        "severity": "high",
+        "message": "Potential password found in code",
+        "file": "test_security_violations\\vulnerable_secrets.py",
+        "line": 7,
+        "column": null,
+        "cwe": null,
+        "confidence": null,
+        "raw_output": {
+          "match": "PASSWORD = \"super_secret_password_123!\"..."
+        }
+      },
+      {
+        "tool": "regex_secrets",
+        "rule_id": "secret_token",
+        "severity": "high",
+        "message": "Potential token found in code",
+        "file": "test_security_violations\\vulnerable_secrets.py",
+        "line": 11,
+        "column": null,
+        "cwe": null,
+        "confidence": null,
+        "raw_output": {
+          "match": "token\": \"ghp_1234567890abcdef1234567890abcdef12345..."
+        }
+      },
+      {
+        "tool": "regex_secrets",
+        "rule_id": "secret_secret",
+        "severity": "high",
+        "message": "Potential secret found in code",
+        "file": "test_security_violations\\vulnerable_secrets.py",
+        "line": 12,
+        "column": null,
+        "cwe": null,
+        "confidence": null,
+        "raw_output": {
+          "match": "secret\": \"my-super-secret-jwt-key-that-should-not-..."
+        }
+      }
+    ]
+  },
+  "dependencies": {
+    "status": "completed",
+    "tools": {
+      "safety": {
+        "status": "completed",
+        "findings_count": 0,
+        "raw_data": []
+      },
+      "pip_audit": {
+        "status": "not_installed",
+        "error": "pip-audit not found"
+      },
+      "licenses": {
+        "status": "completed",
+        "total_packages": 72,
+        "violations": 0,
+        "findings_count": 0,
+        "raw_data": {
+          "packages": [
+            [
+              "aiohappyeyeballs",
+              "2.6.1",
+              "PSF-2.0"
+            ],
+            [
+              "aiohttp",
+              "3.12.11",
+              "Apache-2.0"
+            ],
+            [
+              "aiosignal",
+              "1.3.2",
+              "Apache 2.0"
+            ],
+            [
+              "annotated-types",
+              "0.7.0",
+              "Development Status :: 4 - Beta"
+            ],
+            [
+              "anyio",
+              "4.9.0",
+              "MIT"
+            ],
+            [
+              "async-timeout",
+              "5.0.1",
+              "Apache 2"
+            ],
+            [
+              "attrs",
+              "25.3.0",
+              "Development Status :: 5 - Production/Stable"
+            ],
+            [
+              "Authlib",
+              "1.6.1",
+              "BSD-3-Clause"
+            ],
+            [
+              "backports-datetime-fromisoformat",
+              "2.0.3",
+              "MIT License\n\nCopyright (c) 2018 Michael Overmeyer\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n"
+            ],
+            [
+              "certifi",
+              "2025.4.26",
+              "MPL-2.0"
+            ]
+          ],
+          "violations": []
+        }
+      }
+    },
+    "total_findings": 0
+  },
+  "findings": [
+    {
+      "tool": "regex_secrets",
+      "rule_id": "secret_secret",
+      "severity": "high",
+      "message": "Potential secret found in code",
+      "file": "demo_secret_flow.py",
+      "line": 48,
+      "column": null,
+      "cwe": null,
+      "confidence": null,
+      "raw_output": {
+        "match": "secret = \"sk-demo-secret-12345-not-real\"..."
+      }
+    },
+    {
+      "tool": "regex_secrets",
+      "rule_id": "secret_api_key",
+      "severity": "high",
+      "message": "Potential api_key found in code",
+      "file": "test_security_violations.py",
+      "line": 45,
+      "column": null,
+      "cwe": null,
+      "confidence": null,
+      "raw_output": {
+        "match": "API_KEY = \"sk-1234567890abcdef1234567890abcdef1234..."
+      }
+    },
+    {
+      "tool": "regex_secrets",
+      "rule_id": "secret_api_key",
+      "severity": "high",
+      "message": "Potential api_key found in code",
+      "file": "test_security_violations.py",
+      "line": 60,
+      "column": null,
+      "cwe": null,
+      "confidence": null,
+      "raw_output": {
+        "match": "API-Key\": \"AIzaSyDdVgKwhZl-aNLqx4MIIZkMTj2F_123456..."
+      }
+    },
+    {
+      "tool": "regex_secrets",
+      "rule_id": "secret_password",
+      "severity": "high",
+      "message": "Potential password found in code",
+      "file": "test_security_violations.py",
+      "line": 47,
+      "column": null,
+      "cwe": null,
+      "confidence": null,
+      "raw_output": {
+        "match": "PASSWORD = \"super_secret_password_123!\"..."
+      }
+    },
+    {
+      "tool": "regex_secrets",
+      "rule_id": "secret_token",
+      "severity": "high",
+      "message": "Potential token found in code",
+      "file": "test_security_violations.py",
+      "line": 51,
+      "column": null,
+      "cwe": null,
+      "confidence": null,
+      "raw_output": {
+        "match": "token\": \"ghp_1234567890abcdef1234567890abcdef12345..."
+      }
+    },
+    {
+      "tool": "regex_secrets",
+      "rule_id": "secret_secret",
+      "severity": "high",
+      "message": "Potential secret found in code",
+      "file": "test_security_violations.py",
+      "line": 52,
+      "column": null,
+      "cwe": null,
+      "confidence": null,
+      "raw_output": {
+        "match": "secret\": \"my-super-secret-jwt-key-that-should-not-..."
+      }
+    },
+    {
+      "tool": "regex_secrets",
+      "rule_id": "secret_password",
+      "severity": "high",
+      "message": "Potential password found in code",
+      "file": ".venv\\Lib\\site-packages\\pip\\_internal\\network\\auth.py",
+      "line": 232,
+      "column": null,
+      "cwe": null,
+      "confidence": null,
+      "raw_output": {
+        "match": "Password: \")\n        return username, password, Tr..."
+      }
+    },
+    {
+      "tool": "regex_secrets",
+      "rule_id": "secret_password",
+      "severity": "high",
+      "message": "Potential password found in code",
+      "file": ".venv\\Lib\\site-packages\\pip\\_internal\\utils\\misc.py",
+      "line": 642,
+      "column": null,
+      "cwe": null,
+      "confidence": null,
+      "raw_output": {
+        "match": "password = \"\"\n    else:\n        user = urllib.pars..."
+      }
+    },
+    {
+      "tool": "regex_secrets",
+      "rule_id": "secret_password",
+      "severity": "high",
+      "message": "Potential password found in code",
+      "file": ".venv\\Lib\\site-packages\\setuptools\\_distutils\\command\\register.py",
+      "line": 158,
+      "column": null,
+      "cwe": null,
+      "confidence": null,
+      "raw_output": {
+        "match": "Password: ')\n\n            # set up the authenticat..."
+      }
+    },
+    {
+      "tool": "regex_secrets",
+      "rule_id": "secret_password",
+      "severity": "high",
+      "message": "Potential password found in code",
+      "file": ".venv\\Lib\\site-packages\\setuptools\\_distutils\\command\\register.py",
+      "line": 197,
+      "column": null,
+      "cwe": null,
+      "confidence": null,
+      "raw_output": {
+        "match": "Password: ')\n                while not data['..."
+      }
+    },
+    {
+      "tool": "regex_secrets",
+      "rule_id": "secret_api_key",
+      "severity": "high",
+      "message": "Potential api_key found in code",
+      "file": "test_security_violations\\vulnerable_secrets.py",
+      "line": 5,
+      "column": null,
+      "cwe": null,
+      "confidence": null,
+      "raw_output": {
+        "match": "API_KEY = \"sk-1234567890abcdef1234567890abcdef1234..."
+      }
+    },
+    {
+      "tool": "regex_secrets",
+      "rule_id": "secret_api_key",
+      "severity": "high",
+      "message": "Potential api_key found in code",
+      "file": "test_security_violations\\vulnerable_secrets.py",
+      "line": 20,
+      "column": null,
+      "cwe": null,
+      "confidence": null,
+      "raw_output": {
+        "match": "API-Key\": \"AIzaSyDdVgKwhZl-aNLqx4MIIZkMTj2F_123456..."
+      }
+    },
+    {
+      "tool": "regex_secrets",
+      "rule_id": "secret_password",
+      "severity": "high",
+      "message": "Potential password found in code",
+      "file": "test_security_violations\\vulnerable_secrets.py",
+      "line": 7,
+      "column": null,
+      "cwe": null,
+      "confidence": null,
+      "raw_output": {
+        "match": "PASSWORD = \"super_secret_password_123!\"..."
+      }
+    },
+    {
+      "tool": "regex_secrets",
+      "rule_id": "secret_token",
+      "severity": "high",
+      "message": "Potential token found in code",
+      "file": "test_security_violations\\vulnerable_secrets.py",
+      "line": 11,
+      "column": null,
+      "cwe": null,
+      "confidence": null,
+      "raw_output": {
+        "match": "token\": \"ghp_1234567890abcdef1234567890abcdef12345..."
+      }
+    },
+    {
+      "tool": "regex_secrets",
+      "rule_id": "secret_secret",
+      "severity": "high",
+      "message": "Potential secret found in code",
+      "file": "test_security_violations\\vulnerable_secrets.py",
+      "line": 12,
+      "column": null,
+      "cwe": null,
+      "confidence": null,
+      "raw_output": {
+        "match": "secret\": \"my-super-secret-jwt-key-that-should-not-..."
+      }
+    }
+  ],
+  "total_findings": 15,
+  "findings_by_severity": {
+    "none": 0,
+    "low": 0,
+    "medium": 0,
+    "high": 15,
+    "critical": 0
+  },
+  "failing_severity": "high"
+}

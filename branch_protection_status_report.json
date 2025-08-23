@@ -1,0 +1,52 @@
+{
+  "spec_id": "BRANCH-DEMO-001",
+  "timestamp": "2025-08-17T18:56:55.430586",
+  "branch_protection": {
+    "verified": true,
+    "main_branch": "main",
+    "feature_branch": "feature/BRANCH-DEMO-001"
+  },
+  "quality_gates": [
+    {
+      "name": "Test Coverage",
+      "passed": true,
+      "score": 85,
+      "details": "85% coverage achieved",
+      "artifacts_count": 1
+    },
+    {
+      "name": "Security Scan",
+      "passed": true,
+      "score": 95,
+      "details": "No high-severity findings",
+      "artifacts_count": 1
+    },
+    {
+      "name": "License Check",
+      "passed": true,
+      "score": 100,
+      "details": "All licenses compliant",
+      "artifacts_count": 2
+    }
+  ],
+  "artifacts": {
+    "count": 3,
+    "types": [
+      "qa_scorecard",
+      "security_report",
+      "sbom"
+    ],
+    "files": [
+      "qa_scorecard_BRANCH-DEMO-001.json",
+      "security_scan_report.json",
+      "sbom_BRANCH-DEMO-001.json"
+    ]
+  },
+  "summary": {
+    "all_gates_green": true,
+    "ready_for_pr": true,
+    "total_gates": 3,
+    "passed_gates": 3,
+    "failed_gates": 0
+  }
+}

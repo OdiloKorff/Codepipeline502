@@ -1,0 +1,184 @@
+{
+  "timestamp": "2025-08-17T17:17:31.064941",
+  "passed": false,
+  "total_score": 51.0,
+  "score_threshold": 95.0,
+  "inputs": [
+    {
+      "name": "test_coverage",
+      "value": 0.0,
+      "weight": 25.0,
+      "passed": false,
+      "details": {
+        "coverage_percent": 0.0,
+        "threshold": 80,
+        "file_found": false
+      },
+      "hard_must": true,
+      "failure_reason": "Coverage 0.0% < 80%"
+    },
+    {
+      "name": "test_results",
+      "value": 0.0,
+      "weight": 25.0,
+      "passed": false,
+      "details": {
+        "tests_green": false,
+        "environment_variable": "TESTS_GREEN"
+      },
+      "hard_must": true,
+      "failure_reason": "Tests not green"
+    },
+    {
+      "name": "linting",
+      "value": 1.0,
+      "weight": 2.0,
+      "passed": true,
+      "details": {
+        "pylint": {
+          "status": "not_available"
+        },
+        "flake8": {
+          "status": "not_available"
+        }
+      },
+      "hard_must": true,
+      "failure_reason": null
+    },
+    {
+      "name": "type_checking",
+      "value": 1.0,
+      "weight": 3.0,
+      "passed": true,
+      "details": {
+        "mypy": {
+          "status": "not_available"
+        }
+      },
+      "hard_must": true,
+      "failure_reason": null
+    },
+    {
+      "name": "static_analysis",
+      "value": 1.0,
+      "weight": 15.0,
+      "passed": true,
+      "details": {
+        "high": 0,
+        "medium": 0,
+        "low": 0
+      },
+      "hard_must": true,
+      "failure_reason": null
+    },
+    {
+      "name": "secret_scanning",
+      "value": 1.0,
+      "weight": 10.0,
+      "passed": true,
+      "details": {},
+      "hard_must": true,
+      "failure_reason": null
+    },
+    {
+      "name": "dependency_vulnerabilities",
+      "value": 1.0,
+      "weight": 10.0,
+      "passed": true,
+      "details": {},
+      "hard_must": false,
+      "failure_reason": null
+    },
+    {
+      "name": "license_compliance",
+      "value": 1.0,
+      "weight": 10.0,
+      "passed": true,
+      "details": {},
+      "hard_must": false,
+      "failure_reason": null
+    },
+    {
+      "name": "token_budget",
+      "value": 1.0,
+      "weight": 2.0,
+      "passed": true,
+      "details": {
+        "used": 0.0,
+        "limit": 10000.0,
+        "ratio": 0.0,
+        "exceeded": false
+      },
+      "hard_must": false,
+      "failure_reason": null
+    }
+  ],
+  "hard_must_failures": [
+    "Coverage 0.0% < 80%",
+    "Tests not green"
+  ],
+  "summary": {
+    "total_inputs": 9,
+    "passed_inputs": 7,
+    "failed_inputs": 2,
+    "hard_must_inputs": 6,
+    "hard_must_failures": 2,
+    "categories": {
+      "test_coverage": {
+        "score": 0.0,
+        "weight": 25.0,
+        "passed": false,
+        "hard_must": true
+      },
+      "test_results": {
+        "score": 0.0,
+        "weight": 25.0,
+        "passed": false,
+        "hard_must": true
+      },
+      "linting": {
+        "score": 1.0,
+        "weight": 2.0,
+        "passed": true,
+        "hard_must": true
+      },
+      "type_checking": {
+        "score": 1.0,
+        "weight": 3.0,
+        "passed": true,
+        "hard_must": true
+      },
+      "static_analysis": {
+        "score": 1.0,
+        "weight": 15.0,
+        "passed": true,
+        "hard_must": true
+      },
+      "secret_scanning": {
+        "score": 1.0,
+        "weight": 10.0,
+        "passed": true,
+        "hard_must": true
+      },
+      "dependency_vulnerabilities": {
+        "score": 1.0,
+        "weight": 10.0,
+        "passed": true,
+        "hard_must": false
+      },
+      "license_compliance": {
+        "score": 1.0,
+        "weight": 10.0,
+        "passed": true,
+        "hard_must": false
+      },
+      "token_budget": {
+        "score": 1.0,
+        "weight": 2.0,
+        "passed": true,
+        "hard_must": false
+      }
+    }
+  },
+  "exit_code": 1
+}

@@ -1,0 +1,66 @@
+{
+  "secure_policy_roadmap": {
+    "current_stage": "sprint1",
+    "smoke_threshold": "20.0% (constant)",
+    "stages": {
+      "sprint1": {
+        "stage": "sprint1",
+        "coverage_min": 35.0,
+        "security_high_max": 0,
+        "security_medium_max": 10,
+        "license_violations_max": 3,
+        "active_tools_min": 2,
+        "description": "Sprint 1: Erste Secure-Stufe mit realistischen Schwellwerten",
+        "target_date": "2025-01-31",
+        "status": "current",
+        "achievable": true,
+        "coverage_increase": "current"
+      },
+      "sprint2": {
+        "stage": "sprint2",
+        "coverage_min": 50.0,
+        "security_high_max": 0,
+        "security_medium_max": 5,
+        "license_violations_max": 1,
+        "active_tools_min": 2,
+        "description": "Sprint 2: Mittlere Secure-Stufe mit verschärften Kriterien",
+        "target_date": "2025-03-31",
+        "status": "future",
+        "achievable": true,
+        "coverage_increase": "+15.0pp"
+      },
+      "sprint3": {
+        "stage": "sprint3",
+        "coverage_min": 75.0,
+        "security_high_max": 0,
+        "security_medium_max": 2,
+        "license_violations_max": 0,
+        "active_tools_min": 3,
+        "description": "Sprint 3: Hohe Secure-Stufe für Production-Readiness",
+        "target_date": "2025-06-30",
+        "status": "future",
+        "achievable": true,
+        "coverage_increase": "+40.0pp"
+      },
+      "production": {
+        "stage": "production",
+        "coverage_min": 85.0,
+        "security_high_max": 0,
+        "security_medium_max": 0,
+        "license_violations_max": 0,
+        "active_tools_min": 3,
+        "description": "Production: Höchste Secure-Stufe für Produktions-Deployment",
+        "target_date": "2025-12-31",
+        "status": "past",
+        "achievable": false,
+        "coverage_increase": "+50.0pp"
+      }
+    },
+    "progression_rules": {
+      "upward_only": "Only progression to higher stages allowed",
+      "no_greenwashing": "Threshold lowering prohibited in secure profiles",
+      "smoke_unchanged": "Smoke profile maintains low thresholds for nightly runs"
+    },
+    "roadmap_date": "2025-08-23T07:56:05.906539Z"
+  }
+}

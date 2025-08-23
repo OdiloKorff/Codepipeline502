@@ -1,0 +1,9 @@
+{
+  "spec_id": "SBOM-DEMO-001",
+  "timestamp": "2025-08-17T18:50:02.554694",
+  "vulnerabilities": [],
+  "summary": {
+    "total_vulnerabilities": 0,
+    "high_severity": 0
+  }
+}

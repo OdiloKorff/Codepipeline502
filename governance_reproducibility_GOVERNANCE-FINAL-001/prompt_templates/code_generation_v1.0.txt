@@ -1,0 +1,14 @@
+Generate Python code for the following specification:
+
+Specification: {specification}
+Target Files: {target_files}
+Constraints: {constraints}
+
+Requirements:
+- Follow PEP 8 style guidelines
+- Include comprehensive docstrings
+- Add type hints where appropriate
+- Implement error handling
+- Write unit tests
+
+Output the code in a structured format with clear file separations.

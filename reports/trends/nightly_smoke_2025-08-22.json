@@ -1,0 +1,82 @@
+{
+  "nightly_smoke": {
+    "success": false,
+    "kpi_metrics": {
+      "run_id": "nightly-20250822-233219",
+      "timestamp": "2025-08-22T21:32:21.351987Z",
+      "duration_seconds": 1.44,
+      "coverage_percent": 20.54,
+      "security_high": 0,
+      "security_medium": 0,
+      "security_low": 0,
+      "license_violations": 0,
+      "active_security_tools": 2,
+      "artifacts_found": 11,
+      "overall_status": "fail",
+      "error_count": 5
+    },
+    "details": {
+      "profile": {
+        "name": "nightly_smoke",
+        "description": "Minimal nightly smoke test profile for early warning system",
+        "dry_run": true,
+        "timeout_minutes": 15,
+        "coverage_threshold": 20.0,
+        "security_high_max": 0,
+        "license_violations_max": 5,
+        "active_tools_min": 1,
+        "components": [
+          "feature_spec_validation",
+          "prompt_guard_check",
+          "security_scan",
+          "coverage_check",
+          "scorecard_generation"
+        ]
+      },
+      "component_results": [
+        {
+          "component": "feature_spec_validation",
+          "success": false,
+          "duration": 0.31500697135925293,
+          "output": "Traceback (most recent call last):\n  File \"C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\codepipeline\\feature_spec_mvp.py\", line 480, in <module>\n    main()\n  File \"C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\codepipeline\\feature_spec_mvp.py\", line 371, in main\n    print(\"\\U0001f3af MVP-004: FeatureSpec Validierung + SHA256 Demo\")\n  File \"C:\\Users\\odilo\\AppData\\Local\\Programs\\Python\\Python310\\lib\\encodings\\cp1252.py\", line 19, in encode\n    return codecs.charmap_encode(input,self.errors,enco",
+          "exit_code": 1
+        },
+        {
+          "component": "prompt_guard_check",
+          "success": false,
+          "duration": 0.16699695587158203,
+          "output": "Traceback (most recent call last):\n  File \"C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\codepipeline\\prompt_guard_mvp.py\", line 474, in <module>\n    main()\n  File \"C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\codepipeline\\prompt_guard_mvp.py\", line 382, in main\n    print(\"\\U0001f6e1\\ufe0f MVP-003: Prompt Guard Policy + Tests Demo\")\n  File \"C:\\Users\\odilo\\AppData\\Local\\Programs\\Python\\Python310\\lib\\encodings\\cp1252.py\", line 19, in encode\n    return codecs.charmap_encode(input,self.errors,enc",
+          "exit_code": 1
+        },
+        {
+          "component": "security_scan",
+          "success": false,
+          "duration": 0.2290048599243164,
+          "output": "Traceback (most recent call last):\n  File \"C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\codepipeline\\security_runner_active.py\", line 438, in <module>\n    sys.exit(main())\n  File \"C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\codepipeline\\security_runner_active.py\", line 392, in main\n    print(\"\\U0001f3af MVP-FIX-001: Nightly Security aktiv schalten\")\n  File \"C:\\Users\\odilo\\AppData\\Local\\Programs\\Python\\Python310\\lib\\encodings\\cp1252.py\", line 19, in encode\n    return codecs.charmap_encode(in",
+          "exit_code": 1
+        },
+        {
+          "component": "coverage_check",
+          "success": false,
+          "duration": 0.5030114650726318,
+          "output": "No data to report.\n",
+          "exit_code": 1
+        },
+        {
+          "component": "scorecard_generation",
+          "success": false,
+          "duration": 0.22500824928283691,
+          "output": "Traceback (most recent call last):\n  File \"C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\codepipeline\\scorecard_mvp.py\", line 448, in <module>\n    sys.exit(main())\n  File \"C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\codepipeline\\scorecard_mvp.py\", line 411, in main\n    print(\"\\U0001f3af MVP-009: Scorecard-Aggregation (ehrlich grün)\")\n  File \"C:\\Users\\odilo\\AppData\\Local\\Programs\\Python\\Python310\\lib\\encodings\\cp1252.py\", line 19, in encode\n    return codecs.charmap_encode(input,self.errors,e",
+          "exit_code": 1
+        }
+      ],
+      "success_rate": 0.0,
+      "components_passed": 0,
+      "components_total": 5
+    },
+    "error_message": null,
+    "timestamp": "2025-08-22T21:32:21.595991Z"
+  },
+  "generated_at": "2025-08-22T21:32:21.595991Z",
+  "project_root": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502"
+}

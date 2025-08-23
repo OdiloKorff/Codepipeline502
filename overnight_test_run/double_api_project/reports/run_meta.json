@@ -1,0 +1,10 @@
+{
+  "run_id": "one_prompt_deploy_1755611877",
+  "started_at": "2025-08-19T15:57:57.521830",
+  "seed": 42,
+  "model": "gpt-4o-mini",
+  "temperature": 0.0,
+  "token_prompt": 125,
+  "token_completion": 25,
+  "total_tokens": 150
+}

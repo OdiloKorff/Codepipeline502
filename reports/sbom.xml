@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8'?>
+<bom version="1" serialNumber="urn:uuid:codepipeline-20250820-195203" xmlns="http://cyclonedx.org/schema/bom/1.4">
+  <metadata>
+    <timestamp>2025-08-20T19:52:03.747024</timestamp>
+    <tools>
+      <tool>
+        <vendor>CodePipeline</vendor>
+        <name>dependency_security</name>
+        <version>1.0.0</version>
+      </tool>
+    </tools>
+  </metadata>
+  <components>
+    <component type="library" bom-ref="python@3.10.0">
+      <name>python</name>
+      <version>3.10.0</version>
+    </component>
+    <component type="library" bom-ref="fastapi@0.111.0">
+      <name>fastapi</name>
+      <version>0.111.0</version>
+    </component>
+    <component type="library" bom-ref="pydantic@2.5.0">
+      <name>pydantic</name>
+      <version>2.5.0</version>
+    </component>
+  </components>
+</bom>

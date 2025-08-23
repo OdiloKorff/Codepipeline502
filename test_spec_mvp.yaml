@@ -1,0 +1,14 @@
+id: MVP-005
+title: CLI-Vertrag finalisieren (feature-run)
+version: 1
+goal: Ein konsistentes Interface für Feature-Läufe mit Flags, Exit-Codes und lesbarer Zusammenfassung implementieren
+target_paths:
+  - codepipeline/cli_mvp.py
+  - tests/test_cli_mvp.py
+description: CLI-Interface mit feature-run Kommando für standardisierte Feature-Pipeline-Ausführung
+author: MVP Implementation
+tests:
+  coverage_min: 80.0
+  timeout_seconds: 300
+  parallel: true
+  strict_mode: false

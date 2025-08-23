@@ -1,0 +1,66 @@
+{
+  "secure_security_scan": {
+    "profile": "secure",
+    "overall_status": "fail",
+    "gate_pass": false,
+    "active_tools": 2,
+    "required_tools": 2,
+    "tools_found": [
+      "bandit",
+      "safety",
+      "custom_security"
+    ],
+    "tools_active": [
+      "bandit",
+      "custom_security"
+    ],
+    "tools_status": {
+      "bandit": "ok",
+      "safety": "error",
+      "custom_security": "ok"
+    },
+    "high": 4,
+    "medium": 0,
+    "low": 0,
+    "total": 4,
+    "defense_in_depth": {
+      "multiple_tools_active": true,
+      "high_findings_zero": false,
+      "gate_criteria_met": false
+    },
+    "scan_date": "2025-08-23T11:10:25.737667Z"
+  },
+  "tools_details": {
+    "bandit": {
+      "tool": "bandit",
+      "status": "ok",
+      "high": 0,
+      "medium": 0,
+      "low": 0,
+      "total": 0,
+      "scan_date": "2025-08-23T11:10:25.736666Z"
+    },
+    "safety": {
+      "tool": "safety",
+      "status": "error",
+      "high": 999,
+      "medium": 999,
+      "low": 999,
+      "total": 999,
+      "error": "C:\\Users\\odilo\\AppData\\Local\\Programs\\Python\\Python310\\lib\\site-packages\\safety\\safety.py:1853: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resourc"
+    },
+    "custom_security": {
+      "tool": "custom_security",
+      "status": "ok",
+      "high": 4,
+      "medium": 0,
+      "low": 0,
+      "total": 4,
+      "files_scanned": 132,
+      "patterns_checked": 13,
+      "scan_date": "2025-08-23T11:07:33.728094Z"
+    }
+  },
+  "generated_at": "2025-08-23T11:10:25.737667Z",
+  "project_root": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502"
+}

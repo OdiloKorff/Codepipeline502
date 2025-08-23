@@ -1,0 +1,10 @@
+{
+  "prompt": "Create a simple REST API for user management with basic CRUD operations",
+  "branch": "feature/test-gui",
+  "secure": true,
+  "dry_run": true,
+  "template_type": "web-api",
+  "policy_version": "1.0.0",
+  "seed": 503,
+  "token_budget": 2000
+}

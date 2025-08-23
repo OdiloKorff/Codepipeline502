@@ -1,0 +1,49 @@
+{
+  "timestamp": "2025-08-17T19:41:29.668582",
+  "pipeline_id": "pipeline_1755452489",
+  "stages": {
+    "setup": {
+      "result": "success",
+      "duration": 1.668982744216919,
+      "metrics": {
+        "setup_steps": 4,
+        "missing_files": 0
+      }
+    },
+    "lint_type": {
+      "result": "failure",
+      "duration": 0.0,
+      "metrics": {}
+    },
+    "tests_coverage": {
+      "result": "failure",
+      "duration": 4.726318597793579,
+      "metrics": {
+        "test_count": 0,
+        "failed_tests": 0,
+        "coverage_percentage": 0.0
+      }
+    },
+    "security_sbom": {
+      "result": "success",
+      "duration": 8.465088844299316,
+      "metrics": {
+        "security_findings": 0,
+        "high_severity_findings": 0,
+        "vulnerability_count": 0,
+        "sbom_generated": true
+      }
+    }
+  },
+  "scorecard": {
+    "setup": 100.0,
+    "code_quality": 100.0,
+    "test_coverage": 20.0,
+    "security": 100.0,
+    "overall": 0.0
+  },
+  "hard_must_failures": [
+    "tests_coverage"
+  ],
+  "passed": false
+}

@@ -1,0 +1,69 @@
+# Erweiterte Feature-Spec für das FeatureSpec-Modell
+id: "USER-AUTH-002"
+title: "Advanced User Authentication System"
+version: 2
+goal: "Implementiere ein fortgeschrittenes User Authentication System mit Multi-Factor Authentication, Session Management und erweiterten Sicherheitsfeatures für bessere Benutzererfahrung und Sicherheit"
+description: |
+  Dieses Feature erweitert das bestehende Authentication-System um:
+  - Multi-Factor Authentication (TOTP/SMS)
+  - Session Management mit Redis
+  - Rate Limiting für Login-Versuche
+  - Audit Logging für Security Events
+  - Password Policy Enforcement
+  - Account Lockout Protection
+
+target_paths:
+  - "src/auth/mfa.py"
+  - "src/auth/session_manager.py"
+  - "src/auth/rate_limiter.py"
+  - "src/auth/audit_logger.py"
+  - "src/models/user_session.py"
+  - "tests/test_auth_mfa.py"
+  - "tests/test_session_manager.py"
+  - "tests/test_rate_limiter.py"
+  - "docs/api/auth_v2.md"
+  - "config/auth_settings.yml"
+
+constraints:
+  - "Backward compatibility mit v1 API"
+  - "Performance impact < 50ms für Login"
+  - "Memory usage increase < 100MB"
+  - "Redis als einzige neue Abhängigkeit"
+  - "Graceful degradation wenn MFA nicht verfügbar"
+
+risk_level: "high"
+
+reviewers:
+  - "security-lead@company.com"
+  - "senior-backend-dev@company.com"
+  - "devops-lead@company.com"
+
+model: "gpt-4o"
+token_budget: 15000
+
+tests:
+  coverage_min: 95
+  pytest_args:
+    - "--strict-markers"
+    - "--verbose"
+    - "--cov-fail-under=95"
+    - "--cov-report=html"
+
+quality:
+  score_threshold: 98
+  coverage_min: 95
+  sast_high: 0
+  secret_findings: 0
+  budget_max: 30.0
+
+hard_musts:
+  - "Alle bestehenden Tests müssen weiterhin bestehen"
+  - "Security Review durch CISO abgeschlossen"
+  - "Performance Benchmarks erfüllt (< 50ms Login)"
+  - "Load Testing mit 1000 concurrent users bestanden"
+  - "Penetration Testing durchgeführt"
+  - "OWASP Top 10 Compliance verifiziert"
+  - "Dokumentation vollständig aktualisiert"
+  - "Migration Script für bestehende Sessions bereitgestellt"
+  - "Rollback Plan dokumentiert und getestet"
+  - "Monitoring und Alerting konfiguriert"

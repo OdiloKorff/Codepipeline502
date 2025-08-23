@@ -19,7 +19,8 @@ def check_budget(cost: float) -> bool:
         logging.error(msg)
         if SLACK_WEBHOOK_URL:
             try:
-                requests.post(SLACK_WEBHOOK_URL, json={"text": msg})
+                # SECURITY FIX: Timeout und verify=True für sichere HTTP-Kommunikation
+                requests.post(SLACK_WEBHOOK_URL, json={"text": msg}, timeout=10, verify=True)
             except Exception as e:
                 logging.error(f"Failed to send Slack alert: {e}")
         sys.exit(1)

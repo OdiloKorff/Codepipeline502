@@ -1,0 +1,80 @@
+{
+  "profile_aware_scorecard": {
+    "profile": "secure",
+    "overall_status": "fail",
+    "overall_pass": false,
+    "policy": {
+      "coverage_min": 35.0,
+      "security_high_max": 0,
+      "license_violations_max": 0,
+      "active_tools_min": 2,
+      "profile": "secure",
+      "stage": "sprint1",
+      "stage_config": {}
+    },
+    "gates": {
+      "coverage": {
+        "name": "Coverage",
+        "pass": false,
+        "actual": 0.0,
+        "threshold": 35.0,
+        "message": "Coverage 0.00% < 35.0%",
+        "source": "coverage.xml (aggregated)"
+      },
+      "security": {
+        "name": "Security",
+        "pass": false,
+        "high_findings": 18,
+        "high_threshold": 0,
+        "active_tools": 2,
+        "tools_threshold": 2,
+        "message": "Security HIGH 18 > 0, Tools 2 ≥ 2",
+        "source": "secure_security_secure.json"
+      },
+      "license": {
+        "name": "License",
+        "pass": false,
+        "actual": 55,
+        "threshold": 0,
+        "message": "License violations 55 > 0",
+        "source": "stable_license_secure.json"
+      }
+    },
+    "data_sources": {
+      "coverage": "coverage.xml (aggregated)",
+      "security": "secure_security_secure.json",
+      "license": "stable_license_secure.json"
+    },
+    "evaluation_date": "2025-08-23T08:30:51.528793Z"
+  },
+  "raw_data": {
+    "coverage": {
+      "coverage_percent": 0.0,
+      "lines_covered": 0,
+      "lines_total": 2,
+      "source": "coverage.xml (aggregated)",
+      "main_package": "codepipeline"
+    },
+    "security": {
+      "active_tools": 2,
+      "high": 18,
+      "medium": 109,
+      "low": 0,
+      "total": 127,
+      "gate_pass": false,
+      "source": "secure_security_secure.json",
+      "profile": "secure"
+    },
+    "license": {
+      "total_packages": 84,
+      "compliant_packages": 29,
+      "license_violations": 55,
+      "compliance_rate": 34.523809523809526,
+      "gate_pass": false,
+      "source": "stable_license_secure.json",
+      "profile": "secure"
+    }
+  },
+  "generated_at": "2025-08-23T08:30:51.528793Z",
+  "project_root": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502"
+}

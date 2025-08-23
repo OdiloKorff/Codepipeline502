@@ -1,0 +1,19 @@
+{
+  "test_name": "test-api",
+  "started_at": "2025-08-19T03:38:38.788840",
+  "finished_at": "",
+  "duration_seconds": 0.0,
+  "container_id": "mock_container_test-api_1755574718",
+  "container_name": "test-api",
+  "container_port": 8000,
+  "overall_status": "ERROR",
+  "container_started": true,
+  "health_check_passed": true,
+  "interactions_passed": 2,
+  "interactions_total": 2,
+  "log_files": [
+    "e2e_test_logs\\test-api_container.log"
+  ],
+  "test_artifacts": [],
+  "error_message": null
+}

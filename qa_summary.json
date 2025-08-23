@@ -1,0 +1,40 @@
+{
+  "timestamp": "2025-08-22T11:47:46.615892Z",
+  "overall_status": "pass",
+  "passed": true,
+  "coverage": {
+    "percent": 21.24,
+    "lines_covered": 9579,
+    "lines_valid": 45100,
+    "status": "ok"
+  },
+  "security": {
+    "status": "ok",
+    "high": 0,
+    "medium": 41,
+    "low": 1299,
+    "total": 1340,
+    "active_tools": 1
+  },
+  "gates": {
+    "coverage_gate": {
+      "status": "pass",
+      "threshold": 0.2
+    },
+    "security_gate": {
+      "status": "pass",
+      "threshold": 0
+    },
+    "active_tools_gate": {
+      "status": "pass",
+      "threshold": 1
+    }
+  },
+  "failures": [],
+  "artifacts": {
+    "coverage_report": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\coverage.xml",
+    "security_report": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\security_report.json"
+  },
+  "errors": [],
+  "warnings": []
+}

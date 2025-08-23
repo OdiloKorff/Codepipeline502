@@ -1,0 +1,69 @@
+{
+  "spec_id": "TEST-QA-001",
+  "timestamp": "2025-08-17T20:49:48.744791",
+  "overall_result": "failed",
+  "overall_score": 75.0,
+  "gates": {
+    "test_coverage": {
+      "gate_name": "test_coverage",
+      "result": "error",
+      "score": 0.0,
+      "threshold": 80.0,
+      "issues_count": 0,
+      "execution_time_seconds": 5.591051340103149,
+      "details": {
+        "coverage_percentage": 0.0
+      },
+      "artifacts": []
+    },
+    "linting": {
+      "gate_name": "linting",
+      "result": "passed",
+      "score": null,
+      "threshold": null,
+      "issues_count": 0,
+      "execution_time_seconds": 0.2539987564086914,
+      "details": {
+        "violations": 0
+      },
+      "artifacts": []
+    },
+    "security_scanning": {
+      "gate_name": "security_scanning",
+      "result": "passed",
+      "score": null,
+      "threshold": null,
+      "issues_count": 0,
+      "execution_time_seconds": 0.1290125846862793,
+      "details": {
+        "high_severity": 0
+      },
+      "artifacts": [
+        "security-report.json"
+      ]
+    },
+    "token_budget": {
+      "gate_name": "token_budget",
+      "result": "passed",
+      "score": null,
+      "threshold": null,
+      "issues_count": 0,
+      "execution_time_seconds": 0.0,
+      "details": {
+        "tokens_used": 1500,
+        "tokens_budget": 2000
+      },
+      "artifacts": [
+        "token-usage.json"
+      ]
+    }
+  },
+  "hard_musts": [
+    "test_coverage",
+    "security_scanning"
+  ],
+  "hard_must_failures": [
+    "test_coverage"
+  ],
+  "total_execution_time": 5.977048635482788
+}

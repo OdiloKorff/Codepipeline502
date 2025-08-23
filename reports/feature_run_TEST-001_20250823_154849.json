@@ -1,0 +1,55 @@
+{
+  "start_time": "2025-08-23T13:48:49.554520Z",
+  "end_time": "2025-08-23T13:48:49.569523Z",
+  "spec": {
+    "id": "TEST-001",
+    "title": "Test Feature",
+    "version": 1,
+    "hash": "8b3c2c410aca821d141028ced81672564adeaeb5eb1d0de38a871ab935710546",
+    "source_file": "C:\\Users\\odilo\\AppData\\Local\\Temp\\tmp2ks6zw0m\\test_spec.json"
+  },
+  "gates": {
+    "security": {
+      "status": "simulated",
+      "high": 0,
+      "medium": 5,
+      "low": 20,
+      "tools": [
+        "bandit"
+      ]
+    },
+    "tests": {
+      "status": "simulated",
+      "total": 25,
+      "passed": 25,
+      "failed": 0,
+      "duration": "15.2s"
+    },
+    "coverage": {
+      "status": "simulated",
+      "coverage_percent": 85.0,
+      "threshold": 80.0,
+      "lines_covered": 850,
+      "lines_total": 1000
+    },
+    "lint": {
+      "status": "simulated",
+      "issues": 0,
+      "files_checked": 15,
+      "tools": [
+        "ruff",
+        "mypy"
+      ]
+    }
+  },
+  "errors": [],
+  "warnings": [],
+  "artifacts": [
+    "feature_spec.json",
+    "test_results.xml",
+    "coverage_report.xml",
+    "security_scan.json",
+    "lint_report.txt"
+  ],
+  "exit_code": 0
+}

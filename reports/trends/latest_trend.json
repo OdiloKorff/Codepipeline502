@@ -1,0 +1,50 @@
+{
+  "stable_trend": {
+    "status": "available",
+    "runs_analyzed": 2,
+    "date_range": {
+      "from": "2025-08-22",
+      "to": "2025-08-23"
+    },
+    "metrics": {
+      "runs_count": 2,
+      "success_rate": 0.0,
+      "avg_duration": 0.0,
+      "avg_coverage": 0.0,
+      "avg_active_tools": 0.0,
+      "avg_security_high": 0.0,
+      "avg_license_violations": 0.0,
+      "duration_outliers": [],
+      "coverage_outliers": [],
+      "security_outliers": [],
+      "trend_status": "yellow",
+      "trend_reason": "Insufficient data for trend analysis"
+    },
+    "runs_data": [
+      {
+        "date": "2025-08-23",
+        "duration": 0.0,
+        "coverage_percent": 0.0,
+        "active_tools": 0,
+        "security_high": 999,
+        "license_violations": 999,
+        "overall_status": "unknown",
+        "source_file": "nightly_smoke_trend.json"
+      },
+      {
+        "date": "2025-08-22",
+        "duration": 0.0,
+        "coverage_percent": 0.0,
+        "active_tools": 0,
+        "security_high": 999,
+        "license_violations": 999,
+        "overall_status": "unknown",
+        "source_file": "nightly_smoke_2025-08-22.json"
+      }
+    ],
+    "analysis_date": "2025-08-22T22:01:15.011326Z",
+    "max_runs_limit": 5
+  },
+  "generated_at": "2025-08-22T22:01:15.011326Z",
+  "project_root": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502"
+}

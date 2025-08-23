@@ -1,0 +1,21 @@
+....................F
+================================== FAILURES ===================================
+_____________________________ test_license_check ______________________________
+
+    @pytest.mark.mvp
+    def test_license_check():
+        """Test Lizenz-Check."""
+        result = check_licenses()
+    
+        assert isinstance(result, dict)
+        assert "passed" in result
+        assert "total_packages" in result
+>       assert "compliant_packages" in result
+E       AssertionError: assert 'compliant_packages' in {'allowlist': ['MIT', 'BSD-2-Clause', 'BSD-3-Clause', 'Apache-2.0', 'MPL-2.0'], 'cve_blocker_details': [], 'cve_blockers': 0, 'deny_list': ['GPL-3.0', 'AGPL-3.0', 'SSPL'], ...}
+
+tests\test_security_core.py:40: AssertionError
+---------------------------- Captured stdout call -----------------------------
+\u274c SBOM & License Gate: FAIL (10 license violations, 0 CVE blockers)\n   - aiohappyeyeballs: Unknown (unknown_license)\n   - aiohttp: Unknown (unknown_license)\n   - aiosignal: Unknown (unknown_license)
+=========================== short test summary info ===========================
+FAILED tests/test_security_core.py::test_license_check - AssertionError: asse...
+!!!!!!!!!!!!!!!!!!!!!!!!!! stopping after 1 failures !!!!!!!!!!!!!!!!!!!!!!!!!!

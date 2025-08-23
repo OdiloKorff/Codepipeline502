@@ -1,0 +1,76 @@
+{
+  "nightly_fail_closed": {
+    "overall_status": "pass",
+    "overall_passing": true,
+    "reason_summary": "All gates passed",
+    "failure_reasons": [],
+    "duration": 0.08,
+    "gates_checked": 4,
+    "gates_passed": 4,
+    "gates_failed": 0,
+    "gates_unknown": 0,
+    "evaluation_date": "2025-08-22T21:41:15.643931Z",
+    "thresholds": {
+      "coverage_min": 20.0,
+      "security_high_max": 0,
+      "security_medium_max": 50,
+      "license_violations_max": 5,
+      "active_tools_min": 1
+    }
+  },
+  "gate_results": {
+    "coverage": {
+      "status": "pass",
+      "actual_value": 20.54,
+      "threshold": 20.0,
+      "message": "Coverage 20.54% ≥ 20.0%",
+      "details": {
+        "source": "focused_coverage",
+        "coverage_percent": 20.54
+      }
+    },
+    "security": {
+      "status": "pass",
+      "actual_value": {
+        "high": 0,
+        "medium": 0,
+        "active_tools": 2
+      },
+      "threshold": {
+        "high_max": 0,
+        "tools_min": 1
+      },
+      "message": "Security HIGH 0 ≤ 0, Tools 2 ≥ 1",
+      "details": {
+        "source": "consolidated",
+        "high": 0,
+        "medium": 0,
+        "active_tools": 2
+      }
+    },
+    "license": {
+      "status": "pass",
+      "actual_value": 0,
+      "threshold": 5,
+      "message": "License violations 0 ≤ 5",
+      "details": {
+        "source": "allowlist",
+        "violations": 0,
+        "total_packages": 84
+      }
+    },
+    "scorecard": {
+      "status": "pass",
+      "actual_value": "pass",
+      "threshold": "pass",
+      "message": "Scorecard (smoke) status: pass",
+      "details": {
+        "scorecard_status": "pass",
+        "profile": "smoke",
+        "source": "scorecard_smoke.json"
+      }
+    }
+  },
+  "generated_at": "2025-08-22T21:41:15.644932Z",
+  "project_root": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502"
+}

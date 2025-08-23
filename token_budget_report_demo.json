@@ -1,0 +1,96 @@
+{
+  "spec_id": "BUDGET-001",
+  "timestamp": "2025-08-17T18:36:08.355086",
+  "budget_policy": {
+    "total_budget": 10000,
+    "cost_limit_usd": 5.0,
+    "prompt_token_limit": 4000,
+    "completion_token_limit": 2000
+  },
+  "status": {
+    "total_tokens_used": 3300,
+    "total_cost_usd": 0.0046,
+    "budget_utilization": 0.33,
+    "cost_utilization": 0.001,
+    "requests_count": 4,
+    "gate_passed": true
+  },
+  "model_breakdown": {
+    "gpt-4o-mini": {
+      "total_tokens": 2850,
+      "total_cost": 0.0008549999999999999,
+      "request_count": 3,
+      "prompt_tokens": 1900,
+      "completion_tokens": 950
+    },
+    "gpt-4o": {
+      "total_tokens": 450,
+      "total_cost": 0.00375,
+      "request_count": 1,
+      "prompt_tokens": 300,
+      "completion_tokens": 150
+    }
+  },
+  "operation_breakdown": {
+    "code_generation": {
+      "total_tokens": 800,
+      "total_cost": 0.00025499999999999996,
+      "request_count": 1
+    },
+    "code_review": {
+      "total_tokens": 1200,
+      "total_cost": 0.00035999999999999997,
+      "request_count": 1
+    },
+    "test_generation": {
+      "total_tokens": 850,
+      "total_cost": 0.00023999999999999998,
+      "request_count": 1
+    },
+    "final_review": {
+      "total_tokens": 450,
+      "total_cost": 0.00375,
+      "request_count": 1
+    }
+  },
+  "warnings": [],
+  "failure_reason": null,
+  "usage_entries": [
+    {
+      "timestamp": "2025-08-17T18:36:08.344081",
+      "model": "gpt-4o-mini",
+      "operation": "code_generation",
+      "prompt_tokens": 500,
+      "completion_tokens": 300,
+      "total_tokens": 800,
+      "estimated_cost_usd": 0.0003
+    },
+    {
+      "timestamp": "2025-08-17T18:36:08.344081",
+      "model": "gpt-4o-mini",
+      "operation": "code_review",
+      "prompt_tokens": 800,
+      "completion_tokens": 400,
+      "total_tokens": 1200,
+      "estimated_cost_usd": 0.0004
+    },
+    {
+      "timestamp": "2025-08-17T18:36:08.345082",
+      "model": "gpt-4o-mini",
+      "operation": "test_generation",
+      "prompt_tokens": 600,
+      "completion_tokens": 250,
+      "total_tokens": 850,
+      "estimated_cost_usd": 0.0002
+    },
+    {
+      "timestamp": "2025-08-17T18:36:08.345082",
+      "model": "gpt-4o",
+      "operation": "final_review",
+      "prompt_tokens": 300,
+      "completion_tokens": 150,
+      "total_tokens": 450,
+      "estimated_cost_usd": 0.0037
+    }
+  ]
+}

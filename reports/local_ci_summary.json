@@ -1,0 +1,99 @@
+{
+  "steps": [
+    {
+      "name": "ruff",
+      "cmd": [
+        "ruff",
+        "check",
+        ".",
+        "--exit-zero"
+      ],
+      "rc": 0,
+      "status": "pass",
+      "out_file": "reports/ruff.out.txt",
+      "note": "warnings in reports/ruff.out.txt"
+    },
+    {
+      "name": "mypy",
+      "cmd": [
+        "mypy",
+        "codepipeline"
+      ],
+      "rc": 1,
+      "status": "pass",
+      "out_file": "reports/mypy.out.txt",
+      "note": "type warnings in reports/mypy.out.txt"
+    },
+    {
+      "name": "pytest",
+      "cmd": [
+        "pytest",
+        "-m",
+        "mvp",
+        "-q",
+        "--cov=codepipeline",
+        "--cov-report=xml"
+      ],
+      "rc": 1,
+      "status": "fail",
+      "out_file": "reports/pytest.out.txt",
+      "reason": "MVP test failures"
+    },
+    {
+      "name": "security_scan",
+      "cmd": [
+        "C:\\Users\\odilo\\AppData\\Local\\Programs\\Python\\Python310\\python.exe",
+        "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\scripts\\security_scan.py",
+        "--out-json",
+        "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\security_report.json"
+      ],
+      "rc": 0,
+      "status": "warn",
+      "out_file": "reports/security_scan.out.txt",
+      "note": "no active security tools - consider installing bandit/semgrep"
+    },
+    {
+      "name": "sbom",
+      "status": "fail",
+      "reason": "UnicodeEncodeError: 'charmap' codec can't encode character '\\u2705' in position 0: character maps to <undefined>"
+    },
+    {
+      "name": "branch_protection",
+      "status": "pass",
+      "reason": "local_development_allowed"
+    },
+    {
+      "name": "scorecard",
+      "status": "pass",
+      "out_file": "reports/qa_summary.json"
+    },
+    {
+      "name": "cli_dry_run",
+      "cmd": [
+        "C:\\Users\\odilo\\AppData\\Local\\Programs\\Python\\Python310\\python.exe",
+        "-m",
+        "codepipeline.cli",
+        "feature",
+        "--spec",
+        "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\feature_spec.yaml",
+        "--branch",
+        "feature/LOCAL-CI",
+        "--secure",
+        "--dry-run"
+      ],
+      "rc": 0,
+      "status": "pass",
+      "out_file": "reports/cli_dry_run.out.txt",
+      "note": "CLI dry-run successful"
+    }
+  ],
+  "started_at": 1755549941.1587987,
+  "finished_at": 1755550028.6422684,
+  "overall": "fail",
+  "warnings": [
+    "ruff: warnings in reports/ruff.out.txt",
+    "mypy: type warnings in reports/mypy.out.txt",
+    "security_scan: no active security tools - consider installing bandit/semgrep",
+    "cli_dry_run: CLI dry-run successful"
+  ]
+}

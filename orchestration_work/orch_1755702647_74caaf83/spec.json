@@ -1,0 +1,10 @@
+{
+  "prompt": "System tool that uses rm -rf for cleanup operations",
+  "branch": "main",
+  "secure": true,
+  "dry_run": true,
+  "template_type": "cli-app",
+  "policy_version": "1.0.0",
+  "seed": 9847,
+  "token_budget": 2000
+}

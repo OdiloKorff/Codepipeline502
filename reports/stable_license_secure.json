@@ -1,0 +1,95 @@
+{
+  "stable_license_gate": {
+    "profile": "secure",
+    "gate_pass": false,
+    "total_packages": 113,
+    "compliant_packages": 108,
+    "license_violations": 5,
+    "compliance_rate": 95.57522123893806,
+    "dev_only_packages": 12,
+    "unknown_licenses_count": 4,
+    "normalization_stats": {
+      "canonical_mappings_used": 44,
+      "oss_allowlist_size": 15,
+      "forbidden_licenses": [
+        "Commons Clause",
+        "AGPL-3.0",
+        "SSPL",
+        "Proprietary",
+        "Elastic License",
+        "GPL-3.0",
+        "BUSL-1.1"
+      ],
+      "dev_only_patterns": 35
+    },
+    "scan_date": "2025-08-23T13:08:02.491429Z"
+  },
+  "license_details": {
+    "violations": [
+      {
+        "package": "chardet",
+        "version": "5.2.0",
+        "license": "GPL-3.0",
+        "raw_license": "License :: OSI Approved :: GNU Lesser General Public License v2 or later (LGPLv2+)",
+        "reason": "Forbidden license: GPL-3.0",
+        "is_dev_only": false
+      },
+      {
+        "package": "cryptography",
+        "version": "45.0.6",
+        "license": "UNKNOWN",
+        "raw_license": "UNKNOWN",
+        "reason": "Unknown license not allowed in secure mode: UNKNOWN",
+        "is_dev_only": false
+      },
+      {
+        "package": "regex",
+        "version": "2025.7.34",
+        "license": "UNKNOWN",
+        "raw_license": "UNKNOWN",
+        "reason": "Unknown license not allowed in secure mode: UNKNOWN",
+        "is_dev_only": false
+      },
+      {
+        "package": "sniffio",
+        "version": "1.3.1",
+        "license": "UNKNOWN",
+        "raw_license": "UNKNOWN",
+        "reason": "Unknown license not allowed in secure mode: UNKNOWN",
+        "is_dev_only": false
+      },
+      {
+        "package": "tqdm",
+        "version": "4.67.1",
+        "license": "UNKNOWN",
+        "raw_license": "UNKNOWN",
+        "reason": "Unknown license not allowed in secure mode: UNKNOWN",
+        "is_dev_only": false
+      }
+    ],
+    "unknown_licenses": [
+      "tqdm (UNKNOWN)",
+      "cryptography (UNKNOWN)",
+      "regex (UNKNOWN)",
+      "sniffio (UNKNOWN)"
+    ],
+    "license_distribution": {
+      "BSD-3-Clause": 17,
+      "MIT": 53,
+      "BSD-2-Clause": 2,
+      "PSF-2.0": 3,
+      "Apache-2.0": 27,
+      "MPL-2.0": 3,
+      "GPL-3.0": 1,
+      "UNKNOWN": 4,
+      "Unlicense": 1,
+      "ISC": 2
+    }
+  },
+  "sbom_metadata": {
+    "components_count": 113,
+    "generated_by": "cyclonedx-bom"
+  },
+  "generated_at": "2025-08-23T13:08:02.492425Z",
+  "project_root": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502"
+}

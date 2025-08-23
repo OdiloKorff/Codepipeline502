@@ -1,0 +1,17 @@
+{
+  "run_id": "dryrun-FSPEC-LOW-RISK-001-1755787936",
+  "started_at": 1755787936.988508,
+  "seed": 7,
+  "model": "gpt-4o-mini",
+  "temperature": 0.0,
+  "token_prompt": 4,
+  "token_completion": 15,
+  "tools": {
+    "python": "Python 3.10.0",
+    "pytest": "pytest 8.4.1",
+    "ruff": "ruff 0.12.7",
+    "mypy": "mypy 1.17.1 (compiled: yes)",
+    "bandit": "bandit 1.8.6",
+    "platform": "Windows-10-10.0.19045-SP0"
+  }
+}

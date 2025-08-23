@@ -1,0 +1,18 @@
+{
+  "period_days": 1,
+  "runs_found": 1,
+  "success_rate_percent": 0.0,
+  "avg_duration_seconds": 1.0,
+  "avg_coverage_percent": 20.5,
+  "trend_data": [
+    {
+      "date": "2025-08-22",
+      "success": false,
+      "duration": 1.01,
+      "coverage": 20.54,
+      "security_high": 0,
+      "overall_status": "fail"
+    }
+  ],
+  "generated_at": "2025-08-22T20:23:11.596034Z"
+}

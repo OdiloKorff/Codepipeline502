@@ -1,0 +1,165 @@
+{
+  "run_id": "orch_1755702719_0528ce4d",
+  "spec": {
+    "prompt": "Minimal web service for health monitoring",
+    "branch": "main",
+    "secure": true,
+    "dry_run": false,
+    "template_type": "web-api",
+    "policy_version": "1.0.0",
+    "seed": 9919,
+    "token_budget": 1000
+  },
+  "start_time": "2025-08-20T17:11:59.444882",
+  "end_time": null,
+  "duration_seconds": 0.96701,
+  "overall_status": "success",
+  "total_tokens_used": 207,
+  "gates": [
+    {
+      "name": "Spec-Validation",
+      "status": "pass",
+      "start_time": "2025-08-20T17:11:59.445885",
+      "end_time": "2025-08-20T17:11:59.446869",
+      "duration_seconds": 0.000984,
+      "artifacts": [
+        "orchestration_work\\orch_1755702719_0528ce4d\\spec.json"
+      ],
+      "tokens_used": 0,
+      "error_message": "",
+      "metadata": {
+        "spec_hash": "4d9dff04e164af3d"
+      }
+    },
+    {
+      "name": "Guard",
+      "status": "pass",
+      "start_time": "2025-08-20T17:11:59.446869",
+      "end_time": "2025-08-20T17:11:59.448871",
+      "duration_seconds": 0.002002,
+      "artifacts": [
+        "orchestration_work\\orch_1755702719_0528ce4d\\guard_report.json"
+      ],
+      "tokens_used": 0,
+      "error_message": "",
+      "metadata": {}
+    },
+    {
+      "name": "LLM",
+      "status": "pass",
+      "start_time": "2025-08-20T17:11:59.448871",
+      "end_time": "2025-08-20T17:11:59.765868",
+      "duration_seconds": 0.316997,
+      "artifacts": [
+        "orchestration_work\\orch_1755702719_0528ce4d\\generated_template.md"
+      ],
+      "tokens_used": 207,
+      "error_message": "",
+      "metadata": {
+        "template_lines": 0
+      }
+    },
+    {
+      "name": "Unified-Diff",
+      "status": "pass",
+      "start_time": "2025-08-20T17:11:59.765868",
+      "end_time": "2025-08-20T17:11:59.766870",
+      "duration_seconds": 0.001002,
+      "artifacts": [
+        "orchestration_work\\orch_1755702719_0528ce4d\\unified.diff"
+      ],
+      "tokens_used": 0,
+      "error_message": "",
+      "metadata": {
+        "diff_lines": 0
+      }
+    },
+    {
+      "name": "3-Way-Apply-Sandbox",
+      "status": "pass",
+      "start_time": "2025-08-20T17:11:59.766870",
+      "end_time": "2025-08-20T17:11:59.776888",
+      "duration_seconds": 0.010018,
+      "artifacts": [
+        "orchestration_work\\orch_1755702719_0528ce4d\\sandbox"
+      ],
+      "tokens_used": 0,
+      "error_message": "",
+      "metadata": {
+        "sandbox_files": 5
+      }
+    },
+    {
+      "name": "Tests-Coverage",
+      "status": "pass",
+      "start_time": "2025-08-20T17:11:59.776888",
+      "end_time": "2025-08-20T17:11:59.989874",
+      "duration_seconds": 0.212986,
+      "artifacts": [
+        "orchestration_work\\orch_1755702719_0528ce4d\\qa_summary.json",
+        "orchestration_work\\orch_1755702719_0528ce4d\\coverage.xml"
+      ],
+      "tokens_used": 0,
+      "error_message": "",
+      "metadata": {
+        "coverage_percent": 92.5
+      }
+    },
+    {
+      "name": "Security-SBOM",
+      "status": "pass",
+      "start_time": "2025-08-20T17:11:59.989874",
+      "end_time": "2025-08-20T17:12:00.407884",
+      "duration_seconds": 0.41801,
+      "artifacts": [
+        "orchestration_work\\orch_1755702719_0528ce4d\\security_report.json",
+        "orchestration_work\\orch_1755702719_0528ce4d\\sbom.json"
+      ],
+      "tokens_used": 0,
+      "error_message": "",
+      "metadata": {
+        "security_findings": {
+          "critical": 0,
+          "high": 0,
+          "medium": 1,
+          "low": 2
+        },
+        "active_security_tools": 1
+      }
+    },
+    {
+      "name": "Scorecard",
+      "status": "pass",
+      "start_time": "2025-08-20T17:12:00.407884",
+      "end_time": "2025-08-20T17:12:00.409891",
+      "duration_seconds": 0.002007,
+      "artifacts": [
+        "orchestration_work\\orch_1755702719_0528ce4d\\scorecard.json"
+      ],
+      "tokens_used": 0,
+      "error_message": "",
+      "metadata": {
+        "overall_score": 91.7
+      }
+    },
+    {
+      "name": "Draft-PR",
+      "status": "pass",
+      "start_time": "2025-08-20T17:12:00.409891",
+      "end_time": "2025-08-20T17:12:00.411892",
+      "duration_seconds": 0.002001,
+      "artifacts": [
+        "orchestration_work\\orch_1755702719_0528ce4d\\pr_body.md"
+      ],
+      "tokens_used": 0,
+      "error_message": "",
+      "metadata": {
+        "pr_url": "https://github.com/example/repo/pull/3813"
+      }
+    }
+  ],
+  "policy_version": "1.0.0",
+  "seed": 9919,
+  "spec_hash": "4d9dff04e164af3d",
+  "orchestrator_version": "1.0.0"
+}

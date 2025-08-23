@@ -1,0 +1,33 @@
+{
+  "spec_id": "TEST-001",
+  "timestamp": "2025-08-17T18:05:46.444437",
+  "policy": {
+    "allowed_licenses": [
+      "MIT",
+      "ISC",
+      "MPL-2.0",
+      "BSD-3-Clause",
+      "BSD-2-Clause",
+      "Python-2.0",
+      "Apache-2.0"
+    ],
+    "denied_licenses": [
+      "BUSL-1.1",
+      "SSPL",
+      "GPL-3.0",
+      "Commons-Clause",
+      "AGPL-3.0"
+    ]
+  },
+  "violations": [
+    {
+      "dependency": "problematic-lib",
+      "version": "1.0.0",
+      "license": "GPL-3.0",
+      "violation_type": "denied",
+      "severity": "high"
+    }
+  ],
+  "total_dependencies": 77,
+  "violations_count": 1
+}

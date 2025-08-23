@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import json
 import os
+import shlex
 import shutil
 import subprocess
 import sys
@@ -26,7 +27,8 @@ TRACE_DIR = ROOT / ".ai-build"
 
 def sh(cmd: str, check: bool = True, cwd: Path | None = None) -> int:
     print("+", cmd, flush=True)
-    res = subprocess.run(cmd, shell=True, cwd=str(cwd) if cwd else None)
+    # Sichere subprocess-Verwendung ohne shell=True - verhindert Command Injection
+    res = subprocess.run(shlex.split(cmd), cwd=str(cwd) if cwd else None)
     if check and res.returncode != 0:
         sys.stderr.write(f"[ERROR] Command failed: {cmd}\n")
         sys.exit(res.returncode)
@@ -34,7 +36,8 @@ def sh(cmd: str, check: bool = True, cwd: Path | None = None) -> int:
 
 def sh_out(cmd: str, check: bool = True) -> str:
     print("+", cmd, flush=True)
-    p = subprocess.run(cmd, shell=True, text=True, capture_output=True)
+    # Sichere subprocess-Verwendung ohne shell=True - verhindert Command Injection
+    p = subprocess.run(shlex.split(cmd), text=True, capture_output=True)
     if check and p.returncode != 0:
         sys.stderr.write(p.stdout + p.stderr)
         sys.stderr.write(f"[ERROR] Command failed: {cmd}\n")

@@ -1,0 +1,29 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.4",
+  "serialNumber": "urn:uuid:227f32fc-7170-4dea-9c65-7ef3f35a6b96",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2025-08-20T17:21:44.684969",
+    "tools": [
+      "codepipeline-orchestrator"
+    ]
+  },
+  "components": [
+    {
+      "name": "fastapi",
+      "version": "0.104.1",
+      "type": "library"
+    },
+    {
+      "name": "uvicorn",
+      "version": "0.24.0",
+      "type": "library"
+    },
+    {
+      "name": "pytest",
+      "version": "7.4.3",
+      "type": "library"
+    }
+  ]
+}

@@ -1,0 +1,218 @@
+{
+  "success": false,
+  "total_duration": 15.248504161834717,
+  "stages_executed": 6,
+  "stages_successful": 2,
+  "executions": [
+    {
+      "stage": "setup",
+      "result": "success",
+      "duration": 1.668982744216919,
+      "metrics": {
+        "setup_steps": 4,
+        "missing_files": 0
+      }
+    },
+    {
+      "stage": "lint_type",
+      "result": "failure",
+      "duration": 0.0,
+      "metrics": {}
+    },
+    {
+      "stage": "tests_coverage",
+      "result": "failure",
+      "duration": 4.726318597793579,
+      "metrics": {
+        "test_count": 0,
+        "failed_tests": 0,
+        "coverage_percentage": 0.0
+      }
+    },
+    {
+      "stage": "security_sbom",
+      "result": "success",
+      "duration": 8.465088844299316,
+      "metrics": {
+        "security_findings": 0,
+        "high_severity_findings": 0,
+        "vulnerability_count": 0,
+        "sbom_generated": true
+      }
+    },
+    {
+      "stage": "scorecard",
+      "result": "failure",
+      "duration": 0.004997730255126953,
+      "metrics": {
+        "overall_score": 0.0,
+        "hard_must_failures": 1,
+        "passed": false
+      }
+    },
+    {
+      "stage": "draft_pr",
+      "result": "failure",
+      "duration": 0.0009911060333251953,
+      "metrics": {
+        "pr_created": false
+      }
+    }
+  ],
+  "artifacts_dir": "demo_pipeline_artifacts",
+  "pipeline_log": [
+    {
+      "timestamp": "2025-08-17T19:41:14.426066",
+      "stage": "pipeline",
+      "message": "Pipeline initialisiert",
+      "extra_data": {
+        "config": "PipelineConfig(repo_root='.', branch_name='main', min_coverage_threshold=70.0, max_linting_violations=50, security_severity_threshold='medium', python_executable='python', pytest_args=['-v', '--tb=short'], ruff_config='pyproject.toml', mypy_config='mypy.ini', ci_mode=True, fail_fast=False, artifacts_dir='demo_pipeline_artifacts', github_token=None, create_pr=True, pr_title_template='feat: {spec_id} - {spec_title}')"
+      }
+    },
+    {
+      "timestamp": "2025-08-17T19:41:14.427071",
+      "stage": "pipeline",
+      "message": "Pipeline gestartet",
+      "extra_data": {}
+    },
+    {
+      "timestamp": "2025-08-17T19:41:14.428082",
+      "stage": "setup",
+      "message": "Setup-Stufe gestartet",
+      "extra_data": {}
+    },
+    {
+      "timestamp": "2025-08-17T19:41:16.097065",
+      "stage": "setup",
+      "message": "Setup abgeschlossen: success",
+      "extra_data": {
+        "duration": "1.7s",
+        "steps": 4
+      }
+    },
+    {
+      "timestamp": "2025-08-17T19:41:16.097065",
+      "stage": "lint_type",
+      "message": "Lint/Type-Checking gestartet",
+      "extra_data": {}
+    },
+    {
+      "timestamp": "2025-08-17T19:41:16.097065",
+      "stage": "lint_type",
+      "message": "F\u00fchre Ruff-Linting aus...",
+      "extra_data": {}
+    },
+    {
+      "timestamp": "2025-08-17T19:41:16.472158",
+      "stage": "lint_type",
+      "message": "Pipeline-Fehler in lint_type: 'NoneType' object has no attribute 'count'",
+      "extra_data": {}
+    },
+    {
+      "timestamp": "2025-08-17T19:41:16.472158",
+      "stage": "tests_coverage",
+      "message": "Tests/Coverage gestartet",
+      "extra_data": {}
+    },
+    {
+      "timestamp": "2025-08-17T19:41:16.473158",
+      "stage": "tests_coverage",
+      "message": "F\u00fchre Tests mit Coverage aus...",
+      "extra_data": {}
+    },
+    {
+      "timestamp": "2025-08-17T19:41:21.198477",
+      "stage": "tests_coverage",
+      "message": "Coverage zu niedrig: 0.0% < 70.0%",
+      "extra_data": {}
+    },
+    {
+      "timestamp": "2025-08-17T19:41:21.199477",
+      "stage": "tests_coverage",
+      "message": "Alle Tests bestanden: 0",
+      "extra_data": {}
+    },
+    {
+      "timestamp": "2025-08-17T19:41:21.201485",
+      "stage": "tests_coverage",
+      "message": "Tests/Coverage abgeschlossen: failure",
+      "extra_data": {
+        "tests": "0/0",
+        "coverage": "0.0%"
+      }
+    },
+    {
+      "timestamp": "2025-08-17T19:41:21.201485",
+      "stage": "security_sbom",
+      "message": "Security-Scan/SBOM gestartet",
+      "extra_data": {}
+    },
+    {
+      "timestamp": "2025-08-17T19:41:21.201485",
+      "stage": "security_sbom",
+      "message": "F\u00fchre Bandit Security-Scan aus...",
+      "extra_data": {}
+    },
+    {
+      "timestamp": "2025-08-17T19:41:21.307491",
+      "stage": "security_sbom",
+      "message": "F\u00fchre Safety Vulnerability-Check aus...",
+      "extra_data": {}
+    },
+    {
+      "timestamp": "2025-08-17T19:41:28.469563",
+      "stage": "security_sbom",
+      "message": "Generiere Software Bill of Materials...",
+      "extra_data": {}
+    },
+    {
+      "timestamp": "2025-08-17T19:41:29.665596",
+      "stage": "security_sbom",
+      "message": "SBOM generiert: 72 Komponenten",
+      "extra_data": {}
+    },
+    {
+      "timestamp": "2025-08-17T19:41:29.665596",
+      "stage": "security_sbom",
+      "message": "Security-Scan OK: 0 Findings",
+      "extra_data": {}
+    },
+    {
+      "timestamp": "2025-08-17T19:41:29.667581",
+      "stage": "security_sbom",
+      "message": "Security/SBOM abgeschlossen: success",
+      "extra_data": {
+        "findings": 0,
+        "high_severity": 0,
+        "sbom": true
+      }
+    },
+    {
+      "timestamp": "2025-08-17T19:41:29.667581",
+      "stage": "scorecard",
+      "message": "QA-Scorecard gestartet",
+      "extra_data": {}
+    },
+    {
+      "timestamp": "2025-08-17T19:41:29.673579",
+      "stage": "scorecard",
+      "message": "Scorecard abgeschlossen: failure",
+      "extra_data": {
+        "score": "0.0/100",
+        "passed": false
+      }
+    },
+    {
+      "timestamp": "2025-08-17T19:41:29.673579",
+      "stage": "draft_pr",
+      "message": "Draft-PR gestartet",
+      "extra_data": {}
+    },
+    {
+      "timestamp": "2025-08-17T19:41:29.673579",
+      "stage": "draft_pr",
+      "message": "Scorecard nicht bestanden - PR-Erstellung abgebrochen",
+      "extra_data": {}
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+2024-01-20T10:00:00Z INFO Starting application
+2024-01-20T10:00:01Z INFO Server listening on port 8000
+2024-01-20T10:00:02Z INFO Health check endpoint ready
+2024-01-20T10:00:03Z INFO Application started successfully
+2024-01-20T10:00:10Z INFO Health check request received
+2024-01-20T10:00:10Z INFO Health check passed
+2024-01-20T10:00:15Z INFO API request received: GET /
+2024-01-20T10:00:15Z INFO API response sent: 200 OK

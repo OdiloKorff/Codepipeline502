@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodePipeline Production GUI</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        .header h1 {
+            color: #4a5568;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .header .subtitle {
+            color: #718096;
+            font-size: 1.2em;
+        }
+        
+        .nav-tabs {
+            display: flex;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 5px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        }
+        
+        .nav-tab {
+            flex: 1;
+            padding: 15px 20px;
+            text-align: center;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            color: #718096;
+        }
+        
+        .nav-tab.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4);
+        }
+        
+        .nav-tab:hover:not(.active) {
+            background: rgba(102, 126, 234, 0.1);
+            color: #667eea;
+        }
+        
+        .tab-content {
+            display: none;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(10px);
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .cta-section {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .cta-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 18px 40px;
+            border-radius: 50px;
+            font-size: 1.2em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4);
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.6);
+        }
+        
+        .runs-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        .runs-table th,
+        .runs-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .runs-table th {
+            background: #f7fafc;
+            font-weight: 600;
+            color: #4a5568;
+        }
+        
+        .runs-table tr:hover {
+            background: #f7fafc;
+        }
+        
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+        
+        .status-completed {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+        
+        .status-failed {
+            background: #fed7d7;
+            color: #742a2a;
+        }
+        
+        .status-running {
+            background: #bee3f8;
+            color: #2a4365;
+        }
+        
+        .status-pending {
+            background: #faf089;
+            color: #744210;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #4a5568;
+        }
+        
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .form-group textarea {
+            height: 300px;
+            font-family: 'Courier New', monospace;
+            resize: vertical;
+        }
+        
+        .validation-result {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            display: none;
+        }
+        
+        .validation-valid {
+            background: #c6f6d5;
+            color: #22543d;
+            border: 1px solid #9ae6b4;
+        }
+        
+        .validation-invalid {
+            background: #fed7d7;
+            color: #742a2a;
+            border: 1px solid #feb2b2;
+        }
+        
+        .validation-warning {
+            background: #faf089;
+            color: #744210;
+            border: 1px solid #f6e05e;
+        }
+        
+        .run-detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 20px;
+        }
+        
+        .detail-card {
+            background: #f7fafc;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .detail-card h3 {
+            margin-bottom: 15px;
+            color: #4a5568;
+        }
+        
+        .gate-timeline {
+            list-style: none;
+            position: relative;
+        }
+        
+        .gate-timeline::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #e2e8f0;
+        }
+        
+        .gate-timeline li {
+            position: relative;
+            padding: 15px 0 15px 40px;
+        }
+        
+        .gate-timeline li::before {
+            content: '';
+            position: absolute;
+            left: 10px;
+            top: 20px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #667eea;
+        }
+        
+        .gate-timeline .gate-passed::before {
+            background: #48bb78;
+        }
+        
+        .gate-timeline .gate-failed::before {
+            background: #f56565;
+        }
+        
+        .artifacts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .artifact-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .artifact-card:hover {
+            border-color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+        }
+        
+        .logs-container {
+            background: #1a202c;
+            color: #e2e8f0;
+            border-radius: 8px;
+            padding: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            max-height: 400px;
+            overflow-y: auto;
+            margin-top: 15px;
+        }
+        
+        .log-entry {
+            margin-bottom: 5px;
+            word-wrap: break-word;
+        }
+        
+        .log-timestamp {
+            color: #9ca3af;
+        }
+        
+        .pr-link {
+            display: inline-block;
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .pr-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(72, 187, 120, 0.4);
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #718096;
+        }
+        
+        .spinner {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 4px solid #e2e8f0;
+            border-radius: 50%;
+            border-top-color: #667eea;
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .error {
+            background: #fed7d7;
+            color: #742a2a;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+        
+        @media (max-width: 768px) {
+            .run-detail-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-tabs {
+                flex-direction: column;
+            }
+            
+            .artifacts-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>🏭 CodePipeline Production GUI</h1>
+            <p class="subtitle">Enterprise-Grade Automated Code Pipeline with Quality Gates</p>
+        </div>
+
+        <!-- Navigation -->
+        <div class="nav-tabs">
+            <div class="nav-tab active" onclick="showTab('dashboard')">
+                📊 Dashboard
+            </div>
+            <div class="nav-tab" onclick="showTab('new-run')">
+                🚀 Neuer Run
+            </div>
+            <div class="nav-tab" onclick="showTab('run-detail')">
+                📋 Run-Detail
+            </div>
+        </div>
+
+        <!-- Dashboard Tab -->
+        <div id="dashboard" class="tab-content active">
+            <div class="cta-section">
+                <h2>Willkommen bei CodePipeline Production</h2>
+                <p style="margin: 15px 0; color: #718096;">
+                    Starten Sie einen neuen automatisierten Pipeline-Run mit umfassenden Quality Gates
+                </p>
+                <button class="cta-button" onclick="showTab('new-run')">
+                    🚀 Neuen Run starten
+                </button>
+            </div>
+
+            <h3>Letzte Runs</h3>
+            <table class="runs-table" id="runs-table">
+                <thead>
+                    <tr>
+                        <th>Run ID</th>
+                        <th>Spec ID</th>
+                        <th>Status</th>
+                        <th>Start Zeit</th>
+                        <th>Dauer</th>
+                        <th>Gates</th>
+                        <th>Aktionen</th>
+                    </tr>
+                </thead>
+                <tbody id="runs-table-body">
+                    <tr>
+                        <td colspan="7" class="loading">
+                            <div class="spinner"></div>
+                            <p>Lade Runs...</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- New Run Tab -->
+        <div id="new-run" class="tab-content">
+            <h2>🚀 Neuen Run starten</h2>
+            <form id="new-run-form">
+                <div class="form-group">
+                    <label for="spec-content">Feature Specification (JSON/YAML):</label>
+                    <textarea id="spec-content" placeholder='Beispiel:
+{
+  "id": "FEATURE-001",
+  "title": "Neue Feature-Implementierung",
+  "version": 1,
+  "goal": "Implementiere neue Funktionalität",
+  "target_paths": ["src/feature/"],
+  "constraints": ["safe operations only"],
+  "risk_level": "medium",
+  "reviewers": ["tech-lead"],
+  "model": "gpt-4o-mini",
+  "token_budget": 2000,
+  "tests": {"coverage_min": 85.0},
+  "hard_musts": ["test_coverage", "security_scan"]
+}'></textarea>
+                    <div id="validation-result" class="validation-result"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="branch">Branch (optional):</label>
+                    <input type="text" id="branch" placeholder="feature/my-feature">
+                </div>
+
+                <div class="form-group">
+                    <label for="secure">Security Mode:</label>
+                    <select id="secure">
+                        <option value="true">Secure Mode (empfohlen)</option>
+                        <option value="false">Fast Mode</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="dry-run">Dry Run:</label>
+                    <select id="dry-run">
+                        <option value="false">Echter Run</option>
+                        <option value="true">Dry Run (nur Validierung)</option>
+                    </select>
+                </div>
+
+                <button type="button" class="cta-button" onclick="validateSpec()">
+                    ✅ Spec validieren
+                </button>
+                <button type="button" class="cta-button" onclick="startRun()">
+                    🚀 Run starten
+                </button>
+            </form>
+        </div>
+
+        <!-- Run Detail Tab -->
+        <div id="run-detail" class="tab-content">
+            <div id="run-detail-content">
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>Wählen Sie einen Run aus dem Dashboard aus...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global state
+        let currentRunId = null;
+        let runs = [];
+        let logEventSource = null;
+
+        // API Base URL
+        const API_BASE = 'http://127.0.0.1:8000/api';
+
+        // Tab Management
+        function showTab(tabId) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Hide all nav tabs
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected tab
+            document.getElementById(tabId).classList.add('active');
+            event.target.classList.add('active');
+            
+            // Load data if needed
+            if (tabId === 'dashboard') {
+                loadRuns();
+            }
+        }
+
+        // Load runs from API
+        async function loadRuns() {
+            try {
+                const response = await fetch(`${API_BASE}/runs`);
+                if (!response.ok) throw new Error('API nicht verfügbar');
+                
+                const data = await response.json();
+                runs = data.runs;
+                renderRunsTable();
+            } catch (error) {
+                console.error('Error loading runs:', error);
+                document.getElementById('runs-table-body').innerHTML = `
+                    <tr>
+                        <td colspan="7" class="error">
+                            ❌ Fehler beim Laden der Runs: ${error.message}
+                            <br><br>
+                            <strong>Demo-Modus:</strong> Backend nicht verfügbar. 
+                            Starten Sie das Backend mit: <code>python production_gui_backend.py --start-server</code>
+                        </td>
+                    </tr>
+                `;
+                
+                // Load demo data
+                loadDemoData();
+            }
+        }
+
+        // Load demo data when API is not available
+        function loadDemoData() {
+            runs = [
+                {
+                    run_id: 'demo-run-001',
+                    spec_id: 'DEMO-FEATURE-001',
+                    status: 'completed',
+                    start_time: new Date(Date.now() - 3600000).toISOString(),
+                    duration_seconds: 180,
+                    gate_matrix: {
+                        setup: { status: 'passed', duration: 5 },
+                        lint: { status: 'passed', duration: 10 },
+                        test_coverage: { status: 'passed', duration: 15 },
+                        security_scan: { status: 'passed', duration: 20 },
+                        qa_scorecard: { status: 'passed', duration: 8 }
+                    },
+                    artifacts: [
+                        { name: 'qa-scorecard.json', type: 'json' },
+                        { name: 'security-report.json', type: 'json' }
+                    ],
+                    pr_link: 'https://github.com/example/repo/pull/123'
+                },
+                {
+                    run_id: 'demo-run-002',
+                    spec_id: 'DEMO-FEATURE-002',
+                    status: 'failed',
+                    start_time: new Date(Date.now() - 1800000).toISOString(),
+                    duration_seconds: 95,
+                    gate_matrix: {
+                        setup: { status: 'passed', duration: 5 },
+                        lint: { status: 'passed', duration: 10 },
+                        security_scan: { status: 'failed', duration: 20 }
+                    },
+                    artifacts: [
+                        { name: 'security-report.json', type: 'json' }
+                    ]
+                },
+                {
+                    run_id: 'demo-run-003',
+                    spec_id: 'DEMO-FEATURE-003',
+                    status: 'running',
+                    start_time: new Date(Date.now() - 300000).toISOString(),
+                    gate_matrix: {
+                        setup: { status: 'passed', duration: 5 },
+                        lint: { status: 'passed', duration: 10 }
+                    },
+                    artifacts: []
+                }
+            ];
+            renderRunsTable();
+        }
+
+        // Render runs table
+        function renderRunsTable() {
+            const tbody = document.getElementById('runs-table-body');
+            
+            if (runs.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="7" style="text-align: center; padding: 40px; color: #718096;">
+                            Keine Runs vorhanden. Starten Sie Ihren ersten Run!
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = runs.map(run => {
+                const startTime = new Date(run.start_time).toLocaleString('de-DE');
+                const duration = run.duration_seconds ? 
+                    `${Math.floor(run.duration_seconds / 60)}:${(run.duration_seconds % 60).toString().padStart(2, '0')}` : 
+                    '-';
+                
+                const gateCount = Object.keys(run.gate_matrix || {}).length;
+                const passedGates = Object.values(run.gate_matrix || {}).filter(g => g.status === 'passed').length;
+                
+                return `
+                    <tr>
+                        <td><code>${run.run_id}</code></td>
+                        <td><strong>${run.spec_id}</strong></td>
+                        <td><span class="status-badge status-${run.status}">${run.status.toUpperCase()}</span></td>
+                        <td>${startTime}</td>
+                        <td>${duration}</td>
+                        <td>${passedGates}/${gateCount}</td>
+                        <td>
+                            <button onclick="viewRunDetail('${run.run_id}')" style="background: #667eea; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer;">
+                                Details
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // Validate spec
+        async function validateSpec() {
+            const specContent = document.getElementById('spec-content').value.trim();
+            const resultDiv = document.getElementById('validation-result');
+            
+            if (!specContent) {
+                resultDiv.innerHTML = '<p>❌ Bitte geben Sie eine Specification ein</p>';
+                resultDiv.className = 'validation-result validation-invalid';
+                resultDiv.style.display = 'block';
+                return;
+            }
+
+            try {
+                // Try to parse JSON locally first
+                const specData = JSON.parse(specContent);
+                
+                // Basic validation
+                const errors = [];
+                const warnings = [];
+                
+                if (!specData.id) errors.push('Missing required field: id');
+                if (!specData.title) errors.push('Missing required field: title');
+                if (!specData.goal) errors.push('Missing required field: goal');
+                if (!specData.target_paths || !Array.isArray(specData.target_paths) || specData.target_paths.length === 0) {
+                    errors.push('Missing or empty target_paths');
+                }
+                if (!specData.model) errors.push('Missing required field: model');
+                if (!specData.token_budget || specData.token_budget <= 0) errors.push('Invalid token_budget');
+                
+                // Risk level validation
+                if (!['low', 'medium', 'high'].includes(specData.risk_level)) {
+                    errors.push('Invalid risk_level (must be low, medium, or high)');
+                }
+                
+                // Reviewer validation
+                if (specData.risk_level === 'high' && (!specData.reviewers || specData.reviewers.length < 2)) {
+                    errors.push('High-risk specs require at least 2 reviewers');
+                }
+                
+                // Token budget warning
+                if (specData.token_budget > 5000) {
+                    warnings.push(`High token budget: ${specData.token_budget} (consider reducing)`);
+                }
+                
+                // Path validation
+                if (specData.target_paths) {
+                    specData.target_paths.forEach(path => {
+                        if (path.includes('..') || path.startsWith('/')) {
+                            errors.push(`Dangerous path detected: ${path}`);
+                        }
+                    });
+                }
+                
+                // Display results
+                let status, className, content;
+                
+                if (errors.length > 0) {
+                    status = 'invalid';
+                    className = 'validation-invalid';
+                    content = `
+                        <h4>❌ Validation Fehler:</h4>
+                        <ul>${errors.map(e => `<li>${e}</li>`).join('')}</ul>
+                    `;
+                } else if (warnings.length > 0) {
+                    status = 'valid_with_warnings';
+                    className = 'validation-warning';
+                    content = `
+                        <h4>⚠️ Validation erfolgreich mit Warnungen:</h4>
+                        <ul>${warnings.map(w => `<li>${w}</li>`).join('')}</ul>
+                        <p><strong>Spec ID:</strong> ${specData.id}</p>
+                        <p><strong>Risk Level:</strong> ${specData.risk_level}</p>
+                    `;
+                } else {
+                    status = 'valid';
+                    className = 'validation-valid';
+                    content = `
+                        <h4>✅ Validation erfolgreich!</h4>
+                        <p><strong>Spec ID:</strong> ${specData.id}</p>
+                        <p><strong>Risk Level:</strong> ${specData.risk_level}</p>
+                        <p><strong>Target Paths:</strong> ${specData.target_paths.join(', ')}</p>
+                        <p><strong>Token Budget:</strong> ${specData.token_budget}</p>
+                    `;
+                }
+                
+                resultDiv.innerHTML = content;
+                resultDiv.className = `validation-result ${className}`;
+                resultDiv.style.display = 'block';
+                
+            } catch (error) {
+                resultDiv.innerHTML = `<p>❌ Invalid JSON format: ${error.message}</p>`;
+                resultDiv.className = 'validation-result validation-invalid';
+                resultDiv.style.display = 'block';
+            }
+        }
+
+        // Start new run
+        async function startRun() {
+            const specContent = document.getElementById('spec-content').value.trim();
+            const branch = document.getElementById('branch').value.trim();
+            const secure = document.getElementById('secure').value === 'true';
+            const dryRun = document.getElementById('dry-run').value === 'true';
+            
+            if (!specContent) {
+                alert('Bitte geben Sie eine Specification ein');
+                return;
+            }
+            
+            try {
+                const specData = JSON.parse(specContent);
+                
+                // Create demo run
+                const runId = `run-${Date.now()}-${Math.random().toString(36).substr(2, 8)}`;
+                
+                const newRun = {
+                    run_id: runId,
+                    spec_id: specData.id || 'UNKNOWN',
+                    status: 'pending',
+                    start_time: new Date().toISOString(),
+                    gate_matrix: {},
+                    artifacts: [],
+                    metadata: {
+                        branch: branch || null,
+                        secure: secure,
+                        dry_run: dryRun
+                    }
+                };
+                
+                // Add to runs list
+                runs.unshift(newRun);
+                
+                // Simulate run progression
+                simulateRunProgression(runId);
+                
+                // Switch to dashboard and show the new run
+                showTab('dashboard');
+                renderRunsTable();
+                
+                // Show success message
+                alert(`✅ Run gestartet: ${runId}\n\nDer Run wird im Dashboard angezeigt und automatisch aktualisiert.`);
+                
+                // Clear form
+                document.getElementById('new-run-form').reset();
+                document.getElementById('validation-result').style.display = 'none';
+                
+            } catch (error) {
+                alert(`❌ Fehler beim Starten des Runs: ${error.message}`);
+            }
+        }
+
+        // Simulate run progression
+        function simulateRunProgression(runId) {
+            const run = runs.find(r => r.run_id === runId);
+            if (!run) return;
+            
+            const stages = [
+                { name: 'setup', duration: 5000, willPass: true },
+                { name: 'lint', duration: 8000, willPass: true },
+                { name: 'test_coverage', duration: 12000, willPass: true },
+                { name: 'security_scan', duration: 15000, willPass: Math.random() > 0.3 },
+                { name: 'sbom_license', duration: 10000, willPass: true },
+                { name: 'qa_scorecard', duration: 6000, willPass: true }
+            ];
+            
+            let delay = 2000; // Start delay
+            run.status = 'running';
+            
+            stages.forEach((stage, index) => {
+                setTimeout(() => {
+                    const status = stage.willPass ? 'passed' : 'failed';
+                    run.gate_matrix[stage.name] = {
+                        status: status,
+                        duration: Math.floor(stage.duration / 1000),
+                        timestamp: new Date().toISOString()
+                    };
+                    
+                    // Add artifact
+                    run.artifacts.push({
+                        name: `${stage.name}-report.json`,
+                        type: 'json',
+                        size: '1.2 KB'
+                    });
+                    
+                    // Update table if on dashboard
+                    if (document.getElementById('dashboard').classList.contains('active')) {
+                        renderRunsTable();
+                    }
+                    
+                    // Update detail view if viewing this run
+                    if (currentRunId === runId) {
+                        renderRunDetail(run);
+                    }
+                    
+                    // Complete run after last stage
+                    if (index === stages.length - 1) {
+                        setTimeout(() => {
+                            const allPassed = Object.values(run.gate_matrix).every(g => g.status === 'passed');
+                            run.status = allPassed ? 'completed' : 'failed';
+                            run.end_time = new Date().toISOString();
+                            run.duration_seconds = Math.floor((new Date(run.end_time) - new Date(run.start_time)) / 1000);
+                            
+                            if (allPassed) {
+                                run.pr_link = `https://github.com/example/repo/pull/${Math.floor(Math.random() * 1000)}`;
+                            }
+                            
+                            // Final update
+                            if (document.getElementById('dashboard').classList.contains('active')) {
+                                renderRunsTable();
+                            }
+                            if (currentRunId === runId) {
+                                renderRunDetail(run);
+                            }
+                        }, 2000);
+                    }
+                }, delay);
+                
+                delay += stage.duration;
+            });
+        }
+
+        // View run detail
+        function viewRunDetail(runId) {
+            currentRunId = runId;
+            const run = runs.find(r => r.run_id === runId);
+            
+            if (!run) {
+                document.getElementById('run-detail-content').innerHTML = `
+                    <div class="error">Run nicht gefunden: ${runId}</div>
+                `;
+                return;
+            }
+            
+            showTab('run-detail');
+            renderRunDetail(run);
+        }
+
+        // Render run detail
+        function renderRunDetail(run) {
+            const duration = run.duration_seconds ? 
+                `${Math.floor(run.duration_seconds / 60)}:${(run.duration_seconds % 60).toString().padStart(2, '0')}` : 
+                'Laufend...';
+            
+            const gateTimeline = Object.entries(run.gate_matrix || {}).map(([gateName, gateResult]) => {
+                const statusClass = `gate-${gateResult.status}`;
+                const statusEmoji = gateResult.status === 'passed' ? '✅' : 
+                                   gateResult.status === 'failed' ? '❌' : '⏳';
+                
+                return `
+                    <li class="${statusClass}">
+                        <strong>${gateName.replace('_', ' ').toUpperCase()}</strong>
+                        <span style="float: right;">${statusEmoji} ${gateResult.status} (${gateResult.duration}s)</span>
+                    </li>
+                `;
+            }).join('');
+            
+            const artifactsGrid = run.artifacts.map(artifact => `
+                <div class="artifact-card" onclick="downloadArtifact('${run.run_id}', '${artifact.name}')">
+                    <div style="font-size: 2em; margin-bottom: 10px;">
+                        ${artifact.type === 'json' ? '📄' : 
+                          artifact.type === 'md' ? '📝' : '📋'}
+                    </div>
+                    <div><strong>${artifact.name}</strong></div>
+                    <div style="color: #718096; font-size: 0.9em;">${artifact.size || '1.2 KB'}</div>
+                </div>
+            `).join('');
+            
+            const prLinkHtml = run.pr_link ? 
+                `<a href="${run.pr_link}" target="_blank" class="pr-link">🔗 Pull Request öffnen</a>` : 
+                '<p style="color: #718096;">Kein PR-Link verfügbar</p>';
+            
+            document.getElementById('run-detail-content').innerHTML = `
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h2>📋 Run Details: ${run.spec_id}</h2>
+                    <span class="status-badge status-${run.status}">${run.status.toUpperCase()}</span>
+                </div>
+                
+                <div style="background: #f7fafc; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+                        <div>
+                            <strong>Run ID:</strong><br>
+                            <code>${run.run_id}</code>
+                        </div>
+                        <div>
+                            <strong>Start Zeit:</strong><br>
+                            ${new Date(run.start_time).toLocaleString('de-DE')}
+                        </div>
+                        <div>
+                            <strong>Dauer:</strong><br>
+                            ${duration}
+                        </div>
+                        <div>
+                            <strong>Gates:</strong><br>
+                            ${Object.values(run.gate_matrix || {}).filter(g => g.status === 'passed').length}/${Object.keys(run.gate_matrix || {}).length} bestanden
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="run-detail-grid">
+                    <div class="detail-card">
+                        <h3>🚪 Gate Timeline</h3>
+                        <ul class="gate-timeline">
+                            ${gateTimeline || '<li>Noch keine Gates ausgeführt</li>'}
+                        </ul>
+                    </div>
+                    
+                    <div class="detail-card">
+                        <h3>📄 Artifacts</h3>
+                        <div class="artifacts-grid">
+                            ${artifactsGrid || '<p style="color: #718096;">Noch keine Artifacts generiert</p>'}
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="detail-card" style="margin-top: 20px;">
+                    <h3>📝 Live Logs</h3>
+                    <div class="logs-container" id="logs-container-${run.run_id}">
+                        ${run.status === 'running' ? 
+                            '<div class="log-entry"><span class="log-timestamp">[Live]</span> Logs werden geladen...</div>' : 
+                            '<div class="log-entry"><span class="log-timestamp">[Info]</span> Run abgeschlossen - Logs verfügbar</div>'
+                        }
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 20px;">
+                    ${prLinkHtml}
+                </div>
+            `;
+        }
+
+        // Download artifact (mock)
+        function downloadArtifact(runId, artifactName) {
+            alert(`📄 Artifact Download: ${artifactName}\n\nIn der echten Anwendung würde hier der Download starten.`);
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadRuns();
+            
+            // Auto-refresh runs every 30 seconds
+            setInterval(() => {
+                if (document.getElementById('dashboard').classList.contains('active')) {
+                    loadRuns();
+                }
+            }, 30000);
+        });
+
+        // Add spec content change listener for auto-validation
+        document.getElementById('spec-content').addEventListener('input', function() {
+            // Clear previous validation result when user types
+            const resultDiv = document.getElementById('validation-result');
+            resultDiv.style.display = 'none';
+        });
+    </script>
+</body>
+</html>

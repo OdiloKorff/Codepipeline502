@@ -1,0 +1,25 @@
+author: Nightly Smoke System
+description: Standard template for nightly smoke testing with minimal footprint
+goal: Daily automated smoke test to detect quality regressions early
+id: NIGHTLY-SMOKE-001
+notification:
+  on_failure: true
+  on_success: false
+  on_trend_change: true
+quality_gates:
+  active_tools_min: 1
+  coverage_min: 20.0
+  license_violations_max: 5
+  security_high_max: 0
+smoke_config:
+  essential_checks_only: true
+  fast_mode: true
+  lightweight: true
+  retry_count: 1
+  timeout_minutes: 15
+target_paths:
+- codepipeline/*.py
+- tests/test_*.py
+- policies/*.yml
+title: Nightly Smoke Test Template
+version: 1

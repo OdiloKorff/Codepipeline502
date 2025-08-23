@@ -1,0 +1,9 @@
+{
+  "demo_duration_seconds": 1.4940011501312256,
+  "safety_test_success_rate": 0.0,
+  "pipeline_stages_implemented": 0,
+  "documentation_completeness": 100.0,
+  "governance_compliance": 0.0,
+  "overall_readiness": 62.5,
+  "production_ready": false
+}

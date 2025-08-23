@@ -1,0 +1,27 @@
+{
+  "id": "INTEGRATION-TEST-001",
+  "title": "Production Core System Integration Test",
+  "version": 1,
+  "goal": "Test complete integration of all production core components",
+  "target_paths": [
+    "src/integration/",
+    "tests/integration/"
+  ],
+  "constraints": [
+    "secure implementation",
+    "comprehensive validation"
+  ],
+  "risk_level": "medium",
+  "reviewers": [
+    "integration-team"
+  ],
+  "model": "gpt-4o-mini",
+  "token_budget": 3000,
+  "tests": {
+    "coverage_min": 80.0
+  },
+  "hard_musts": [
+    "coverage_threshold",
+    "security_scan"
+  ]
+}

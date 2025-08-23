@@ -1,0 +1,11 @@
+{
+  "bandit": {
+    "status": "ok",
+    "high": 0,
+    "medium": 41,
+    "low": 1299,
+    "total": 1340,
+    "active_tools": 1,
+    "scan_date": "2025-08-22T11:46:54.173887Z"
+  }
+}

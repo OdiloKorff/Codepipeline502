@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+<coverage version="7.3.2" timestamp="1755702720" lines-valid="100" lines-covered="93" line-rate="0.925">
+    <sources>
+        <source>sandbox</source>
+    </sources>
+    <packages>
+        <package name="." line-rate="0.925" complexity="0">
+            <classes>
+                <class name="main.py" filename="main.py" complexity="0" line-rate="0.925">
+                </class>
+            </classes>
+        </package>
+    </packages>
+</coverage>

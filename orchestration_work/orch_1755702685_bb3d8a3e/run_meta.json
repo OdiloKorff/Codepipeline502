@@ -1,0 +1,163 @@
+{
+  "run_id": "orch_1755702685_bb3d8a3e",
+  "spec": {
+    "prompt": "Simple library for data validation utilities",
+    "branch": "feature/validation-lib",
+    "secure": false,
+    "dry_run": true,
+    "template_type": "library",
+    "policy_version": "1.0.0",
+    "seed": 9885,
+    "token_budget": 2000
+  },
+  "start_time": "2025-08-20T17:11:25.694101",
+  "end_time": null,
+  "duration_seconds": 0.960026,
+  "overall_status": "success",
+  "total_tokens_used": 207,
+  "gates": [
+    {
+      "name": "Spec-Validation",
+      "status": "pass",
+      "start_time": "2025-08-20T17:11:25.695103",
+      "end_time": "2025-08-20T17:11:25.696113",
+      "duration_seconds": 0.00101,
+      "artifacts": [
+        "orchestration_work\\orch_1755702685_bb3d8a3e\\spec.json"
+      ],
+      "tokens_used": 0,
+      "error_message": "",
+      "metadata": {
+        "spec_hash": "664b796a5eac53eb"
+      }
+    },
+    {
+      "name": "Guard",
+      "status": "pass",
+      "start_time": "2025-08-20T17:11:25.696113",
+      "end_time": "2025-08-20T17:11:25.699109",
+      "duration_seconds": 0.002996,
+      "artifacts": [
+        "orchestration_work\\orch_1755702685_bb3d8a3e\\guard_report.json"
+      ],
+      "tokens_used": 0,
+      "error_message": "",
+      "metadata": {}
+    },
+    {
+      "name": "LLM",
+      "status": "pass",
+      "start_time": "2025-08-20T17:11:25.699109",
+      "end_time": "2025-08-20T17:11:26.010102",
+      "duration_seconds": 0.310993,
+      "artifacts": [
+        "orchestration_work\\orch_1755702685_bb3d8a3e\\generated_template.md"
+      ],
+      "tokens_used": 207,
+      "error_message": "",
+      "metadata": {
+        "template_lines": 0
+      }
+    },
+    {
+      "name": "Unified-Diff",
+      "status": "pass",
+      "start_time": "2025-08-20T17:11:26.010102",
+      "end_time": "2025-08-20T17:11:26.012103",
+      "duration_seconds": 0.002001,
+      "artifacts": [
+        "orchestration_work\\orch_1755702685_bb3d8a3e\\unified.diff"
+      ],
+      "tokens_used": 0,
+      "error_message": "",
+      "metadata": {
+        "diff_lines": 0
+      }
+    },
+    {
+      "name": "3-Way-Apply-Sandbox",
+      "status": "pass",
+      "start_time": "2025-08-20T17:11:26.012103",
+      "end_time": "2025-08-20T17:11:26.019109",
+      "duration_seconds": 0.007006,
+      "artifacts": [
+        "orchestration_work\\orch_1755702685_bb3d8a3e\\sandbox"
+      ],
+      "tokens_used": 0,
+      "error_message": "",
+      "metadata": {
+        "sandbox_files": 5
+      }
+    },
+    {
+      "name": "Tests-Coverage",
+      "status": "pass",
+      "start_time": "2025-08-20T17:11:26.019109",
+      "end_time": "2025-08-20T17:11:26.235114",
+      "duration_seconds": 0.216005,
+      "artifacts": [
+        "orchestration_work\\orch_1755702685_bb3d8a3e\\qa_summary.json",
+        "orchestration_work\\orch_1755702685_bb3d8a3e\\coverage.xml"
+      ],
+      "tokens_used": 0,
+      "error_message": "",
+      "metadata": {
+        "coverage_percent": 92.5
+      }
+    },
+    {
+      "name": "Security-SBOM",
+      "status": "pass",
+      "start_time": "2025-08-20T17:11:26.235114",
+      "end_time": "2025-08-20T17:11:26.649108",
+      "duration_seconds": 0.413994,
+      "artifacts": [
+        "orchestration_work\\orch_1755702685_bb3d8a3e\\security_report.json",
+        "orchestration_work\\orch_1755702685_bb3d8a3e\\sbom.json"
+      ],
+      "tokens_used": 0,
+      "error_message": "",
+      "metadata": {
+        "security_findings": {
+          "critical": 0,
+          "high": 0,
+          "medium": 1,
+          "low": 2
+        },
+        "active_security_tools": 1
+      }
+    },
+    {
+      "name": "Scorecard",
+      "status": "pass",
+      "start_time": "2025-08-20T17:11:26.649108",
+      "end_time": "2025-08-20T17:11:26.654127",
+      "duration_seconds": 0.005019,
+      "artifacts": [
+        "orchestration_work\\orch_1755702685_bb3d8a3e\\scorecard.json"
+      ],
+      "tokens_used": 0,
+      "error_message": "",
+      "metadata": {
+        "overall_score": 91.7
+      }
+    },
+    {
+      "name": "Draft-PR",
+      "status": "skip",
+      "start_time": "2025-08-20T17:11:26.654127",
+      "end_time": "2025-08-20T17:11:26.654127",
+      "duration_seconds": 0.0,
+      "artifacts": [],
+      "tokens_used": 0,
+      "error_message": "",
+      "metadata": {
+        "reason": "Skipped in dry-run mode"
+      }
+    }
+  ],
+  "policy_version": "1.0.0",
+  "seed": 9885,
+  "spec_hash": "664b796a5eac53eb",
+  "orchestrator_version": "1.0.0"
+}

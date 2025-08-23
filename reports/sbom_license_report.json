@@ -1,0 +1,255 @@
+{
+  "sbom_license_gate": {
+    "sbom_generated": true,
+    "total_packages": 84,
+    "license_violations": 16,
+    "unknown_licenses": 37,
+    "status": "fail",
+    "timestamp": "2025-08-22T19:01:57.073247Z",
+    "details": {
+      "sbom_file": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\sbom.json",
+      "sbom_format": "CycloneDX",
+      "license_check": {
+        "total_packages": 84,
+        "approved": 31,
+        "violations": [
+          {
+            "package": "aiohappyeyeballs",
+            "license": "PSF-2.0",
+            "reason": "Not in allowlist"
+          },
+          {
+            "package": "aiosignal",
+            "license": "Apache 2.0",
+            "reason": "Not in allowlist"
+          },
+          {
+            "package": "async-timeout",
+            "license": "Apache 2",
+            "reason": "Not in allowlist"
+          },
+          {
+            "package": "backports-datetime-fromisoformat",
+            "license": "MIT License",
+            "reason": "Not in allowlist"
+          },
+          {
+            "package": "cryptography",
+            "license": "Apache-2.0 OR BSD-3-Clause",
+            "reason": "Not in allowlist"
+          },
+          {
+            "package": "distro",
+            "license": "Apache License, Version 2.0",
+            "reason": "Not in allowlist"
+          },
+          {
+            "package": "dparse",
+            "license": "MIT license",
+            "reason": "Not in allowlist"
+          },
+          {
+            "package": "joblib",
+            "license": "BSD 3-Clause",
+            "reason": "Not in allowlist"
+          },
+          {
+            "package": "MarkupSafe",
+            "license": "Copyright 2010 Pallets",
+            "reason": "Not in allowlist"
+          },
+          {
+            "package": "multidict",
+            "license": "Apache 2",
+            "reason": "Not in allowlist"
+          },
+          {
+            "package": "nltk",
+            "license": "Apache License, Version 2.0",
+            "reason": "Not in allowlist"
+          },
+          {
+            "package": "ruamel.yaml",
+            "license": "MIT license",
+            "reason": "Not in allowlist"
+          },
+          {
+            "package": "shellingham",
+            "license": "ISC License",
+            "reason": "Not in allowlist"
+          },
+          {
+            "package": "sniffio",
+            "license": "MIT OR Apache-2.0",
+            "reason": "Not in allowlist"
+          },
+          {
+            "package": "tenacity",
+            "license": "Apache 2.0",
+            "reason": "Not in allowlist"
+          },
+          {
+            "package": "tqdm",
+            "license": "MPL-2.0 AND MIT",
+            "reason": "Not in allowlist"
+          }
+        ],
+        "unknown": [
+          {
+            "package": "annotated-types",
+            "license": ""
+          },
+          {
+            "package": "attrs",
+            "license": "UNKNOWN"
+          },
+          {
+            "package": "build",
+            "license": "UNKNOWN"
+          },
+          {
+            "package": "click",
+            "license": "UNKNOWN"
+          },
+          {
+            "package": "colorama",
+            "license": ""
+          },
+          {
+            "package": "exceptiongroup",
+            "license": ""
+          },
+          {
+            "package": "fastapi",
+            "license": ""
+          },
+          {
+            "package": "filelock",
+            "license": ""
+          },
+          {
+            "package": "httpcore",
+            "license": "UNKNOWN"
+          },
+          {
+            "package": "idna",
+            "license": ""
+          },
+          {
+            "package": "importlib_metadata",
+            "license": ""
+          },
+          {
+            "package": "iniconfig",
+            "license": "UNKNOWN"
+          },
+          {
+            "package": "Jinja2",
+            "license": ""
+          },
+          {
+            "package": "markdown-it-py",
+            "license": ""
+          },
+          {
+            "package": "marshmallow",
+            "license": ""
+          },
+          {
+            "package": "mdurl",
+            "license": ""
+          },
+          {
+            "package": "mypy_extensions",
+            "license": "UNKNOWN"
+          },
+          {
+            "package": "packaging",
+            "license": ""
+          },
+          {
+            "package": "pathspec",
+            "license": ""
+          },
+          {
+            "package": "pip",
+            "license": "UNKNOWN"
+          },
+          {
+            "package": "pydantic",
+            "license": ""
+          },
+          {
+            "package": "pyproject_hooks",
+            "license": ""
+          },
+          {
+            "package": "regex",
+            "license": "UNKNOWN"
+          },
+          {
+            "package": "ruff",
+            "license": ""
+          },
+          {
+            "package": "safety",
+            "license": "UNKNOWN"
+          },
+          {
+            "package": "setuptools",
+            "license": "UNKNOWN"
+          },
+          {
+            "package": "starlette",
+            "license": "UNKNOWN"
+          },
+          {
+            "package": "stevedore",
+            "license": ""
+          },
+          {
+            "package": "tomli",
+            "license": ""
+          },
+          {
+            "package": "typer",
+            "license": ""
+          },
+          {
+            "package": "types-PyYAML",
+            "license": "UNKNOWN"
+          },
+          {
+            "package": "typing_extensions",
+            "license": "UNKNOWN"
+          },
+          {
+            "package": "typing-inspection",
+            "license": "UNKNOWN"
+          },
+          {
+            "package": "urllib3",
+            "license": "UNKNOWN"
+          },
+          {
+            "package": "uvicorn",
+            "license": "UNKNOWN"
+          },
+          {
+            "package": "wheel",
+            "license": ""
+          },
+          {
+            "package": "zipp",
+            "license": "UNKNOWN"
+          }
+        ],
+        "violation_count": 16,
+        "unknown_count": 37
+      },
+      "allowed_licenses_count": 5
+    }
+  },
+  "generated_at": "2025-08-22T19:01:57.073247Z",
+  "project_root": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502"
+}

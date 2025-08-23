@@ -1,0 +1,163 @@
+{
+  "spec_id": "QA-DEMO-001",
+  "timestamp": "2025-08-17T18:38:11.961774",
+  "scorecard_version": "production-v1.0",
+  "overall": {
+    "result": "failed",
+    "score": 59.0,
+    "exit_code": 1,
+    "execution_time_ms": 4.0
+  },
+  "summary": {
+    "gates_total": 5,
+    "gates_passed": 3,
+    "gates_failed": 2,
+    "hard_must_violations": 6
+  },
+  "gates": [
+    {
+      "name": "Test Coverage",
+      "result": "passed",
+      "score": 94,
+      "details": {
+        "coverage": 94.22638124144561,
+        "lines_covered": 916,
+        "lines_total": 972,
+        "threshold": 80.0,
+        "threshold_met": true
+      },
+      "execution_time_ms": 4338.5,
+      "error_message": null,
+      "hard_must_violations": [
+        "minimum_gate_score: Jedes Gate muss Mindest-Score erreichen (Gate: Test Coverage)"
+      ]
+    },
+    {
+      "name": "Code Quality",
+      "result": "failed",
+      "score": 0,
+      "details": {
+        "lint_errors": 5,
+        "lint_warnings": 7,
+        "type_errors": 0,
+        "total_issues": 12
+      },
+      "execution_time_ms": 2580.9,
+      "error_message": "Code Quality Issues: 5 Errors, 0 Type Errors",
+      "hard_must_violations": [
+        "minimum_gate_score: Jedes Gate muss Mindest-Score erreichen (Gate: Code Quality)"
+      ]
+    },
+    {
+      "name": "Security Analysis",
+      "result": "passed",
+      "score": 76,
+      "details": {
+        "high_severity_count": 0,
+        "medium_severity_count": 1,
+        "low_severity_count": 7,
+        "total_findings": 8,
+        "tools_used": [
+          "semgrep",
+          "bandit",
+          "safety"
+        ]
+      },
+      "execution_time_ms": 5320.5,
+      "error_message": null,
+      "hard_must_violations": [
+        "minimum_gate_score: Jedes Gate muss Mindest-Score erreichen (Gate: Security Analysis)"
+      ]
+    },
+    {
+      "name": "License Policy",
+      "result": "failed",
+      "score": 50,
+      "details": {
+        "license_violations": 2,
+        "dependencies_scanned": 46,
+        "allowed_licenses": [
+          "MIT",
+          "Apache-2.0",
+          "BSD-3-Clause"
+        ],
+        "denied_licenses": [
+          "GPL-3.0",
+          "AGPL-3.0"
+        ]
+      },
+      "execution_time_ms": 6294.1,
+      "error_message": "2 License Policy Violations",
+      "hard_must_violations": [
+        "no_license_violations: Keine Lizenz-Verletzungen erlaubt (Gate: License Policy)",
+        "minimum_gate_score: Jedes Gate muss Mindest-Score erreichen (Gate: License Policy)"
+      ]
+    },
+    {
+      "name": "Token Budget",
+      "result": "passed",
+      "score": 75,
+      "details": {
+        "budget_limit": 8000,
+        "tokens_used": 5930,
+        "budget_utilization_percent": 74.125,
+        "estimated_cost_usd": 0.5930000000000001
+      },
+      "execution_time_ms": 337.1,
+      "error_message": null,
+      "hard_must_violations": [
+        "minimum_gate_score: Jedes Gate muss Mindest-Score erreichen (Gate: Token Budget)"
+      ]
+    }
+  ],
+  "hard_must_violations": [
+    "no_license_violations: Keine Lizenz-Verletzungen erlaubt (Gate: License Policy)",
+    "minimum_gate_score: Jedes Gate muss Mindest-Score erreichen (Gate: Test Coverage)",
+    "minimum_gate_score: Jedes Gate muss Mindest-Score erreichen (Gate: Code Quality)",
+    "minimum_gate_score: Jedes Gate muss Mindest-Score erreichen (Gate: Security Analysis)",
+    "minimum_gate_score: Jedes Gate muss Mindest-Score erreichen (Gate: License Policy)",
+    "minimum_gate_score: Jedes Gate muss Mindest-Score erreichen (Gate: Token Budget)"
+  ],
+  "hard_must_rules": [
+    {
+      "rule_id": "coverage_minimum",
+      "description": "Mindest-Code-Coverage muss erreicht werden",
+      "severity": "high",
+      "gate_name": "Test Coverage",
+      "condition": "coverage_threshold",
+      "threshold": 80.0
+    },
+    {
+      "rule_id": "no_high_security_findings",
+      "description": "Keine High-Severity Security-Findings erlaubt",
+      "severity": "critical",
+      "gate_name": "Security Analysis",
+      "condition": "high_severity_count",
+      "threshold": 0
+    },
+    {
+      "rule_id": "no_license_violations",
+      "description": "Keine Lizenz-Verletzungen erlaubt",
+      "severity": "high",
+      "gate_name": "License Policy",
+      "condition": "license_violations",
+      "threshold": 0
+    },
+    {
+      "rule_id": "token_budget_limit",
+      "description": "Token-Budget darf nicht überschritten werden",
+      "severity": "high",
+      "gate_name": "Token Budget",
+      "condition": "token_budget_utilization",
+      "threshold": 100.0
+    },
+    {
+      "rule_id": "minimum_gate_score",
+      "description": "Jedes Gate muss Mindest-Score erreichen",
+      "severity": "medium",
+      "gate_name": "All Gates",
+      "condition": "score_minimum",
+      "threshold": 50.0
+    }
+  ]
+}

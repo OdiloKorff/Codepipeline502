@@ -1,0 +1,137 @@
+{
+  "spec_id": "FINAL-PROD-001",
+  "timestamp": "2025-08-17T18:39:36.287740",
+  "scorecard_version": "production-v1.0",
+  "overall": {
+    "result": "failed",
+    "score": 70.0,
+    "exit_code": 1,
+    "execution_time_ms": 14.0
+  },
+  "summary": {
+    "gates_total": 5,
+    "gates_passed": 4,
+    "gates_failed": 1,
+    "hard_must_violations": 0
+  },
+  "gates": [
+    {
+      "name": "Test Coverage",
+      "result": "passed",
+      "score": 92,
+      "details": {
+        "coverage": 92.72648827867029,
+        "lines_covered": 939,
+        "lines_total": 1012,
+        "threshold": 80.0,
+        "threshold_met": true
+      },
+      "execution_time_ms": 3793.7,
+      "error_message": null,
+      "hard_must_violations": []
+    },
+    {
+      "name": "Code Quality",
+      "result": "failed",
+      "score": 6,
+      "details": {
+        "lint_errors": 3,
+        "lint_warnings": 2,
+        "type_errors": 2,
+        "total_issues": 7
+      },
+      "execution_time_ms": 1258.9,
+      "error_message": "Code Quality Issues: 3 Errors, 2 Type Errors",
+      "hard_must_violations": []
+    },
+    {
+      "name": "Security Analysis",
+      "result": "passed",
+      "score": 70,
+      "details": {
+        "high_severity_count": 0,
+        "medium_severity_count": 2,
+        "low_severity_count": 5,
+        "total_findings": 7,
+        "tools_used": [
+          "semgrep",
+          "bandit",
+          "safety"
+        ]
+      },
+      "execution_time_ms": 12632.2,
+      "error_message": null,
+      "hard_must_violations": []
+    },
+    {
+      "name": "License Policy",
+      "result": "passed",
+      "score": 100,
+      "details": {
+        "license_violations": 0,
+        "dependencies_scanned": 49,
+        "allowed_licenses": [
+          "MIT",
+          "Apache-2.0",
+          "BSD-3-Clause"
+        ],
+        "denied_licenses": [
+          "GPL-3.0",
+          "AGPL-3.0"
+        ]
+      },
+      "execution_time_ms": 4066.2,
+      "error_message": null,
+      "hard_must_violations": []
+    },
+    {
+      "name": "Token Budget",
+      "result": "passed",
+      "score": 82,
+      "details": {
+        "budget_limit": 15000,
+        "tokens_used": 10148,
+        "budget_utilization_percent": 67.65333333333334,
+        "estimated_cost_usd": 1.0148000000000001
+      },
+      "execution_time_ms": 396.3,
+      "error_message": null,
+      "hard_must_violations": []
+    }
+  ],
+  "hard_must_violations": [],
+  "hard_must_rules": [
+    {
+      "rule_id": "zero_high_security",
+      "description": "Null High-Severity Security-Findings",
+      "severity": "critical",
+      "gate_name": "Security Analysis",
+      "condition": "high_severity_count",
+      "threshold": 0
+    },
+    {
+      "rule_id": "minimum_coverage",
+      "description": "Mindestens 85% Code Coverage",
+      "severity": "high",
+      "gate_name": "Test Coverage",
+      "condition": "coverage_threshold",
+      "threshold": 85.0
+    },
+    {
+      "rule_id": "token_budget_compliance",
+      "description": "Token-Budget nicht überschreiten",
+      "severity": "high",
+      "gate_name": "Token Budget",
+      "condition": "token_budget_utilization",
+      "threshold": 100.0
+    },
+    {
+      "rule_id": "zero_license_violations",
+      "description": "Keine Lizenz-Verletzungen",
+      "severity": "high",
+      "gate_name": "License Policy",
+      "condition": "license_violations",
+      "threshold": 0
+    }
+  ]
+}

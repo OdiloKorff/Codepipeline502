@@ -1,0 +1,24 @@
+{
+  "pr_integration": {
+    "pr_created": false,
+    "pr_url": null,
+    "error_message": "No GitHub token - PR creation skipped",
+    "timestamp": "2025-08-22T20:18:08.426793Z",
+    "details": {
+      "minimal_invasive": true,
+      "issues": [
+        "No GitHub token found (GITHUB_TOKEN or GH_TOKEN environment variable)"
+      ]
+    }
+  },
+  "git_config": {
+    "remote_url": "https://github.com/OdiloKorff/Codepipeline502.git",
+    "branch": "feature/BRANCH-DEMO-001",
+    "commit_hash": "11e3621807324e5d28612fd72797481c9a3a53c3",
+    "repo_owner": "OdiloKorff",
+    "repo_name": "Codepipeline502",
+    "has_token": false
+  },
+  "generated_at": "2025-08-22T20:18:08.427800Z",
+  "project_root": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502"
+}

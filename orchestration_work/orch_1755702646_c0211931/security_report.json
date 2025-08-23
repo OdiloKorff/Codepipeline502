@@ -1,0 +1,14 @@
+{
+  "timestamp": "2025-08-20T17:10:47.702438",
+  "tools": [
+    "trivy"
+  ],
+  "findings": {
+    "critical": 0,
+    "high": 0,
+    "medium": 1,
+    "low": 2
+  },
+  "active_tools": 1,
+  "status": "pass"
+}

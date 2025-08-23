@@ -1,0 +1,12 @@
+{
+  "coverage_percent": 20.54,
+  "policy_threshold": 0.2,
+  "meets_threshold": true,
+  "status": "pass",
+  "timestamp": "2025-08-22T11:55:52.099565Z",
+  "artifacts": {
+    "coverage_xml": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\coverage.xml",
+    "coverage_html": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\htmlcov\\index.html",
+    "summary_md": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\coverage_summary.md"
+  }
+}

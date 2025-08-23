@@ -1,0 +1,10 @@
+{
+  "harness_id": "e2e-test_app-1755622252",
+  "program_type": "web_api",
+  "status": "error",
+  "duration_seconds": 0.01900005340576172,
+  "tests_passed": 0,
+  "tests_failed": 0,
+  "container_logs": "",
+  "artifacts": {}
+}

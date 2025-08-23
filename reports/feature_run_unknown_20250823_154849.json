@@ -1,0 +1,12 @@
+{
+  "start_time": "2025-08-23T13:48:49.605530Z",
+  "end_time": "2025-08-23T13:48:49.606524Z",
+  "spec": null,
+  "gates": {},
+  "errors": [
+    "Spec validation failed: Missing required field: 'id'"
+  ],
+  "warnings": [],
+  "artifacts": [],
+  "exit_code": 1
+}

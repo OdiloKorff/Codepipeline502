@@ -1,0 +1,57 @@
+{
+  "export_timestamp": "2025-08-17T21:05:25.828024",
+  "runs": {
+    "754490a7": {
+      "run_id": "754490a7",
+      "spec_id": "TEST-001",
+      "spec_hash": "abc123",
+      "model": "gpt-4o-mini",
+      "token_budget": 1000,
+      "start_time": "2025-08-17T21:05:25.824026",
+      "end_time": "2025-08-17T21:05:25.827020",
+      "status": "failed",
+      "exit_code": 1,
+      "gates": {
+        "test_coverage": {
+          "result": "passed",
+          "execution_time": 5.5,
+          "details": {
+            "coverage": 85
+          },
+          "timestamp": "2025-08-17T21:05:25.824026"
+        },
+        "security_scan": {
+          "result": "failed",
+          "execution_time": 3.2,
+          "details": {
+            "issues": 2
+          },
+          "timestamp": "2025-08-17T21:05:25.825029"
+        }
+      },
+      "metrics": {
+        "total_tokens": 750
+      },
+      "artifacts": [
+        {
+          "name": "qa-scorecard.json",
+          "path": "qa-scorecard.json",
+          "size": 1632,
+          "timestamp": "2025-08-17T21:05:25.826024"
+        },
+        {
+          "name": "security-report.json",
+          "path": "security-report.json",
+          "size": 6938,
+          "timestamp": "2025-08-17T21:05:25.826024"
+        }
+      ]
+    }
+  },
+  "statistics": {
+    "total_runs": 1,
+    "completed_runs": 0,
+    "failed_runs": 1,
+    "success_rate": 0.0
+  }
+}

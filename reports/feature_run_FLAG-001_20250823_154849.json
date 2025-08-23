@@ -1,0 +1,55 @@
+{
+  "start_time": "2025-08-23T13:48:49.657530Z",
+  "end_time": "2025-08-23T13:48:49.659537Z",
+  "spec": {
+    "id": "FLAG-001",
+    "title": "Flag Test Feature",
+    "version": 1,
+    "hash": "8bc07da5fa85f2cac5d447c3b6e81ce45bf0b660e791eb30b931e1db75cd1a39",
+    "source_file": "C:\\Users\\odilo\\AppData\\Local\\Temp\\tmp954755ln\\flag_spec.json"
+  },
+  "gates": {
+    "security": {
+      "status": "simulated",
+      "high": 0,
+      "medium": 5,
+      "low": 20,
+      "tools": [
+        "bandit"
+      ]
+    },
+    "tests": {
+      "status": "simulated",
+      "total": 25,
+      "passed": 25,
+      "failed": 0,
+      "duration": "15.2s"
+    },
+    "coverage": {
+      "status": "simulated",
+      "coverage_percent": 85.0,
+      "threshold": 80.0,
+      "lines_covered": 850,
+      "lines_total": 1000
+    },
+    "lint": {
+      "status": "simulated",
+      "issues": 0,
+      "files_checked": 15,
+      "tools": [
+        "ruff",
+        "mypy"
+      ]
+    }
+  },
+  "errors": [],
+  "warnings": [],
+  "artifacts": [
+    "feature_spec.json",
+    "test_results.xml",
+    "coverage_report.xml",
+    "security_scan.json",
+    "lint_report.txt"
+  ],
+  "exit_code": 0
+}

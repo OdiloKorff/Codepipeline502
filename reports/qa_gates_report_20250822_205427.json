@@ -1,0 +1,115 @@
+{
+  "summary": {
+    "start_time": "2025-08-22T18:53:35.359302Z",
+    "end_time": "2025-08-22T18:54:27.349937Z",
+    "overall_status": "fail",
+    "gates_passed": 2,
+    "gates_total": 4,
+    "gates_failed": [
+      "type_check",
+      "tests"
+    ],
+    "coverage_achieved": 20.54,
+    "coverage_required": 0.2
+  },
+  "policy_config": {
+    "hard_musts": {
+      "coverage_min": 0.2,
+      "tests_green": true,
+      "sast_high": 0,
+      "secret_findings": 0,
+      "license_violations": 15,
+      "cve_blockers": 0,
+      "budget_max": 200,
+      "lint_max_issues": 50,
+      "type_check_errors": 10
+    },
+    "score_threshold": 70,
+    "weights": {
+      "coverage": 25,
+      "tests": 25,
+      "static": 20,
+      "sast": 15,
+      "licenses": 10,
+      "mutation": 5
+    },
+    "licenses": {
+      "allow": [
+        "MIT",
+        "BSD-2-Clause",
+        "BSD-3-Clause",
+        "Apache-2.0",
+        "MPL-2.0"
+      ],
+      "deny": [
+        "GPL-3.0",
+        "AGPL-3.0",
+        "SSPL"
+      ]
+    },
+    "qa_gates": {
+      "enable_lint": true,
+      "enable_type_check": true,
+      "enable_tests": true,
+      "enable_coverage": true,
+      "coverage_fail_under": 0.2
+    }
+  },
+  "results": {
+    "lint": {
+      "name": "lint",
+      "status": "pass",
+      "details": {
+        "tool": "ruff",
+        "issues_found": 0,
+        "max_allowed": 50,
+        "command": "ruff check . --output-format=json",
+        "exit_code": 1
+      },
+      "timestamp": "2025-08-22T18:53:36.474395Z"
+    },
+    "type_check": {
+      "name": "type_check",
+      "status": "fail",
+      "details": {
+        "tool": "mypy",
+        "errors_found": 645,
+        "max_allowed": 10,
+        "command": "mypy . --ignore-missing-imports --no-error-summary",
+        "exit_code": 1
+      },
+      "timestamp": "2025-08-22T18:54:09.498426Z"
+    },
+    "tests": {
+      "name": "tests",
+      "status": "fail",
+      "details": {
+        "tool": "pytest",
+        "command": "pytest --tb=short -q",
+        "exit_code": 2,
+        "summary": "!!!!!!!!!!!!!!!!!! Interrupted: 43 errors during collection !!!!!!!!!!!!!!!!!!!",
+        "duration": "estimated from timeout"
+      },
+      "timestamp": "2025-08-22T18:54:17.417819Z"
+    },
+    "coverage": {
+      "name": "coverage",
+      "status": "pass",
+      "details": {
+        "tool": "pytest-cov",
+        "coverage_percent": 20.54,
+        "coverage_required": 0.2,
+        "lines_covered": 9266,
+        "lines_total": 45114,
+        "coverage_file": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\coverage.xml",
+        "command": "pytest --cov=codepipeline --cov=. --cov-report=xml:coverage.xml --cov-report=term-missing --tb=short -q",
+        "exit_code": 2
+      },
+      "timestamp": "2025-08-22T18:54:27.336905Z"
+    }
+  },
+  "metadata": {
+    "project_root": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502",
+    "generated_at": "2025-08-22T18:54:27.351902Z"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "policy_type": "QUALITY",
+  "version": "1.0.0",
+  "effective_date": "2025-08-20T17:39:02.088018",
+  "description": "Default quality policy",
+  "config": {
+    "coverage_min": 80.0,
+    "complexity_max": 10,
+    "duplication_max": 5.0,
+    "maintainability_min": 70.0
+  }
+}

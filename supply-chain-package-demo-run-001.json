@@ -1,0 +1,15 @@
+{
+  "package_id": "supply-chain-demo-run-001",
+  "created_at": "2025-08-17T21:13:05.455306",
+  "files": [
+    "reproducibility_manifest_demo-run-001.json",
+    "requirements-lock-demo-run-001.txt",
+    "prompt-templates-demo-run-001.json",
+    "production_qa_scorecard.py",
+    "production_security_scanner.py",
+    "production_sbom_license_gate.py"
+  ],
+  "reproducibility_manifest": "reproducibility_manifest_demo-run-001.json",
+  "requirements_lock": "requirements-lock-demo-run-001.txt",
+  "prompt_templates": "prompt-templates-demo-run-001.json"
+}

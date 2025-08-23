@@ -1,0 +1,13 @@
+{
+  "cache_key": "f31e0ce2fdd85942",
+  "response": "# Generated Code for Spec dbd00404\n\ndef main():\n    print(\"Hello from generated code!\")\n    return True\n\nif __name__ == \"__main__\":\n    main()\n",
+  "tokens_used": {
+    "prompt_tokens": 115,
+    "response_tokens": 207,
+    "total_tokens": 322,
+    "model": "gpt-4",
+    "timestamp": "2025-08-20T17:49:31.736086"
+  },
+  "created_at": "2025-08-20T17:49:31.736086",
+  "hit_count": 5
+}

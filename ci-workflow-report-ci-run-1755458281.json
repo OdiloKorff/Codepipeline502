@@ -1,0 +1,42 @@
+{
+  "run_id": "ci-run-1755458281",
+  "workflow_name": "CodePipeline Production CI",
+  "trigger_type": "push",
+  "trigger_event": {
+    "event_type": "push",
+    "branch": "feature/demo-ci",
+    "commit": "abc123def456",
+    "author": "demo-user"
+  },
+  "start_time": "2025-08-17T21:18:01.758482",
+  "end_time": "2025-08-17T21:18:02.103472",
+  "overall_status": "failed",
+  "stage_results": {
+    "setup": {
+      "stage_name": "setup",
+      "status": "failed",
+      "start_time": "2025-08-17T21:18:01.759487",
+      "end_time": "2025-08-17T21:18:02.097483",
+      "duration_seconds": 0.3379957675933838,
+      "exit_code": null,
+      "output": "Command: C:\\Users\\odilo\\AppData\\Local\\Programs\\Python\\Python310\\python.exe --version\nExit code: 0\nOutput: Python 3.10.0\nCommand: C:\\Users\\odilo\\AppData\\Local\\Programs\\Python\\Python310\\python.exe -c import sys; print(f'Python {sys.version_info.major}.{sys.version_info.minor} ready')\nExit code: 0\nOutput: Python 3.10 ready\nCommand: C:\\Users\\odilo\\AppData\\Local\\Programs\\Python\\Python310\\python.exe -c import os; print(f'Working directory: C:\\Users\\odilo\\PycharmProjects\\Codepipeline502')\nExit code: 1\nError: File \"<string>\", line 1\n    import os; print(f'Working directory: C:\\Users\\odilo\\PycharmProjects\\Codepipeline502')\n                                                                                         ^\nSyntaxError: (unicode error) 'unicodeescape' codec can't decode bytes in position 21-22: truncated \\UXXXXXXXX escape",
+      "error_message": null,
+      "artifacts": [],
+      "required_check": false
+    },
+    "draft_pr": {
+      "stage_name": "draft_pr",
+      "status": "skipped",
+      "start_time": "2025-08-17T21:18:02.100490",
+      "end_time": "2025-08-17T21:18:02.100490",
+      "duration_seconds": 0.0,
+      "exit_code": null,
+      "output": "Draft PR skipped: Required checks failed",
+      "error_message": "Cannot create PR with failed required checks",
+      "artifacts": [],
+      "required_check": false
+    }
+  },
+  "required_checks_status": {},
+  "artifacts": []
+}

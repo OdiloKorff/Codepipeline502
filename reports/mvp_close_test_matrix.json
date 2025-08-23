@@ -1,0 +1,118 @@
+{
+  "mvp_close_test": {
+    "timestamp": "2025-08-23T08:40:39.069585Z",
+    "duration_seconds": 0.32,
+    "smoke": {
+      "success": false,
+      "kpis": {
+        "profile": "smoke",
+        "coverage_percent": 0.0,
+        "security_high": 0,
+        "active_tools": 1,
+        "license_violations": 0,
+        "overall_pass": false,
+        "gates": {
+          "coverage": {
+            "name": "Coverage",
+            "pass": false,
+            "actual": 0.0,
+            "threshold": 20.0,
+            "message": "Coverage 0.00% < 20.0%",
+            "source": "coverage.xml (aggregated)"
+          },
+          "security": {
+            "name": "Security",
+            "pass": true,
+            "high_findings": 0,
+            "high_threshold": 0,
+            "active_tools": 1,
+            "tools_threshold": 1,
+            "message": "Security HIGH 0 ≤ 0, Tools 1 ≥ 1",
+            "source": "security_report.json"
+          },
+          "license": {
+            "name": "License",
+            "pass": true,
+            "actual": 0,
+            "threshold": 5,
+            "message": "License violations 0 ≤ 5",
+            "source": "stable_license_smoke.json"
+          }
+        },
+        "policy": {
+          "coverage_min": 20.0,
+          "security_high_max": 0,
+          "license_violations_max": 5,
+          "active_tools_min": 1,
+          "profile": "smoke"
+        }
+      },
+      "requirements": {
+        "active_tools_min": 1,
+        "security_high_max": 0,
+        "coverage_min": 20.0,
+        "license_violations_max": 5
+      }
+    },
+    "secure": {
+      "success": false,
+      "kpis": {
+        "profile": "secure",
+        "coverage_percent": 0.0,
+        "security_high": 18,
+        "active_tools": 2,
+        "license_violations": 55,
+        "overall_pass": false,
+        "gates": {
+          "coverage": {
+            "name": "Coverage",
+            "pass": false,
+            "actual": 0.0,
+            "threshold": 35.0,
+            "message": "Coverage 0.00% < 35.0%",
+            "source": "coverage.xml (aggregated)"
+          },
+          "security": {
+            "name": "Security",
+            "pass": false,
+            "high_findings": 18,
+            "high_threshold": 0,
+            "active_tools": 2,
+            "tools_threshold": 2,
+            "message": "Security HIGH 18 > 0, Tools 2 ≥ 2",
+            "source": "secure_security_secure.json"
+          },
+          "license": {
+            "name": "License",
+            "pass": false,
+            "actual": 55,
+            "threshold": 0,
+            "message": "License violations 55 > 0",
+            "source": "stable_license_secure.json"
+          }
+        },
+        "policy": {
+          "coverage_min": 35.0,
+          "security_high_max": 0,
+          "license_violations_max": 0,
+          "active_tools_min": 2,
+          "profile": "secure",
+          "stage": "sprint1",
+          "stage_config": {}
+        }
+      },
+      "requirements": {
+        "active_tools_min": 2,
+        "security_high_max": 0,
+        "coverage_min": 35.0,
+        "license_violations_max": 0
+      }
+    },
+    "overall": {
+      "both_pass": false,
+      "at_least_one_pass": false,
+      "smoke_pass": false,
+      "secure_pass": false
+    }
+  }
+}

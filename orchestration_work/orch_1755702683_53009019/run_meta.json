@@ -1,0 +1,163 @@
+{
+  "run_id": "orch_1755702683_53009019",
+  "spec": {
+    "prompt": "Simple CLI tool for file processing and validation",
+    "branch": "main",
+    "secure": true,
+    "dry_run": true,
+    "template_type": "cli-app",
+    "policy_version": "1.0.0",
+    "seed": 9883,
+    "token_budget": 1500
+  },
+  "start_time": "2025-08-20T17:11:23.736113",
+  "end_time": null,
+  "duration_seconds": 0.952986,
+  "overall_status": "success",
+  "total_tokens_used": 210,
+  "gates": [
+    {
+      "name": "Spec-Validation",
+      "status": "pass",
+      "start_time": "2025-08-20T17:11:23.737110",
+      "end_time": "2025-08-20T17:11:23.739113",
+      "duration_seconds": 0.002003,
+      "artifacts": [
+        "orchestration_work\\orch_1755702683_53009019\\spec.json"
+      ],
+      "tokens_used": 0,
+      "error_message": "",
+      "metadata": {
+        "spec_hash": "f03a9590bf14edf1"
+      }
+    },
+    {
+      "name": "Guard",
+      "status": "pass",
+      "start_time": "2025-08-20T17:11:23.739113",
+      "end_time": "2025-08-20T17:11:23.741096",
+      "duration_seconds": 0.001983,
+      "artifacts": [
+        "orchestration_work\\orch_1755702683_53009019\\guard_report.json"
+      ],
+      "tokens_used": 0,
+      "error_message": "",
+      "metadata": {}
+    },
+    {
+      "name": "LLM",
+      "status": "pass",
+      "start_time": "2025-08-20T17:11:23.741096",
+      "end_time": "2025-08-20T17:11:24.046093",
+      "duration_seconds": 0.304997,
+      "artifacts": [
+        "orchestration_work\\orch_1755702683_53009019\\generated_template.md"
+      ],
+      "tokens_used": 210,
+      "error_message": "",
+      "metadata": {
+        "template_lines": 0
+      }
+    },
+    {
+      "name": "Unified-Diff",
+      "status": "pass",
+      "start_time": "2025-08-20T17:11:24.046093",
+      "end_time": "2025-08-20T17:11:24.047094",
+      "duration_seconds": 0.001001,
+      "artifacts": [
+        "orchestration_work\\orch_1755702683_53009019\\unified.diff"
+      ],
+      "tokens_used": 0,
+      "error_message": "",
+      "metadata": {
+        "diff_lines": 0
+      }
+    },
+    {
+      "name": "3-Way-Apply-Sandbox",
+      "status": "pass",
+      "start_time": "2025-08-20T17:11:24.047094",
+      "end_time": "2025-08-20T17:11:24.054108",
+      "duration_seconds": 0.007014,
+      "artifacts": [
+        "orchestration_work\\orch_1755702683_53009019\\sandbox"
+      ],
+      "tokens_used": 0,
+      "error_message": "",
+      "metadata": {
+        "sandbox_files": 5
+      }
+    },
+    {
+      "name": "Tests-Coverage",
+      "status": "pass",
+      "start_time": "2025-08-20T17:11:24.054108",
+      "end_time": "2025-08-20T17:11:24.273102",
+      "duration_seconds": 0.218994,
+      "artifacts": [
+        "orchestration_work\\orch_1755702683_53009019\\qa_summary.json",
+        "orchestration_work\\orch_1755702683_53009019\\coverage.xml"
+      ],
+      "tokens_used": 0,
+      "error_message": "",
+      "metadata": {
+        "coverage_percent": 92.5
+      }
+    },
+    {
+      "name": "Security-SBOM",
+      "status": "pass",
+      "start_time": "2025-08-20T17:11:24.273102",
+      "end_time": "2025-08-20T17:11:24.687098",
+      "duration_seconds": 0.413996,
+      "artifacts": [
+        "orchestration_work\\orch_1755702683_53009019\\security_report.json",
+        "orchestration_work\\orch_1755702683_53009019\\sbom.json"
+      ],
+      "tokens_used": 0,
+      "error_message": "",
+      "metadata": {
+        "security_findings": {
+          "critical": 0,
+          "high": 0,
+          "medium": 1,
+          "low": 2
+        },
+        "active_security_tools": 1
+      }
+    },
+    {
+      "name": "Scorecard",
+      "status": "pass",
+      "start_time": "2025-08-20T17:11:24.687098",
+      "end_time": "2025-08-20T17:11:24.689099",
+      "duration_seconds": 0.002001,
+      "artifacts": [
+        "orchestration_work\\orch_1755702683_53009019\\scorecard.json"
+      ],
+      "tokens_used": 0,
+      "error_message": "",
+      "metadata": {
+        "overall_score": 91.7
+      }
+    },
+    {
+      "name": "Draft-PR",
+      "status": "skip",
+      "start_time": "2025-08-20T17:11:24.689099",
+      "end_time": "2025-08-20T17:11:24.689099",
+      "duration_seconds": 0.0,
+      "artifacts": [],
+      "tokens_used": 0,
+      "error_message": "",
+      "metadata": {
+        "reason": "Skipped in dry-run mode"
+      }
+    }
+  ],
+  "policy_version": "1.0.0",
+  "seed": 9883,
+  "spec_hash": "f03a9590bf14edf1",
+  "orchestrator_version": "1.0.0"
+}

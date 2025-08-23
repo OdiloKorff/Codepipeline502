@@ -1,0 +1,10 @@
+{
+  "prompt": "Simple CLI tool for file processing and validation",
+  "branch": "main",
+  "secure": true,
+  "dry_run": true,
+  "template_type": "cli-app",
+  "policy_version": "1.0.0",
+  "seed": 9844,
+  "token_budget": 1500
+}

@@ -1,0 +1,10 @@
+{
+  "prompt": "Simple library for data validation utilities",
+  "branch": "feature/validation-lib",
+  "secure": false,
+  "dry_run": true,
+  "template_type": "library",
+  "policy_version": "1.0.0",
+  "seed": 9846,
+  "token_budget": 2000
+}

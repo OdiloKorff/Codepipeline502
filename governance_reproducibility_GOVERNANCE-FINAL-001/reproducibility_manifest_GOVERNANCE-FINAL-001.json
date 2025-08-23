@@ -1,0 +1,64 @@
+{
+  "manifest_version": "1.0",
+  "spec_id": "GOVERNANCE-FINAL-001",
+  "build_environment": {
+    "python_version": "3.10.0",
+    "platform_system": "Windows",
+    "platform_release": "10",
+    "platform_machine": "AMD64",
+    "environment_hash": "2f8a2b263a656755",
+    "build_timestamp": "2025-08-17T19:18:40.541296",
+    "git_commit": "11e3621807324e5d28612fd72797481c9a3a53c3"
+  },
+  "dependency_locks": [],
+  "prompt_templates": {
+    "code_generation": {
+      "template_id": "code_generation",
+      "version": "1.0",
+      "content_hash": "4ff11f0534a30c6b95250d2ee6c313cf588eac45b877f7d075db916a55c21c22",
+      "variables": [
+        "specification",
+        "target_files",
+        "constraints"
+      ],
+      "deterministic_seed": 42
+    },
+    "test_generation": {
+      "template_id": "test_generation",
+      "version": "1.0",
+      "content_hash": "476974865eec81ba247ab13c10458a9fea47029f455580ef0744298f4f646bdf",
+      "variables": [
+        "code",
+        "coverage_target"
+      ],
+      "deterministic_seed": 123
+    },
+    "documentation": {
+      "template_id": "documentation",
+      "version": "1.0",
+      "content_hash": "fb106cd218f02fcc6ec645b2f43ae8c61824a7444854107a61fb138855574455",
+      "variables": [
+        "feature_title",
+        "feature_description",
+        "api_specification"
+      ],
+      "deterministic_seed": 456
+    }
+  },
+  "deterministic_seeds": {
+    "prompt_code_generation": 42,
+    "prompt_test_generation": 123,
+    "prompt_documentation": 456,
+    "llm_generation": 42,
+    "test_execution": 123,
+    "random_sampling": 456,
+    "hash_generation": 789,
+    "uuid_generation": 999
+  },
+  "artifact_hashes": {
+    "source_code": "6aa2a5a58b930f3ebdf6894b4a8a3f5e636d6993f4bdfe1bf8acecbab45777b4",
+    "security_report": "5e5668cd32b8bd07ad503f88032aafa6168d108f39de04d8855a78938cb916b2",
+    "audit_log": "8e1e68b6b40c6a1e868b15d5dac49511af93f44cd959ec1fb0d26b9a5e15a234",
+    "reproducibility_manifest": "b1aaae9dfa99a111cf3908a5727110fd5cdfb8ed7e0982062ebde8f0436bac48"
+  }
+}

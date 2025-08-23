@@ -1,0 +1,14 @@
+Generate comprehensive unit tests for the following code:
+
+Code: {code}
+Test Framework: pytest
+Coverage Target: {coverage_target}%
+
+Requirements:
+- Test all public methods and functions
+- Include edge cases and error conditions
+- Use appropriate fixtures and mocks
+- Ensure deterministic test behavior
+- Add descriptive test names and docstrings
+
+Output complete test files with proper imports.

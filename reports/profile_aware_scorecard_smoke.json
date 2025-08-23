@@ -1,0 +1,78 @@
+{
+  "profile_aware_scorecard": {
+    "profile": "smoke",
+    "overall_status": "fail",
+    "overall_pass": false,
+    "policy": {
+      "coverage_min": 20.0,
+      "security_high_max": 0,
+      "license_violations_max": 5,
+      "active_tools_min": 1,
+      "profile": "smoke"
+    },
+    "gates": {
+      "coverage": {
+        "name": "Coverage",
+        "pass": false,
+        "actual": 2.5,
+        "threshold": 20.0,
+        "message": "Coverage 2.50% < 20.0%",
+        "source": "coverage.xml"
+      },
+      "security": {
+        "name": "Security",
+        "pass": true,
+        "high_findings": 0,
+        "high_threshold": 0,
+        "active_tools": 1,
+        "tools_threshold": 1,
+        "message": "Security HIGH 0 ≤ 0, Tools 1 ≥ 1",
+        "source": "security_report.json"
+      },
+      "license": {
+        "name": "License",
+        "pass": true,
+        "actual": 0,
+        "threshold": 5,
+        "message": "License violations 0 ≤ 5",
+        "source": "stable_license_smoke.json"
+      }
+    },
+    "data_sources": {
+      "coverage": "coverage.xml",
+      "security": "security_report.json",
+      "license": "stable_license_smoke.json"
+    },
+    "evaluation_date": "2025-08-23T13:49:44.291106Z"
+  },
+  "raw_data": {
+    "coverage": {
+      "coverage_percent": 2.5,
+      "lines_covered": 886,
+      "lines_total": 35442,
+      "source": "coverage.xml",
+      "main_package": "codepipeline"
+    },
+    "security": {
+      "active_tools": 1,
+      "high": 0,
+      "medium": 41,
+      "low": 1299,
+      "total": 1340,
+      "gate_pass": true,
+      "source": "security_report.json",
+      "profile": "smoke"
+    },
+    "license": {
+      "total_packages": 84,
+      "compliant_packages": 84,
+      "license_violations": 0,
+      "compliance_rate": 100.0,
+      "gate_pass": true,
+      "source": "stable_license_smoke.json",
+      "profile": "smoke"
+    }
+  },
+  "generated_at": "2025-08-23T13:49:44.291106Z",
+  "project_root": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502"
+}

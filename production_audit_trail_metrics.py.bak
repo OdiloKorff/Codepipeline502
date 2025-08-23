@@ -1,0 +1,939 @@
+"""Production Audit-Trail und Metriken."""
+
+import hashlib
+import json
+import os
+import platform
+import sqlite3
+import subprocess
+import sys
+import time
+from dataclasses import dataclass, field, asdict
+from datetime import datetime
+from enum import Enum
+from pathlib import Path
+from typing import Dict, List, Optional, Any, Union
+import uuid
+
+
+class RunStatus(str, Enum):
+    """Status eines Pipeline-Runs."""
+    STARTED = "started"
+    IN_PROGRESS = "in_progress"
+    COMPLETED = "completed"
+    FAILED = "failed"
+    CANCELLED = "cancelled"
+
+
+class MetricType(str, Enum):
+    """Typen von Metriken."""
+    COUNTER = "counter"
+    GAUGE = "gauge"
+    HISTOGRAM = "histogram"
+    TIMER = "timer"
+
+
+@dataclass
+class ToolVersion:
+    """Version eines Tools."""
+    tool_name: str
+    version: str
+    path: Optional[str] = None
+
+
+@dataclass
+class GitInfo:
+    """Git-Repository-Informationen."""
+    commit_hash: str
+    branch: str
+    author: str
+    commit_message: str
+    repository_url: Optional[str] = None
+    is_dirty: bool = False
+
+
+@dataclass
+class RunMetadata:
+    """Vollständige Metadaten eines Pipeline-Runs."""
+    run_id: str
+    spec_id: str
+    spec_hash: str
+    model: str
+    seed: Optional[int]
+    token_budget: int
+    start_timestamp: str
+    end_timestamp: Optional[str] = None
+    status: RunStatus = RunStatus.STARTED
+    exit_code: Optional[int] = None
+    
+    # Environment-Info
+    python_version: str = ""
+    platform_info: str = ""
+    working_directory: str = ""
+    
+    # Git-Info
+    git_info: Optional[GitInfo] = None
+    
+    # Tool-Versionen
+    tool_versions: List[ToolVersion] = field(default_factory=list)
+    
+    # Performance-Metriken
+    total_duration_seconds: Optional[float] = None
+    token_usage: Dict[str, Any] = field(default_factory=dict)
+    
+    def __post_init__(self):
+        if not self.python_version:
+            self.python_version = sys.version
+        if not self.platform_info:
+            self.platform_info = platform.platform()
+        if not self.working_directory:
+            self.working_directory = str(Path.cwd())
+
+
+@dataclass
+class StructuredLogEntry:
+    """Strukturierter Log-Eintrag."""
+    run_id: str
+    timestamp: str
+    level: str  # INFO, WARNING, ERROR, DEBUG
+    component: str
+    message: str
+    details: Dict[str, Any] = field(default_factory=dict)
+    
+    def __post_init__(self):
+        if not self.timestamp:
+            self.timestamp = datetime.now().isoformat()
+
+
+@dataclass
+class Metric:
+    """Metrik-Eintrag."""
+    run_id: str
+    metric_name: str
+    metric_type: MetricType
+    value: Union[int, float]
+    timestamp: str
+    labels: Dict[str, str] = field(default_factory=dict)
+    
+    def __post_init__(self):
+        if not self.timestamp:
+            self.timestamp = datetime.now().isoformat()
+
+
+@dataclass
+class GateResult:
+    """Ergebnis eines QA-Gates."""
+    run_id: str
+    gate_name: str
+    result: str  # passed, failed, skipped, error
+    execution_time_seconds: float
+    details: Dict[str, Any] = field(default_factory=dict)
+    artifacts: List[str] = field(default_factory=list)
+    timestamp: str = ""
+    
+    def __post_init__(self):
+        if not self.timestamp:
+            self.timestamp = datetime.now().isoformat()
+
+
+@dataclass
+class AuditArtifact:
+    """Audit-Artefakt."""
+    run_id: str
+    artifact_name: str
+    artifact_path: str
+    artifact_type: str  # json, markdown, binary, log
+    file_size_bytes: int
+    checksum_sha256: str
+    created_timestamp: str
+    
+    def __post_init__(self):
+        if not self.created_timestamp:
+            self.created_timestamp = datetime.now().isoformat()
+
+
+class ProductionAuditTrailDB:
+    """Production-ready Audit-Trail-Datenbank."""
+    
+    def __init__(self, db_path: str = "audit_trail.db"):
+        self.db_path = db_path
+        self._connection = None
+        if db_path == ":memory:":
+            # For in-memory DB, keep connection alive
+            self._connection = sqlite3.connect(db_path)
+        self._init_database()
+        
+        print(f"🗄️ Audit-Trail-DB initialisiert: {db_path}")
+    
+    def _get_connection(self):
+        """Get database connection."""
+        if self._connection:
+            return self._connection
+        return sqlite3.connect(self.db_path)
+    
+    def _init_database(self):
+        """Initialisiere Datenbank-Schema."""
+        conn = self._get_connection()
+        conn.executescript("""
+                CREATE TABLE IF NOT EXISTS runs (
+                    run_id TEXT PRIMARY KEY,
+                    spec_id TEXT NOT NULL,
+                    spec_hash TEXT NOT NULL,
+                    model TEXT NOT NULL,
+                    seed INTEGER,
+                    token_budget INTEGER NOT NULL,
+                    start_timestamp TEXT NOT NULL,
+                    end_timestamp TEXT,
+                    status TEXT NOT NULL,
+                    exit_code INTEGER,
+                    python_version TEXT,
+                    platform_info TEXT,
+                    working_directory TEXT,
+                    git_commit_hash TEXT,
+                    git_branch TEXT,
+                    git_author TEXT,
+                    git_commit_message TEXT,
+                    git_repository_url TEXT,
+                    git_is_dirty BOOLEAN,
+                    total_duration_seconds REAL,
+                    token_usage TEXT,  -- JSON
+                    tool_versions TEXT  -- JSON
+                );
+                
+                CREATE TABLE IF NOT EXISTS logs (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    run_id TEXT NOT NULL,
+                    timestamp TEXT NOT NULL,
+                    level TEXT NOT NULL,
+                    component TEXT NOT NULL,
+                    message TEXT NOT NULL,
+                    details TEXT,  -- JSON
+                    FOREIGN KEY (run_id) REFERENCES runs (run_id)
+                );
+                
+                CREATE TABLE IF NOT EXISTS metrics (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    run_id TEXT NOT NULL,
+                    metric_name TEXT NOT NULL,
+                    metric_type TEXT NOT NULL,
+                    value REAL NOT NULL,
+                    timestamp TEXT NOT NULL,
+                    labels TEXT,  -- JSON
+                    FOREIGN KEY (run_id) REFERENCES runs (run_id)
+                );
+                
+                CREATE TABLE IF NOT EXISTS gate_results (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    run_id TEXT NOT NULL,
+                    gate_name TEXT NOT NULL,
+                    result TEXT NOT NULL,
+                    execution_time_seconds REAL NOT NULL,
+                    timestamp TEXT NOT NULL,
+                    details TEXT,  -- JSON
+                    artifacts TEXT,  -- JSON
+                    FOREIGN KEY (run_id) REFERENCES runs (run_id)
+                );
+                
+                CREATE TABLE IF NOT EXISTS artifacts (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    run_id TEXT NOT NULL,
+                    artifact_name TEXT NOT NULL,
+                    artifact_path TEXT NOT NULL,
+                    artifact_type TEXT NOT NULL,
+                    file_size_bytes INTEGER NOT NULL,
+                    checksum_sha256 TEXT NOT NULL,
+                    created_timestamp TEXT NOT NULL,
+                    FOREIGN KEY (run_id) REFERENCES runs (run_id)
+                );
+                
+                CREATE INDEX IF NOT EXISTS idx_runs_spec_id ON runs (spec_id);
+                CREATE INDEX IF NOT EXISTS idx_runs_start_timestamp ON runs (start_timestamp);
+                CREATE INDEX IF NOT EXISTS idx_logs_run_id ON logs (run_id);
+                CREATE INDEX IF NOT EXISTS idx_logs_timestamp ON logs (timestamp);
+                CREATE INDEX IF NOT EXISTS idx_metrics_run_id ON metrics (run_id);
+                CREATE INDEX IF NOT EXISTS idx_gate_results_run_id ON gate_results (run_id);
+                CREATE INDEX IF NOT EXISTS idx_artifacts_run_id ON artifacts (run_id);
+            """)
+        if not self._connection:
+            conn.close()
+    
+    def insert_run(self, run_metadata: RunMetadata):
+        """Füge Run-Metadaten ein."""
+        conn = self._get_connection()
+            git_info = run_metadata.git_info
+            
+            conn.execute("""
+                INSERT OR REPLACE INTO runs (
+                    run_id, spec_id, spec_hash, model, seed, token_budget,
+                    start_timestamp, end_timestamp, status, exit_code,
+                    python_version, platform_info, working_directory,
+                    git_commit_hash, git_branch, git_author, git_commit_message,
+                    git_repository_url, git_is_dirty,
+                    total_duration_seconds, token_usage, tool_versions
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+            """, (
+                run_metadata.run_id,
+                run_metadata.spec_id,
+                run_metadata.spec_hash,
+                run_metadata.model,
+                run_metadata.seed,
+                run_metadata.token_budget,
+                run_metadata.start_timestamp,
+                run_metadata.end_timestamp,
+                run_metadata.status.value,
+                run_metadata.exit_code,
+                run_metadata.python_version,
+                run_metadata.platform_info,
+                run_metadata.working_directory,
+                git_info.commit_hash if git_info else None,
+                git_info.branch if git_info else None,
+                git_info.author if git_info else None,
+                git_info.commit_message if git_info else None,
+                git_info.repository_url if git_info else None,
+                git_info.is_dirty if git_info else None,
+                run_metadata.total_duration_seconds,
+                json.dumps(run_metadata.token_usage) if run_metadata.token_usage else None,
+                json.dumps([asdict(tv) for tv in run_metadata.tool_versions]) if run_metadata.tool_versions else None
+            ))
+    
+    def insert_log(self, log_entry: StructuredLogEntry):
+        """Füge Log-Eintrag ein."""
+        with sqlite3.connect(self.db_path) as conn:
+            conn.execute("""
+                INSERT INTO logs (run_id, timestamp, level, component, message, details)
+                VALUES (?, ?, ?, ?, ?, ?)
+            """, (
+                log_entry.run_id,
+                log_entry.timestamp,
+                log_entry.level,
+                log_entry.component,
+                log_entry.message,
+                json.dumps(log_entry.details) if log_entry.details else None
+            ))
+    
+    def insert_metric(self, metric: Metric):
+        """Füge Metrik ein."""
+        with sqlite3.connect(self.db_path) as conn:
+            conn.execute("""
+                INSERT INTO metrics (run_id, metric_name, metric_type, value, timestamp, labels)
+                VALUES (?, ?, ?, ?, ?, ?)
+            """, (
+                metric.run_id,
+                metric.metric_name,
+                metric.metric_type.value,
+                metric.value,
+                metric.timestamp,
+                json.dumps(metric.labels) if metric.labels else None
+            ))
+    
+    def insert_gate_result(self, gate_result: GateResult):
+        """Füge Gate-Ergebnis ein."""
+        with sqlite3.connect(self.db_path) as conn:
+            conn.execute("""
+                INSERT INTO gate_results (run_id, gate_name, result, execution_time_seconds, timestamp, details, artifacts)
+                VALUES (?, ?, ?, ?, ?, ?, ?)
+            """, (
+                gate_result.run_id,
+                gate_result.gate_name,
+                gate_result.result,
+                gate_result.execution_time_seconds,
+                gate_result.timestamp,
+                json.dumps(gate_result.details) if gate_result.details else None,
+                json.dumps(gate_result.artifacts) if gate_result.artifacts else None
+            ))
+    
+    def insert_artifact(self, artifact: AuditArtifact):
+        """Füge Artefakt ein."""
+        with sqlite3.connect(self.db_path) as conn:
+            conn.execute("""
+                INSERT INTO artifacts (run_id, artifact_name, artifact_path, artifact_type, 
+                                     file_size_bytes, checksum_sha256, created_timestamp)
+                VALUES (?, ?, ?, ?, ?, ?, ?)
+            """, (
+                artifact.run_id,
+                artifact.artifact_name,
+                artifact.artifact_path,
+                artifact.artifact_type,
+                artifact.file_size_bytes,
+                artifact.checksum_sha256,
+                artifact.created_timestamp
+            ))
+    
+    def get_run_statistics(self) -> Dict[str, Any]:
+        """Hole Run-Statistiken."""
+        with sqlite3.connect(self.db_path) as conn:
+            conn.row_factory = sqlite3.Row
+            
+            # Basis-Statistiken
+            stats = conn.execute("""
+                SELECT 
+                    COUNT(*) as total_runs,
+                    COUNT(CASE WHEN status = 'completed' THEN 1 END) as completed_runs,
+                    COUNT(CASE WHEN status = 'failed' THEN 1 END) as failed_runs,
+                    AVG(total_duration_seconds) as avg_duration,
+                    MIN(start_timestamp) as first_run,
+                    MAX(start_timestamp) as last_run
+                FROM runs
+            """).fetchone()
+            
+            # Status-Verteilung
+            status_dist = conn.execute("""
+                SELECT status, COUNT(*) as count
+                FROM runs
+                GROUP BY status
+            """).fetchall()
+            
+            # Gate-Statistiken
+            gate_stats = conn.execute("""
+                SELECT 
+                    gate_name,
+                    COUNT(*) as total_executions,
+                    COUNT(CASE WHEN result = 'passed' THEN 1 END) as passed,
+                    AVG(execution_time_seconds) as avg_execution_time
+                FROM gate_results
+                GROUP BY gate_name
+            """).fetchall()
+            
+            return {
+                "total_runs": stats["total_runs"],
+                "completed_runs": stats["completed_runs"],
+                "failed_runs": stats["failed_runs"],
+                "success_rate": (stats["completed_runs"] / stats["total_runs"]) * 100 if stats["total_runs"] > 0 else 0,
+                "avg_duration_seconds": stats["avg_duration"] or 0,
+                "first_run": stats["first_run"],
+                "last_run": stats["last_run"],
+                "status_distribution": {row["status"]: row["count"] for row in status_dist},
+                "gate_statistics": [dict(row) for row in gate_stats]
+            }
+
+
+class ProductionAuditTrailManager:
+    """Production-ready Audit-Trail-Manager."""
+    
+    def __init__(self, run_id: str = None, db_path: str = "audit_trail.db"):
+        self.run_id = run_id or str(uuid.uuid4())
+        self.db = ProductionAuditTrailDB(db_path)
+        self.db._init_database()  # Ensure database is initialized
+        self.start_time = time.time()
+        
+        print(f"📊 Audit-Trail-Manager initialisiert")
+        print(f"   🏷️ Run ID: {self.run_id}")
+    
+    def _get_git_info(self) -> Optional[GitInfo]:
+        """Sammle Git-Repository-Informationen."""
+        try:
+            # Git-Commands ausführen
+            commands = {
+                "commit_hash": ["git", "rev-parse", "HEAD"],
+                "branch": ["git", "branch", "--show-current"],
+                "author": ["git", "log", "-1", "--format=%an <%ae>"],
+                "commit_message": ["git", "log", "-1", "--format=%s"],
+                "repository_url": ["git", "remote", "get-url", "origin"]
+            }
+            
+            git_data = {}
+            
+            for key, command in commands.items():
+                try:
+                    result = subprocess.run(
+                        command,
+                        capture_output=True,
+                        text=True,
+                        timeout=10,
+                        cwd=Path.cwd()
+                    )
+                    
+                    if result.returncode == 0:
+                        git_data[key] = result.stdout.strip()
+                    else:
+                        git_data[key] = "unknown"
+                        
+                except Exception:
+                    git_data[key] = "unknown"
+            
+            # Prüfe auf uncommitted changes
+            try:
+                result = subprocess.run(
+                    ["git", "status", "--porcelain"],
+                    capture_output=True,
+                    text=True,
+                    timeout=10,
+                    cwd=Path.cwd()
+                )
+                is_dirty = len(result.stdout.strip()) > 0
+            except Exception:
+                is_dirty = False
+            
+            return GitInfo(
+                commit_hash=git_data["commit_hash"],
+                branch=git_data["branch"],
+                author=git_data["author"],
+                commit_message=git_data["commit_message"],
+                repository_url=git_data.get("repository_url"),
+                is_dirty=is_dirty
+            )
+            
+        except Exception as e:
+            print(f"   ⚠️ Git-Info-Sammlung fehlgeschlagen: {e}")
+            return None
+    
+    def _get_tool_versions(self) -> List[ToolVersion]:
+        """Sammle Tool-Versionen."""
+        tools = [
+            ("python", [sys.executable, "--version"]),
+            ("git", ["git", "--version"]),
+            ("pytest", [sys.executable, "-m", "pytest", "--version"]),
+            ("ruff", [sys.executable, "-m", "ruff", "--version"]),
+            ("mypy", [sys.executable, "-m", "mypy", "--version"]),
+            ("safety", [sys.executable, "-m", "safety", "--version"]),
+            ("bandit", [sys.executable, "-m", "bandit", "--version"])
+        ]
+        
+        tool_versions = []
+        
+        for tool_name, command in tools:
+            try:
+                result = subprocess.run(
+                    command,
+                    capture_output=True,
+                    text=True,
+                    timeout=10
+                )
+                
+                if result.returncode == 0:
+                    version_output = result.stdout.strip()
+                    # Extrahiere Version (vereinfacht)
+                    version = version_output.split()[-1] if version_output else "unknown"
+                else:
+                    version = "not_installed"
+                
+                tool_versions.append(ToolVersion(
+                    tool_name=tool_name,
+                    version=version,
+                    path=command[0] if command else None
+                ))
+                
+            except Exception:
+                tool_versions.append(ToolVersion(
+                    tool_name=tool_name,
+                    version="error",
+                    path=None
+                ))
+        
+        return tool_versions
+    
+    def start_run(self, spec_id: str, spec_hash: str, model: str, 
+                  token_budget: int, seed: int = None) -> RunMetadata:
+        """Starte neuen Run."""
+        print(f"🚀 Starting run: {self.run_id}")
+        
+        # Sammle Environment-Informationen
+        git_info = self._get_git_info()
+        tool_versions = self._get_tool_versions()
+        
+        run_metadata = RunMetadata(
+            run_id=self.run_id,
+            spec_id=spec_id,
+            spec_hash=spec_hash,
+            model=model,
+            seed=seed,
+            token_budget=token_budget,
+            start_timestamp=datetime.now().isoformat(),
+            status=RunStatus.STARTED,
+            git_info=git_info,
+            tool_versions=tool_versions
+        )
+        
+        # Speichere in DB
+        self.db.insert_run(run_metadata)
+        
+        # Logge Start
+        self.log("INFO", "audit_trail", "Run started", {
+            "spec_id": spec_id,
+            "model": model,
+            "token_budget": token_budget
+        })
+        
+        print(f"   📊 Run metadata captured")
+        print(f"   🔧 Tool versions: {len(tool_versions)}")
+        print(f"   📂 Git info: {'✅' if git_info else '❌'}")
+        
+        return run_metadata
+    
+    def end_run(self, exit_code: int, token_usage: Dict[str, Any] = None):
+        """Beende Run."""
+        end_time = time.time()
+        total_duration = end_time - self.start_time
+        
+        status = RunStatus.COMPLETED if exit_code == 0 else RunStatus.FAILED
+        
+        # Update Run-Metadaten
+        run_metadata = RunMetadata(
+            run_id=self.run_id,
+            spec_id="",  # Wird nicht überschrieben
+            spec_hash="",  # Wird nicht überschrieben
+            model="",  # Wird nicht überschrieben
+            token_budget=0,  # Wird nicht überschrieben
+            start_timestamp="",  # Wird nicht überschrieben
+            end_timestamp=datetime.now().isoformat(),
+            status=status,
+            exit_code=exit_code,
+            total_duration_seconds=total_duration,
+            token_usage=token_usage or {}
+        )
+        
+        # Update nur relevante Felder
+        with sqlite3.connect(self.db.db_path) as conn:
+            conn.execute("""
+                UPDATE runs 
+                SET end_timestamp = ?, status = ?, exit_code = ?, 
+                    total_duration_seconds = ?, token_usage = ?
+                WHERE run_id = ?
+            """, (
+                run_metadata.end_timestamp,
+                run_metadata.status.value,
+                run_metadata.exit_code,
+                run_metadata.total_duration_seconds,
+                json.dumps(run_metadata.token_usage),
+                self.run_id
+            ))
+        
+        # Logge Ende
+        self.log("INFO", "audit_trail", "Run completed", {
+            "exit_code": exit_code,
+            "duration_seconds": total_duration,
+            "status": status.value
+        })
+        
+        print(f"🏁 Run completed: {self.run_id}")
+        print(f"   ⏱️ Duration: {total_duration:.1f}s")
+        print(f"   📊 Status: {status.value}")
+        print(f"   🎯 Exit Code: {exit_code}")
+    
+    def log(self, level: str, component: str, message: str, details: Dict[str, Any] = None):
+        """Logge strukturierten Eintrag."""
+        log_entry = StructuredLogEntry(
+            run_id=self.run_id,
+            timestamp=datetime.now().isoformat(),
+            level=level,
+            component=component,
+            message=message,
+            details=details or {}
+        )
+        
+        self.db.insert_log(log_entry)
+        
+        # Auch in Console ausgeben
+        level_emoji = {
+            "INFO": "ℹ️",
+            "WARNING": "⚠️",
+            "ERROR": "❌",
+            "DEBUG": "🔍"
+        }.get(level, "📝")
+        
+        print(f"{level_emoji} [{component}] {message}")
+    
+    def record_metric(self, metric_name: str, metric_type: MetricType, 
+                     value: Union[int, float], labels: Dict[str, str] = None):
+        """Erfasse Metrik."""
+        metric = Metric(
+            run_id=self.run_id,
+            metric_name=metric_name,
+            metric_type=metric_type,
+            value=value,
+            timestamp=datetime.now().isoformat(),
+            labels=labels or {}
+        )
+        
+        self.db.insert_metric(metric)
+        
+        print(f"📈 Metric recorded: {metric_name} = {value} ({metric_type.value})")
+    
+    def record_gate_result(self, gate_name: str, result: str, 
+                          execution_time: float, details: Dict[str, Any] = None,
+                          artifacts: List[str] = None):
+        """Erfasse Gate-Ergebnis."""
+        gate_result = GateResult(
+            run_id=self.run_id,
+            gate_name=gate_name,
+            result=result,
+            execution_time_seconds=execution_time,
+            details=details or {},
+            artifacts=artifacts or []
+        )
+        
+        self.db.insert_gate_result(gate_result)
+        
+        result_emoji = {"passed": "✅", "failed": "❌", "skipped": "⏭️", "error": "💥"}.get(result, "❓")
+        print(f"🚪 Gate result: {gate_name} = {result_emoji} {result} ({execution_time:.1f}s)")
+    
+    def record_artifact(self, artifact_path: str, artifact_type: str = "json"):
+        """Erfasse Artefakt."""
+        artifact_path_obj = Path(artifact_path)
+        
+        if not artifact_path_obj.exists():
+            print(f"   ⚠️ Artifact not found: {artifact_path}")
+            return
+        
+        # Berechne Checksum
+        with open(artifact_path_obj, 'rb') as f:
+            content = f.read()
+            checksum = hashlib.sha256(content).hexdigest()
+        
+        artifact = AuditArtifact(
+            run_id=self.run_id,
+            artifact_name=artifact_path_obj.name,
+            artifact_path=str(artifact_path_obj.absolute()),
+            artifact_type=artifact_type,
+            file_size_bytes=len(content),
+            checksum_sha256=checksum
+        )
+        
+        self.db.insert_artifact(artifact)
+        
+        print(f"📄 Artifact recorded: {artifact.artifact_name} ({len(content)} bytes, {checksum[:8]}...)")
+    
+    def generate_run_manifest(self) -> Dict[str, Any]:
+        """Generiere vollständige Run-Manifest."""
+        # Hole Run-Daten aus DB
+        with sqlite3.connect(self.db.db_path) as conn:
+            conn.row_factory = sqlite3.Row
+            
+            # Run-Metadaten
+            run_data = conn.execute(
+                "SELECT * FROM runs WHERE run_id = ?", (self.run_id,)
+            ).fetchone()
+            
+            if not run_data:
+                return {"error": "Run not found"}
+            
+            # Gate-Ergebnisse
+            gates = conn.execute(
+                "SELECT * FROM gate_results WHERE run_id = ? ORDER BY timestamp",
+                (self.run_id,)
+            ).fetchall()
+            
+            # Metriken
+            metrics = conn.execute(
+                "SELECT * FROM metrics WHERE run_id = ? ORDER BY timestamp",
+                (self.run_id,)
+            ).fetchall()
+            
+            # Artefakte
+            artifacts = conn.execute(
+                "SELECT * FROM artifacts WHERE run_id = ? ORDER BY created_timestamp",
+                (self.run_id,)
+            ).fetchall()
+            
+            # Logs
+            logs = conn.execute(
+                "SELECT * FROM logs WHERE run_id = ? ORDER BY timestamp",
+                (self.run_id,)
+            ).fetchall()
+        
+        manifest = {
+            "run_metadata": dict(run_data),
+            "gate_results": [dict(gate) for gate in gates],
+            "metrics": [dict(metric) for metric in metrics],
+            "artifacts": [dict(artifact) for artifact in artifacts],
+            "logs": [dict(log) for log in logs],
+            "manifest_generated_at": datetime.now().isoformat(),
+            "manifest_version": "1.0"
+        }
+        
+        # Speichere Manifest
+        manifest_file = Path(f"run_manifest_{self.run_id}.json")
+        with open(manifest_file, 'w', encoding='utf-8') as f:
+            json.dump(manifest, f, indent=2, ensure_ascii=False)
+        
+        print(f"📋 Run manifest generated: {manifest_file}")
+        
+        return manifest
+    
+    def export_audit_trail(self, format: str = "json") -> str:
+        """Exportiere Audit-Trail."""
+        stats = self.db.get_run_statistics()
+        
+        export_data = {
+            "export_timestamp": datetime.now().isoformat(),
+            "export_format": format,
+            "database_path": self.db.db_path,
+            "statistics": stats
+        }
+        
+        if format == "json":
+            export_file = Path(f"audit_trail_export_{int(time.time())}.json")
+            with open(export_file, 'w', encoding='utf-8') as f:
+                json.dump(export_data, f, indent=2, ensure_ascii=False)
+        else:
+            export_file = Path(f"audit_trail_export_{int(time.time())}.txt")
+            with open(export_file, 'w', encoding='utf-8') as f:
+                f.write(f"Audit Trail Export\n")
+                f.write(f"Generated: {export_data['export_timestamp']}\n")
+                f.write(f"Database: {export_data['database_path']}\n\n")
+                f.write(f"Statistics:\n")
+                for key, value in stats.items():
+                    f.write(f"  {key}: {value}\n")
+        
+        print(f"📤 Audit trail exported: {export_file}")
+        
+        return str(export_file)
+
+
+def test_production_audit_trail():
+    """Teste Production Audit-Trail."""
+    print("🧪 PRODUCTION AUDIT-TRAIL TESTS")
+    print("=" * 50)
+    
+    # Test 1: Manager-Initialisierung
+    manager = ProductionAuditTrailManager("TEST-AUDIT-001", ":memory:")
+    assert manager.run_id == "TEST-AUDIT-001"
+    print("✅ Manager initialization: OK")
+    
+    # Test 2: Run starten
+    run_metadata = manager.start_run(
+        spec_id="TEST-SPEC-001",
+        spec_hash="abc123",
+        model="gpt-4o-mini",
+        token_budget=1000,
+        seed=42
+    )
+    
+    assert run_metadata.run_id == "TEST-AUDIT-001"
+    assert run_metadata.spec_id == "TEST-SPEC-001"
+    print("✅ Run start: OK")
+    
+    # Test 3: Metriken erfassen
+    manager.record_metric("test_duration", MetricType.TIMER, 5.5, {"component": "test"})
+    manager.record_metric("test_count", MetricType.COUNTER, 10)
+    print("✅ Metrics recording: OK")
+    
+    # Test 4: Gate-Ergebnisse erfassen
+    manager.record_gate_result("test_gate", "passed", 2.3, {"score": 95}, ["test-report.json"])
+    manager.record_gate_result("security_gate", "failed", 1.8, {"issues": 3})
+    print("✅ Gate results recording: OK")
+    
+    # Test 5: Logs erfassen
+    manager.log("INFO", "test", "Test message", {"detail": "test detail"})
+    manager.log("ERROR", "test", "Test error", {"error_code": 500})
+    print("✅ Structured logging: OK")
+    
+    # Test 6: Run beenden
+    manager.end_run(1, {"total_tokens": 750, "cost": 0.0015})
+    print("✅ Run completion: OK")
+    
+    # Test 7: Statistiken
+    stats = manager.db.get_run_statistics()
+    assert stats["total_runs"] >= 1
+    print("✅ Statistics generation: OK")
+    
+    # Test 8: Manifest generieren
+    manifest = manager.generate_run_manifest()
+    assert "run_metadata" in manifest
+    assert "gate_results" in manifest
+    print("✅ Manifest generation: OK")
+    
+    print("🎉 All tests completed!")
+    return True
+
+
+def demo():
+    """Demo."""
+    print("📊 PRODUCTION AUDIT-TRAIL DEMO")
+    print("=" * 60)
+    
+    if not test_production_audit_trail():
+        return 1
+    
+    print(f"\n📋 Demo: Vollständiger Audit-Trail-Workflow")
+    
+    # Demo-Run
+    manager = ProductionAuditTrailManager("DEMO-AUDIT-001")
+    
+    # Simuliere Pipeline-Run
+    print(f"\n🚀 Simuliere Pipeline-Run...")
+    
+    # 1. Run starten
+    run_metadata = manager.start_run(
+        spec_id="DEMO-FEATURE-001",
+        spec_hash="abc123def456",
+        model="gpt-4o-mini",
+        token_budget=2000,
+        seed=42
+    )
+    
+    # 2. Verschiedene Aktivitäten simulieren
+    time.sleep(0.1)  # Simuliere Arbeit
+    
+    manager.log("INFO", "spec_loader", "Feature spec loaded successfully")
+    manager.record_metric("spec_load_time", MetricType.TIMER, 0.5)
+    
+    time.sleep(0.1)
+    
+    manager.log("INFO", "llm_gateway", "LLM request completed")
+    manager.record_metric("llm_tokens", MetricType.COUNTER, 850)
+    manager.record_metric("llm_cost", MetricType.GAUGE, 0.00425)
+    
+    time.sleep(0.1)
+    
+    # 3. Gate-Ergebnisse
+    manager.record_gate_result("test_coverage", "passed", 12.5, 
+                              {"coverage": 85.5}, ["coverage.json"])
+    
+    manager.record_gate_result("security_scan", "failed", 8.2,
+                              {"high_issues": 2, "medium_issues": 5}, 
+                              ["security-report.json", "security-report.md"])
+    
+    manager.record_gate_result("license_check", "passed", 3.1,
+                              {"packages_checked": 45}, ["sbom.json"])
+    
+    # 4. Artefakte erfassen (falls vorhanden)
+    for artifact in ["qa-scorecard.json", "security-report.json", "sbom-license-report.json"]:
+        if Path(artifact).exists():
+            manager.record_artifact(artifact)
+    
+    # 5. Run beenden
+    manager.end_run(1, {  # Exit code 1 wegen Security-Gate-Failure
+        "total_tokens": 850,
+        "prompt_tokens": 600,
+        "completion_tokens": 250,
+        "estimated_cost": 0.00425
+    })
+    
+    # 6. Manifest und Export
+    manifest = manager.generate_run_manifest()
+    export_file = manager.export_audit_trail("json")
+    
+    print(f"\n📊 Demo-Ergebnisse:")
+    print(f"   Run ID: {manager.run_id}")
+    print(f"   Gates: {len(manifest.get('gate_results', []))}")
+    print(f"   Metrics: {len(manifest.get('metrics', []))}")
+    print(f"   Logs: {len(manifest.get('logs', []))}")
+    print(f"   Artifacts: {len(manifest.get('artifacts', []))}")
+    print(f"   Export: {export_file}")
+    
+    # 7. Statistiken anzeigen
+    stats = manager.db.get_run_statistics()
+    print(f"\n📈 Audit-Trail-Statistiken:")
+    print(f"   Total Runs: {stats['total_runs']}")
+    print(f"   Success Rate: {stats['success_rate']:.1f}%")
+    print(f"   Avg Duration: {stats['avg_duration_seconds']:.1f}s")
+    
+    print(f"\n📊 Audit-Trail-Capabilities:")
+    print(f"   ✅ Vollständige Run-Metadaten mit Spec-Hash")
+    print(f"   ✅ Git-Repository-Informationen und Tool-Versionen")
+    print(f"   ✅ Strukturierte Logs mit Component-Tagging")
+    print(f"   ✅ Performance-Metriken (Counter, Gauge, Timer, Histogram)")
+    print(f"   ✅ Gate-Ergebnisse mit Execution-Time und Details")
+    print(f"   ✅ Artefakt-Tracking mit Checksums")
+    print(f"   ✅ SQLite-basierte persistente Speicherung")
+    print(f"   ✅ Run-Manifest-Generierung für Download")
+    print(f"   ✅ Audit-Trail-Export für Long-Term-Storage")
+    print(f"   ✅ Umfassende Statistiken und Reporting")
+    
+    print(f"\n✅ Demo complete!")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(demo())

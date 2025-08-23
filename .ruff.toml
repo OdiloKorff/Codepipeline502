@@ -1,0 +1,51 @@
+# Ruff Konfiguration für MVP-fokussierte Linting
+target-version = "py310"
+line-length = 120
+
+# Experimentelle Bereiche, Archive, Build-Ordner und virtuelle Umgebungen ausschließen
+exclude = [
+    ".git",
+    "__pycache__",
+    "*.pyc",
+    ".pytest_cache",
+    ".coverage",
+    "htmlcov",
+    "dist",
+    "build",
+    "*.egg-info",
+    ".venv",
+    "venv",
+    "env",
+    ".env",
+    "node_modules",
+    ".mypy_cache",
+    ".ruff_cache",
+    "services",
+    "test_security_violations",
+    "patterns",
+    "migrations", 
+    "tools",
+    "docs",
+    ".github",
+    "release",
+    "tests"
+]
+
+[lint]
+# Regelsatz: E, F, I wie gefordert + Zeilenlänge 120
+select = [
+    "E",  # pycodestyle errors
+    "F",  # pyflakes
+    "I",  # isort
+]
+
+# Lange Zeilen ignorieren wie gefordert
+ignore = [
+    "E501",  # line too long - wird durch line-length = 120 behandelt
+]
+
+[format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"

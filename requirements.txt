@@ -1,6 +1,44 @@
-fastapi
-uvicorn
-pydantic
-pytest
-pytest-cov
-httpx
+# MVP Pipeline System - Production Dependencies
+# Ehrliche CI/CD-Pipeline ohne Greenwashing
+
+# Core Testing & Coverage
+pytest>=7.0.0
+pytest-cov>=4.0.0
+coverage>=7.0.0
+
+# Security Scanning
+bandit>=1.7.0
+
+# Configuration & Data
+PyYAML>=6.0
+typer>=0.9.0
+
+# Optional: Enhanced Security Scanning
+# semgrep>=1.45.0  # Advanced SAST (optional)
+
+# Optional: SBOM Generation  
+# cyclonedx-bom>=4.0.0  # Software Bill of Materials
+# pip-licenses>=4.0.0   # License checking
+
+# Optional: Git Integration
+# GitPython>=3.1.0  # Git operations (optional)
+
+# Development Dependencies (for contributors)
+# ruff>=0.1.0       # Fast Python linter
+# mypy>=1.5.0       # Type checking
+# black>=23.0.0     # Code formatting
+
+# GUI Dependencies (already in Python stdlib)
+# tkinter - included in Python standard library
+
+# Network/HTTP (for future extensions)
+# requests>=2.31.0  # HTTP client (optional)
+
+# Note: This pipeline works with minimal dependencies for maximum compatibility
+# Optional dependencies can be installed based on specific requirements:
+#
+# For full SAST: pip install semgrep
+# For SBOM: pip install cyclonedx-bom pip-licenses  
+# For development: pip install ruff mypy black
+# For Git integration: pip install GitPython
+# For enhanced networking: pip install requests

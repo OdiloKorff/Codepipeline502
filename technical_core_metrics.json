@@ -1,0 +1,11 @@
+{
+  "demo_duration_seconds": 1.0030431747436523,
+  "unified_diff_functional": false,
+  "hardened_sandbox_functional": false,
+  "secret_token_functional": false,
+  "integration_successful": true,
+  "overall_readiness": 40.0,
+  "production_ready": false,
+  "security_tests_passed": 0,
+  "components_integrated": 4
+}

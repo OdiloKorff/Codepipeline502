@@ -1,0 +1,25 @@
+[
+  {
+    "method": "GET",
+    "url": "http://localhost:8000/",
+    "status_code": 200,
+    "expected_status": 200,
+    "status_match": true,
+    "response_data": {
+      "message": "Hello World",
+      "version": "1.0.0"
+    },
+    "success": true
+  },
+  {
+    "method": "GET",
+    "url": "http://localhost:8000/health",
+    "status_code": 200,
+    "expected_status": 200,
+    "status_match": true,
+    "response_data": {
+      "status": "healthy"
+    },
+    "success": true
+  }
+]

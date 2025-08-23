@@ -1,0 +1,622 @@
+{
+  "license_gate": {
+    "status": "pass",
+    "total_packages": 84,
+    "compliant_packages": 84,
+    "license_violations": 0,
+    "compliance_rate": 100.0,
+    "dev_only_count": 13,
+    "nightly_profile": true,
+    "allowlist_used": "extended",
+    "allowlist_size": 12,
+    "violations": [],
+    "compliant": [
+      {
+        "package": "aiohappyeyeballs",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": false
+      },
+      {
+        "package": "aiohttp",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": false
+      },
+      {
+        "package": "aiosignal",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": false
+      },
+      {
+        "package": "annotated-types",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": false
+      },
+      {
+        "package": "anyio",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": false
+      },
+      {
+        "package": "async-timeout",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": false
+      },
+      {
+        "package": "attrs",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": false
+      },
+      {
+        "package": "Authlib",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": false
+      },
+      {
+        "package": "backports-datetime-fromisoformat",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": false
+      },
+      {
+        "package": "bandit",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": true
+      },
+      {
+        "package": "build",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": true
+      },
+      {
+        "package": "certifi",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": false
+      },
+      {
+        "package": "cffi",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": false
+      },
+      {
+        "package": "charset-normalizer",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": false
+      },
+      {
+        "package": "click",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": false
+      },
+      {
+        "package": "colorama",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": false
+      },
+      {
+        "package": "coverage",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": true
+      },
+      {
+        "package": "cryptography",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": false
+      },
+      {
+        "package": "distro",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": false
+      },
+      {
+        "package": "dparse",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": false
+      },
+      {
+        "package": "exceptiongroup",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": false
+      },
+      {
+        "package": "fastapi",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": false
+      },
+      {
+        "package": "filelock",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": false
+      },
+      {
+        "package": "frozenlist",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": false
+      },
+      {
+        "package": "h11",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": false
+      },
+      {
+        "package": "httpcore",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": false
+      },
+      {
+        "package": "httpx",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": false
+      },
+      {
+        "package": "idna",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": false
+      },
+      {
+        "package": "importlib_metadata",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": false
+      },
+      {
+        "package": "iniconfig",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": false
+      },
+      {
+        "package": "Jinja2",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": false
+      },
+      {
+        "package": "jiter",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": false
+      },
+      {
+        "package": "joblib",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": false
+      },
+      {
+        "package": "markdown-it-py",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": false
+      },
+      {
+        "package": "MarkupSafe",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": false
+      },
+      {
+        "package": "marshmallow",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": false
+      },
+      {
+        "package": "mdurl",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": false
+      },
+      {
+        "package": "multidict",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": false
+      },
+      {
+        "package": "mypy",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": true
+      },
+      {
+        "package": "mypy_extensions",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": true
+      },
+      {
+        "package": "nltk",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": false
+      },
+      {
+        "package": "openai",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": false
+      },
+      {
+        "package": "packaging",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": true
+      },
+      {
+        "package": "pathspec",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": false
+      },
+      {
+        "package": "pbr",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": false
+      },
+      {
+        "package": "pip",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": true
+      },
+      {
+        "package": "pluggy",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": false
+      },
+      {
+        "package": "propcache",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": false
+      },
+      {
+        "package": "psutil",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": true
+      },
+      {
+        "package": "pycparser",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": false
+      },
+      {
+        "package": "pydantic",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": false
+      },
+      {
+        "package": "pydantic_core",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": false
+      },
+      {
+        "package": "Pygments",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": false
+      },
+      {
+        "package": "pyproject_hooks",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": false
+      },
+      {
+        "package": "pytest",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": true
+      },
+      {
+        "package": "pytest-cov",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": true
+      },
+      {
+        "package": "python-dotenv",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": false
+      },
+      {
+        "package": "PyYAML",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": false
+      },
+      {
+        "package": "regex",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": false
+      },
+      {
+        "package": "requests",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": false
+      },
+      {
+        "package": "rich",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": false
+      },
+      {
+        "package": "ruamel.yaml",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": false
+      },
+      {
+        "package": "ruamel.yaml.clib",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": false
+      },
+      {
+        "package": "ruff",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": true
+      },
+      {
+        "package": "safety",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": false
+      },
+      {
+        "package": "safety-schemas",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": false
+      },
+      {
+        "package": "setuptools",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": true
+      },
+      {
+        "package": "shellingham",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": false
+      },
+      {
+        "package": "sniffio",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": false
+      },
+      {
+        "package": "starlette",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": false
+      },
+      {
+        "package": "stevedore",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": false
+      },
+      {
+        "package": "tenacity",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": false
+      },
+      {
+        "package": "tomli",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": false
+      },
+      {
+        "package": "tomlkit",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": false
+      },
+      {
+        "package": "tqdm",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": false
+      },
+      {
+        "package": "typer",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": false
+      },
+      {
+        "package": "types-PyYAML",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": false
+      },
+      {
+        "package": "typing_extensions",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": false
+      },
+      {
+        "package": "typing-inspection",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": false
+      },
+      {
+        "package": "urllib3",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": false
+      },
+      {
+        "package": "uvicorn",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": false
+      },
+      {
+        "package": "wheel",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": true
+      },
+      {
+        "package": "yarl",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": false
+      },
+      {
+        "package": "zipp",
+        "licenses": [
+          "UNKNOWN"
+        ],
+        "dev_only": false
+      }
+    ],
+    "dev_only_packages": [
+      "bandit",
+      "build",
+      "coverage",
+      "mypy",
+      "mypy_extensions",
+      "packaging",
+      "pip",
+      "psutil",
+      "pytest",
+      "pytest-cov",
+      "ruff",
+      "setuptools",
+      "wheel"
+    ],
+    "check_date": "2025-08-22T21:30:57.053933Z"
+  },
+  "generated_at": "2025-08-22T21:30:57.053933Z",
+  "project_root": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502"
+}

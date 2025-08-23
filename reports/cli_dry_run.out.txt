@@ -1,0 +1,48 @@
+Feature Pipeline gestartet
+   Spec: C:\Users\odilo\PycharmProjects\Codepipeline502\feature_spec.yaml
+   Branch: feature/LOCAL-CI
+   Secure: True
+   Dry-Run: True
+Spec geladen: FSPEC-LOW-RISK-001
+Dry-Run-Modus: Simuliere Pipeline-Schritte
+   1. Spec validieren OK
+   2. Prompt Guard ausf�hren...
+      - Prompt sanitization: OK
+      - Injection detection: OK
+      -> Prompt Guard PASS
+   3. LLM Unified Diff erzeugen...
+      - Model: gpt-4o-mini
+      - Temperature: 0.0
+      - Seed: 7
+      - Token usage: prompt=4 completion=15 total=19
+      - Generated diff: 15 lines changed
+      -> LLM Diff PASS
+   4. Sandbox-Validierung...
+      - Target paths: codepipeline, tests
+      - Path constraints: OK
+      - Three-way merge: OK
+      -> Sandbox PASS
+   5. QA Gates durchlaufen...
+      - Linting: PASS
+      - Type checking: PASS
+      - Tests: PASS
+      - Security scan: PASS
+      - Coverage: PASS
+      -> QA Gates PASS
+   6. Branch-Protection Check...
+      - Target branch: feature/LOCAL-CI
+      - Protection status: pass
+      - Reason: local_development_allowed
+      -> Branch Protection PASS
+   7. Draft PR erstellen (simuliert)...
+      - PR title: Low-Risk Feature Test
+      - Artifacts attached: QA Summary, SBOM, Security Report
+      -> Draft PR PASS
+
+Dry-Run erfolgreich abgeschlossen!
+   - Spec: FSPEC-LOW-RISK-001
+   - Target: feature/LOCAL-CI
+   - Alle Gates: PASS
+   - Bereit f�r echten Pipeline-Lauf
+C:\Users\odilo\AppData\Local\Programs\Python\Python310\lib\runpy.py:126: RuntimeWarning: 'codepipeline.cli' found in sys.modules after import of package 'codepipeline', but prior to execution of 'codepipeline.cli'; this may result in unpredictable behaviour
+  warn(RuntimeWarning(msg))

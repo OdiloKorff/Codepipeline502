@@ -1,0 +1,15 @@
+{
+  "branch_protection_preflight": {
+    "status": "FAIL",
+    "reason_code": "MAIN_BRANCH_PROTECTED",
+    "branch_name": "main",
+    "message": "Branch 'main' is protected - main branch requires PR workflow",
+    "timestamp": "2025-08-22T19:08:54.270524Z",
+    "details": {
+      "protected_pattern": "^main$",
+      "protection_reason": "Main branch is the primary development branch and requires pull request workflow for quality control"
+    }
+  },
+  "generated_at": "2025-08-22T19:08:54.270524Z",
+  "project_root": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502"
+}

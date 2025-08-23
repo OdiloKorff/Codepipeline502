@@ -1,0 +1,345 @@
+{
+  "security_consolidated": {
+    "status": "pass",
+    "active_tools": 4,
+    "tools_total": 8,
+    "high": 0,
+    "medium": 0,
+    "low": 0,
+    "total": 0,
+    "aggregated_at": "2025-08-23T09:39:25.575328Z",
+    "tools": {
+      "bandit": {
+        "status": "skip",
+        "high": 0,
+        "medium": 0,
+        "low": 0,
+        "total": 0,
+        "format": "consolidated",
+        "active": false
+      },
+      "security_gate": {
+        "status": "pass",
+        "high": 0,
+        "medium": 0,
+        "low": 0,
+        "total": 0,
+        "format": "consolidated",
+        "active": true
+      },
+      "security_scan": {
+        "status": "pass",
+        "high": 0,
+        "medium": 0,
+        "low": 0,
+        "total": 0,
+        "format": "active_scan",
+        "active": true
+      },
+      "safety": {
+        "status": "ok",
+        "high": 0,
+        "medium": 0,
+        "low": 0,
+        "total": 0,
+        "format": "active_tool",
+        "active": true
+      },
+      "semgrep": {
+        "status": "skip",
+        "high": 0,
+        "medium": 0,
+        "low": 0,
+        "total": 0,
+        "format": "consolidated",
+        "active": false
+      },
+      "gitleaks": {
+        "status": "skip",
+        "high": 0,
+        "medium": 0,
+        "low": 0,
+        "total": 0,
+        "format": "consolidated",
+        "active": false
+      },
+      "pip_audit": {
+        "status": "skip",
+        "high": 0,
+        "medium": 0,
+        "low": 0,
+        "total": 0,
+        "format": "consolidated",
+        "active": false
+      },
+      "security_consolidated": {
+        "status": "pass",
+        "high": 0,
+        "medium": 0,
+        "low": 0,
+        "total": 0,
+        "format": "consolidated",
+        "active": true
+      }
+    },
+    "sources": {
+      "report_files": [
+        "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\security_report.json",
+        "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\security_gate_report.json",
+        "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\active_security_report.json",
+        "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\bandit_raw_scan.json",
+        "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\consolidated_security_report.json",
+        "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\custom_security_secure.json",
+        "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\e2e_security_report.json",
+        "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\secure_e2e_security_report.json",
+        "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\secure_security_secure.json",
+        "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\security_consolidated_report.json",
+        "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\security_test_new.json",
+        "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\test_security.json"
+      ],
+      "formats_detected": 24,
+      "formats": [
+        {
+          "format": "consolidated",
+          "tool": "bandit",
+          "status": "ok",
+          "high": 0,
+          "medium": 41,
+          "low": 1299,
+          "total": 1340,
+          "active": true
+        },
+        {
+          "format": "consolidated",
+          "tool": "security_gate",
+          "status": "pass",
+          "high": 0,
+          "medium": 0,
+          "low": 0,
+          "total": 0,
+          "active": true
+        },
+        {
+          "format": "consolidated",
+          "tool": "security_scan",
+          "status": "pass",
+          "high": 0,
+          "medium": 0,
+          "low": 0,
+          "total": 0,
+          "active": true
+        },
+        {
+          "format": "active_scan",
+          "tool": "security_scan",
+          "status": "pass",
+          "high": 0,
+          "medium": 0,
+          "low": 0,
+          "total": 0,
+          "active": true
+        },
+        {
+          "format": "active_tool",
+          "tool": "bandit",
+          "status": "warn",
+          "high": 0,
+          "medium": 0,
+          "low": 0,
+          "total": 0,
+          "active": false
+        },
+        {
+          "format": "active_tool",
+          "tool": "safety",
+          "status": "ok",
+          "high": 0,
+          "medium": 0,
+          "low": 0,
+          "total": 0,
+          "active": true
+        },
+        {
+          "format": "bandit_raw",
+          "tool": "bandit",
+          "status": "ok",
+          "high": 0,
+          "medium": 41,
+          "low": 1299,
+          "total": 1340,
+          "active": true
+        },
+        {
+          "format": "consolidated",
+          "tool": "semgrep",
+          "status": "skip",
+          "high": 0,
+          "medium": 0,
+          "low": 0,
+          "total": 0,
+          "active": false
+        },
+        {
+          "format": "consolidated",
+          "tool": "bandit",
+          "status": "parse_error",
+          "high": 0,
+          "medium": 0,
+          "low": 0,
+          "total": 0,
+          "active": false
+        },
+        {
+          "format": "consolidated",
+          "tool": "gitleaks",
+          "status": "skip",
+          "high": 0,
+          "medium": 0,
+          "low": 0,
+          "total": 0,
+          "active": false
+        },
+        {
+          "format": "consolidated",
+          "tool": "pip_audit",
+          "status": "skip",
+          "high": 0,
+          "medium": 0,
+          "low": 0,
+          "total": 0,
+          "active": false
+        },
+        {
+          "format": "consolidated",
+          "tool": "semgrep",
+          "status": "skip",
+          "high": 0,
+          "medium": 0,
+          "low": 0,
+          "total": 0,
+          "active": false
+        },
+        {
+          "format": "consolidated",
+          "tool": "bandit",
+          "status": "parse_error",
+          "high": 0,
+          "medium": 0,
+          "low": 0,
+          "total": 0,
+          "active": false
+        },
+        {
+          "format": "consolidated",
+          "tool": "gitleaks",
+          "status": "skip",
+          "high": 0,
+          "medium": 0,
+          "low": 0,
+          "total": 0,
+          "active": false
+        },
+        {
+          "format": "consolidated",
+          "tool": "pip_audit",
+          "status": "skip",
+          "high": 0,
+          "medium": 0,
+          "low": 0,
+          "total": 0,
+          "active": false
+        },
+        {
+          "format": "consolidated",
+          "tool": "security_consolidated",
+          "status": "pass",
+          "high": 0,
+          "medium": 0,
+          "low": 0,
+          "total": 0,
+          "active": true
+        },
+        {
+          "format": "consolidated",
+          "tool": "semgrep",
+          "status": "skip",
+          "high": 0,
+          "medium": 0,
+          "low": 0,
+          "total": 0,
+          "active": false
+        },
+        {
+          "format": "consolidated",
+          "tool": "bandit",
+          "status": "parse_error",
+          "high": 0,
+          "medium": 0,
+          "low": 0,
+          "total": 0,
+          "active": false
+        },
+        {
+          "format": "consolidated",
+          "tool": "gitleaks",
+          "status": "skip",
+          "high": 0,
+          "medium": 0,
+          "low": 0,
+          "total": 0,
+          "active": false
+        },
+        {
+          "format": "consolidated",
+          "tool": "pip_audit",
+          "status": "skip",
+          "high": 0,
+          "medium": 0,
+          "low": 0,
+          "total": 0,
+          "active": false
+        },
+        {
+          "format": "consolidated",
+          "tool": "semgrep",
+          "status": "skip",
+          "high": 0,
+          "medium": 0,
+          "low": 0,
+          "total": 0,
+          "active": false
+        },
+        {
+          "format": "consolidated",
+          "tool": "bandit",
+          "status": "skip",
+          "high": 0,
+          "medium": 0,
+          "low": 0,
+          "total": 0,
+          "active": false
+        },
+        {
+          "format": "consolidated",
+          "tool": "gitleaks",
+          "status": "skip",
+          "high": 0,
+          "medium": 0,
+          "low": 0,
+          "total": 0,
+          "active": false
+        },
+        {
+          "format": "consolidated",
+          "tool": "pip_audit",
+          "status": "skip",
+          "high": 0,
+          "medium": 0,
+          "low": 0,
+          "total": 0,
+          "active": false
+        }
+      ]
+    }
+  }
+}

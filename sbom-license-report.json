@@ -1,0 +1,754 @@
+{
+  "gate_id": "DEMO-SBOM-001",
+  "timestamp": "2025-08-17T20:56:17.398133",
+  "sbom_result": {
+    "sbom_format": "CycloneDX",
+    "total_packages": 72,
+    "packages": [
+      {
+        "name": "aiohappyeyeballs",
+        "version": "2.6.1",
+        "license": "Unknown",
+        "license_status": "unknown",
+        "vulnerabilities": [],
+        "homepage": null,
+        "description": null
+      },
+      {
+        "name": "aiohttp",
+        "version": "3.12.11",
+        "license": "Unknown",
+        "license_status": "unknown",
+        "vulnerabilities": [],
+        "homepage": null,
+        "description": null
+      },
+      {
+        "name": "aiosignal",
+        "version": "1.3.2",
+        "license": "Unknown",
+        "license_status": "unknown",
+        "vulnerabilities": [],
+        "homepage": null,
+        "description": null
+      },
+      {
+        "name": "annotated-types",
+        "version": "0.7.0",
+        "license": "Unknown",
+        "license_status": "unknown",
+        "vulnerabilities": [],
+        "homepage": null,
+        "description": null
+      },
+      {
+        "name": "anyio",
+        "version": "4.9.0",
+        "license": "Unknown",
+        "license_status": "unknown",
+        "vulnerabilities": [],
+        "homepage": null,
+        "description": null
+      },
+      {
+        "name": "async-timeout",
+        "version": "5.0.1",
+        "license": "Unknown",
+        "license_status": "unknown",
+        "vulnerabilities": [],
+        "homepage": null,
+        "description": null
+      },
+      {
+        "name": "attrs",
+        "version": "25.3.0",
+        "license": "Unknown",
+        "license_status": "unknown",
+        "vulnerabilities": [],
+        "homepage": null,
+        "description": null
+      },
+      {
+        "name": "Authlib",
+        "version": "1.6.1",
+        "license": "Unknown",
+        "license_status": "unknown",
+        "vulnerabilities": [],
+        "homepage": null,
+        "description": null
+      },
+      {
+        "name": "backports-datetime-fromisoformat",
+        "version": "2.0.3",
+        "license": "Unknown",
+        "license_status": "unknown",
+        "vulnerabilities": [],
+        "homepage": null,
+        "description": null
+      },
+      {
+        "name": "certifi",
+        "version": "2025.4.26",
+        "license": "MPL-2.0",
+        "license_status": "requires_review",
+        "vulnerabilities": [],
+        "homepage": null,
+        "description": null
+      },
+      {
+        "name": "cffi",
+        "version": "1.17.1",
+        "license": "Unknown",
+        "license_status": "unknown",
+        "vulnerabilities": [],
+        "homepage": null,
+        "description": null
+      },
+      {
+        "name": "charset-normalizer",
+        "version": "3.4.2",
+        "license": "MIT",
+        "license_status": "allowed",
+        "vulnerabilities": [],
+        "homepage": null,
+        "description": null
+      },
+      {
+        "name": "click",
+        "version": "8.2.2",
+        "license": "BSD-3-Clause",
+        "license_status": "allowed",
+        "vulnerabilities": [],
+        "homepage": null,
+        "description": null
+      },
+      {
+        "name": "colorama",
+        "version": "0.4.6",
+        "license": "Unknown",
+        "license_status": "unknown",
+        "vulnerabilities": [],
+        "homepage": null,
+        "description": null
+      },
+      {
+        "name": "coverage",
+        "version": "7.10.1",
+        "license": "Apache-2.0",
+        "license_status": "allowed",
+        "vulnerabilities": [],
+        "homepage": null,
+        "description": null
+      },
+      {
+        "name": "cryptography",
+        "version": "45.0.6",
+        "license": "Unknown",
+        "license_status": "unknown",
+        "vulnerabilities": [],
+        "homepage": null,
+        "description": null
+      },
+      {
+        "name": "distro",
+        "version": "1.9.0",
+        "license": "Unknown",
+        "license_status": "unknown",
+        "vulnerabilities": [],
+        "homepage": null,
+        "description": null
+      },
+      {
+        "name": "dparse",
+        "version": "0.6.4",
+        "license": "Unknown",
+        "license_status": "unknown",
+        "vulnerabilities": [],
+        "homepage": null,
+        "description": null
+      },
+      {
+        "name": "exceptiongroup",
+        "version": "1.3.0",
+        "license": "Unknown",
+        "license_status": "unknown",
+        "vulnerabilities": [],
+        "homepage": null,
+        "description": null
+      },
+      {
+        "name": "fastapi",
+        "version": "0.116.1",
+        "license": "MIT",
+        "license_status": "allowed",
+        "vulnerabilities": [],
+        "homepage": null,
+        "description": null
+      },
+      {
+        "name": "filelock",
+        "version": "3.16.1",
+        "license": "Unknown",
+        "license_status": "unknown",
+        "vulnerabilities": [],
+        "homepage": null,
+        "description": null
+      },
+      {
+        "name": "frozenlist",
+        "version": "1.6.2",
+        "license": "Unknown",
+        "license_status": "unknown",
+        "vulnerabilities": [],
+        "homepage": null,
+        "description": null
+      },
+      {
+        "name": "h11",
+        "version": "0.16.0",
+        "license": "Unknown",
+        "license_status": "unknown",
+        "vulnerabilities": [],
+        "homepage": null,
+        "description": null
+      },
+      {
+        "name": "httpcore",
+        "version": "1.0.9",
+        "license": "Unknown",
+        "license_status": "unknown",
+        "vulnerabilities": [],
+        "homepage": null,
+        "description": null
+      },
+      {
+        "name": "httpx",
+        "version": "0.28.1",
+        "license": "Unknown",
+        "license_status": "unknown",
+        "vulnerabilities": [],
+        "homepage": null,
+        "description": null
+      },
+      {
+        "name": "idna",
+        "version": "3.10",
+        "license": "BSD-3-Clause",
+        "license_status": "allowed",
+        "vulnerabilities": [],
+        "homepage": null,
+        "description": null
+      },
+      {
+        "name": "iniconfig",
+        "version": "2.1.0",
+        "license": "Unknown",
+        "license_status": "unknown",
+        "vulnerabilities": [],
+        "homepage": null,
+        "description": null
+      },
+      {
+        "name": "Jinja2",
+        "version": "3.1.6",
+        "license": "BSD-3-Clause",
+        "license_status": "allowed",
+        "vulnerabilities": [],
+        "homepage": null,
+        "description": null
+      },
+      {
+        "name": "jiter",
+        "version": "0.10.0",
+        "license": "Unknown",
+        "license_status": "unknown",
+        "vulnerabilities": [],
+        "homepage": null,
+        "description": null
+      },
+      {
+        "name": "joblib",
+        "version": "1.5.1",
+        "license": "Unknown",
+        "license_status": "unknown",
+        "vulnerabilities": [],
+        "homepage": null,
+        "description": null
+      },
+      {
+        "name": "markdown-it-py",
+        "version": "4.0.0",
+        "license": "Unknown",
+        "license_status": "unknown",
+        "vulnerabilities": [],
+        "homepage": null,
+        "description": null
+      },
+      {
+        "name": "MarkupSafe",
+        "version": "3.0.2",
+        "license": "BSD-3-Clause",
+        "license_status": "allowed",
+        "vulnerabilities": [],
+        "homepage": null,
+        "description": null
+      },
+      {
+        "name": "marshmallow",
+        "version": "4.0.0",
+        "license": "Unknown",
+        "license_status": "unknown",
+        "vulnerabilities": [],
+        "homepage": null,
+        "description": null
+      },
+      {
+        "name": "mdurl",
+        "version": "0.1.2",
+        "license": "Unknown",
+        "license_status": "unknown",
+        "vulnerabilities": [],
+        "homepage": null,
+        "description": null
+      },
+      {
+        "name": "multidict",
+        "version": "6.4.4",
+        "license": "Unknown",
+        "license_status": "unknown",
+        "vulnerabilities": [],
+        "homepage": null,
+        "description": null
+      },
+      {
+        "name": "nltk",
+        "version": "3.9.1",
+        "license": "Unknown",
+        "license_status": "unknown",
+        "vulnerabilities": [],
+        "homepage": null,
+        "description": null
+      },
+      {
+        "name": "openai",
+        "version": "1.84.0",
+        "license": "Unknown",
+        "license_status": "unknown",
+        "vulnerabilities": [],
+        "homepage": null,
+        "description": null
+      },
+      {
+        "name": "packaging",
+        "version": "25.0",
+        "license": "Unknown",
+        "license_status": "unknown",
+        "vulnerabilities": [],
+        "homepage": null,
+        "description": null
+      },
+      {
+        "name": "pip",
+        "version": "25.2",
+        "license": "Unknown",
+        "license_status": "unknown",
+        "vulnerabilities": [],
+        "homepage": null,
+        "description": null
+      },
+      {
+        "name": "pluggy",
+        "version": "1.6.0",
+        "license": "Unknown",
+        "license_status": "unknown",
+        "vulnerabilities": [],
+        "homepage": null,
+        "description": null
+      },
+      {
+        "name": "propcache",
+        "version": "0.3.1",
+        "license": "Unknown",
+        "license_status": "unknown",
+        "vulnerabilities": [],
+        "homepage": null,
+        "description": null
+      },
+      {
+        "name": "psutil",
+        "version": "6.1.1",
+        "license": "Unknown",
+        "license_status": "unknown",
+        "vulnerabilities": [],
+        "homepage": null,
+        "description": null
+      },
+      {
+        "name": "pycparser",
+        "version": "2.22",
+        "license": "Unknown",
+        "license_status": "unknown",
+        "vulnerabilities": [],
+        "homepage": null,
+        "description": null
+      },
+      {
+        "name": "pydantic",
+        "version": "2.9.2",
+        "license": "MIT",
+        "license_status": "allowed",
+        "vulnerabilities": [],
+        "homepage": null,
+        "description": null
+      },
+      {
+        "name": "pydantic_core",
+        "version": "2.23.4",
+        "license": "Unknown",
+        "license_status": "unknown",
+        "vulnerabilities": [],
+        "homepage": null,
+        "description": null
+      },
+      {
+        "name": "Pygments",
+        "version": "2.19.2",
+        "license": "Unknown",
+        "license_status": "unknown",
+        "vulnerabilities": [],
+        "homepage": null,
+        "description": null
+      },
+      {
+        "name": "pytest",
+        "version": "8.4.1",
+        "license": "MIT",
+        "license_status": "allowed",
+        "vulnerabilities": [],
+        "homepage": null,
+        "description": null
+      },
+      {
+        "name": "pytest-cov",
+        "version": "6.2.1",
+        "license": "Unknown",
+        "license_status": "unknown",
+        "vulnerabilities": [],
+        "homepage": null,
+        "description": null
+      },
+      {
+        "name": "python-dotenv",
+        "version": "1.1.0",
+        "license": "Unknown",
+        "license_status": "unknown",
+        "vulnerabilities": [],
+        "homepage": null,
+        "description": null
+      },
+      {
+        "name": "PyYAML",
+        "version": "6.0.2",
+        "license": "Unknown",
+        "license_status": "unknown",
+        "vulnerabilities": [],
+        "homepage": null,
+        "description": null
+      },
+      {
+        "name": "regex",
+        "version": "2025.7.34",
+        "license": "Unknown",
+        "license_status": "unknown",
+        "vulnerabilities": [],
+        "homepage": null,
+        "description": null
+      },
+      {
+        "name": "requests",
+        "version": "2.32.4",
+        "license": "Apache-2.0",
+        "license_status": "allowed",
+        "vulnerabilities": [],
+        "homepage": null,
+        "description": null
+      },
+      {
+        "name": "rich",
+        "version": "14.1.0",
+        "license": "Unknown",
+        "license_status": "unknown",
+        "vulnerabilities": [],
+        "homepage": null,
+        "description": null
+      },
+      {
+        "name": "ruamel.yaml",
+        "version": "0.18.14",
+        "license": "Unknown",
+        "license_status": "unknown",
+        "vulnerabilities": [],
+        "homepage": null,
+        "description": null
+      },
+      {
+        "name": "ruamel.yaml.clib",
+        "version": "0.2.12",
+        "license": "Unknown",
+        "license_status": "unknown",
+        "vulnerabilities": [],
+        "homepage": null,
+        "description": null
+      },
+      {
+        "name": "ruff",
+        "version": "0.12.7",
+        "license": "Unknown",
+        "license_status": "unknown",
+        "vulnerabilities": [],
+        "homepage": null,
+        "description": null
+      },
+      {
+        "name": "safety",
+        "version": "3.6.0",
+        "license": "Unknown",
+        "license_status": "unknown",
+        "vulnerabilities": [],
+        "homepage": null,
+        "description": null
+      },
+      {
+        "name": "safety-schemas",
+        "version": "0.0.14",
+        "license": "Unknown",
+        "license_status": "unknown",
+        "vulnerabilities": [],
+        "homepage": null,
+        "description": null
+      },
+      {
+        "name": "setuptools",
+        "version": "80.9.0",
+        "license": "Unknown",
+        "license_status": "unknown",
+        "vulnerabilities": [],
+        "homepage": null,
+        "description": null
+      },
+      {
+        "name": "shellingham",
+        "version": "1.5.4",
+        "license": "Unknown",
+        "license_status": "unknown",
+        "vulnerabilities": [],
+        "homepage": null,
+        "description": null
+      },
+      {
+        "name": "sniffio",
+        "version": "1.3.1",
+        "license": "Unknown",
+        "license_status": "unknown",
+        "vulnerabilities": [],
+        "homepage": null,
+        "description": null
+      },
+      {
+        "name": "starlette",
+        "version": "0.47.2",
+        "license": "BSD-3-Clause",
+        "license_status": "allowed",
+        "vulnerabilities": [],
+        "homepage": null,
+        "description": null
+      },
+      {
+        "name": "tenacity",
+        "version": "9.1.2",
+        "license": "Unknown",
+        "license_status": "unknown",
+        "vulnerabilities": [],
+        "homepage": null,
+        "description": null
+      },
+      {
+        "name": "tomli",
+        "version": "2.2.1",
+        "license": "Unknown",
+        "license_status": "unknown",
+        "vulnerabilities": [],
+        "homepage": null,
+        "description": null
+      },
+      {
+        "name": "tomlkit",
+        "version": "0.13.3",
+        "license": "Unknown",
+        "license_status": "unknown",
+        "vulnerabilities": [],
+        "homepage": null,
+        "description": null
+      },
+      {
+        "name": "tqdm",
+        "version": "4.67.1",
+        "license": "Unknown",
+        "license_status": "unknown",
+        "vulnerabilities": [],
+        "homepage": null,
+        "description": null
+      },
+      {
+        "name": "typer",
+        "version": "0.16.0",
+        "license": "Unknown",
+        "license_status": "unknown",
+        "vulnerabilities": [],
+        "homepage": null,
+        "description": null
+      },
+      {
+        "name": "typing_extensions",
+        "version": "4.14.0",
+        "license": "Unknown",
+        "license_status": "unknown",
+        "vulnerabilities": [],
+        "homepage": null,
+        "description": null
+      },
+      {
+        "name": "typing-inspection",
+        "version": "0.4.1",
+        "license": "Unknown",
+        "license_status": "unknown",
+        "vulnerabilities": [],
+        "homepage": null,
+        "description": null
+      },
+      {
+        "name": "urllib3",
+        "version": "2.5.0",
+        "license": "MIT",
+        "license_status": "allowed",
+        "vulnerabilities": [],
+        "homepage": null,
+        "description": null
+      },
+      {
+        "name": "uvicorn",
+        "version": "0.35.0",
+        "license": "BSD-3-Clause",
+        "license_status": "allowed",
+        "vulnerabilities": [],
+        "homepage": null,
+        "description": null
+      },
+      {
+        "name": "yarl",
+        "version": "1.20.0",
+        "license": "Unknown",
+        "license_status": "unknown",
+        "vulnerabilities": [],
+        "homepage": null,
+        "description": null
+      }
+    ],
+    "sbom_file_path": "sbom.json",
+    "generation_time_seconds": 0.1190037727355957,
+    "timestamp": "2025-08-17T20:56:17.395136"
+  },
+  "license_audit": {
+    "total_packages": 72,
+    "allowed_licenses": 13,
+    "denied_licenses": 0,
+    "unknown_licenses": 58,
+    "license_violations": [
+      "Package 'aiohappyeyeballs' has unknown license: Unknown",
+      "Package 'aiohttp' has unknown license: Unknown",
+      "Package 'aiosignal' has unknown license: Unknown",
+      "Package 'annotated-types' has unknown license: Unknown",
+      "Package 'anyio' has unknown license: Unknown",
+      "Package 'async-timeout' has unknown license: Unknown",
+      "Package 'attrs' has unknown license: Unknown",
+      "Package 'Authlib' has unknown license: Unknown",
+      "Package 'backports-datetime-fromisoformat' has unknown license: Unknown",
+      "Package 'certifi' requires license review: MPL-2.0",
+      "Package 'cffi' has unknown license: Unknown",
+      "Package 'colorama' has unknown license: Unknown",
+      "Package 'cryptography' has unknown license: Unknown",
+      "Package 'distro' has unknown license: Unknown",
+      "Package 'dparse' has unknown license: Unknown",
+      "Package 'exceptiongroup' has unknown license: Unknown",
+      "Package 'filelock' has unknown license: Unknown",
+      "Package 'frozenlist' has unknown license: Unknown",
+      "Package 'h11' has unknown license: Unknown",
+      "Package 'httpcore' has unknown license: Unknown",
+      "Package 'httpx' has unknown license: Unknown",
+      "Package 'iniconfig' has unknown license: Unknown",
+      "Package 'jiter' has unknown license: Unknown",
+      "Package 'joblib' has unknown license: Unknown",
+      "Package 'markdown-it-py' has unknown license: Unknown",
+      "Package 'marshmallow' has unknown license: Unknown",
+      "Package 'mdurl' has unknown license: Unknown",
+      "Package 'multidict' has unknown license: Unknown",
+      "Package 'nltk' has unknown license: Unknown",
+      "Package 'openai' has unknown license: Unknown",
+      "Package 'packaging' has unknown license: Unknown",
+      "Package 'pip' has unknown license: Unknown",
+      "Package 'pluggy' has unknown license: Unknown",
+      "Package 'propcache' has unknown license: Unknown",
+      "Package 'psutil' has unknown license: Unknown",
+      "Package 'pycparser' has unknown license: Unknown",
+      "Package 'pydantic_core' has unknown license: Unknown",
+      "Package 'Pygments' has unknown license: Unknown",
+      "Package 'pytest-cov' has unknown license: Unknown",
+      "Package 'python-dotenv' has unknown license: Unknown",
+      "Package 'PyYAML' has unknown license: Unknown",
+      "Package 'regex' has unknown license: Unknown",
+      "Package 'rich' has unknown license: Unknown",
+      "Package 'ruamel.yaml' has unknown license: Unknown",
+      "Package 'ruamel.yaml.clib' has unknown license: Unknown",
+      "Package 'ruff' has unknown license: Unknown",
+      "Package 'safety' has unknown license: Unknown",
+      "Package 'safety-schemas' has unknown license: Unknown",
+      "Package 'setuptools' has unknown license: Unknown",
+      "Package 'shellingham' has unknown license: Unknown",
+      "Package 'sniffio' has unknown license: Unknown",
+      "Package 'tenacity' has unknown license: Unknown",
+      "Package 'tomli' has unknown license: Unknown",
+      "Package 'tomlkit' has unknown license: Unknown",
+      "Package 'tqdm' has unknown license: Unknown",
+      "Package 'typer' has unknown license: Unknown",
+      "Package 'typing_extensions' has unknown license: Unknown",
+      "Package 'typing-inspection' has unknown license: Unknown",
+      "Package 'yarl' has unknown license: Unknown"
+    ],
+    "passed": false,
+    "license_summary": {
+      "Unknown": 58,
+      "MPL-2.0": 1,
+      "MIT": 5,
+      "BSD-3-Clause": 6,
+      "Apache-2.0": 2
+    }
+  },
+  "vulnerability_audit": {
+    "total_vulnerabilities": 0,
+    "vulnerabilities_by_severity": {
+      "critical": 0,
+      "high": 0,
+      "medium": 0,
+      "low": 0,
+      "info": 0
+    },
+    "vulnerable_packages": [],
+    "passed": true,
+    "vulnerability_details": []
+  },
+  "overall_passed": false,
+  "exit_code": 1,
+  "artifacts": [
+    "sbom.json"
+  ]
+}

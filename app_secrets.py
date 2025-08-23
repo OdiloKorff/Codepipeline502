@@ -54,15 +54,70 @@ _DEFAULT_SECRET_MAP={
     "ANTHROPIC_API_KEY": ("anthropic","ANTHROPIC_API_KEY"),
 }
 
-def ensure_env(var_name:str)->None:
+class SecretNotAvailableError(Exception):
+    """Raised when a required secret is not available from environment or Vault."""
+    pass
+
+
+def ensure_env(var_name: str) -> None:
+    """
+    Ensure that the specified environment variable is available.
+    
+    First checks if the variable is already set in the environment.
+    If not, attempts to fetch it from Vault using the default secret map.
+    
+    Args:
+        var_name: Name of the environment variable to ensure
+        
+    Raises:
+        SecretNotAvailableError: If the secret cannot be obtained from 
+                                environment or Vault
+    """
+    # Check if already set in environment
     if os.getenv(var_name):
+        _log.debug("Secret %s already available in environment", var_name)
         return
-    path,key=_DEFAULT_SECRET_MAP.get(var_name, (None, None))
+    
+    # Try to fetch from Vault
+    path, key = _DEFAULT_SECRET_MAP.get(var_name, (None, None))
     if not path:
-        _log.warning("No default Vault path for %s", var_name)
-        return
+        raise SecretNotAvailableError(
+            f"Secret '{var_name}' not found in environment and no Vault path configured. "
+            f"Available Vault paths: {list(_DEFAULT_SECRET_MAP.keys())}"
+        )
+    
     try:
-        os.environ[var_name]=get_secret(path,key)
-        _log.info("Fetched secret %s from Vault", var_name)
+        secret_value = get_secret(path, key)
+        os.environ[var_name] = secret_value
+        _log.info("Successfully fetched secret %s from Vault path %s", var_name, path)
     except Exception as exc:
-        _log.error("Failed to fetch secret %s: %s", var_name, exc)
+        raise SecretNotAvailableError(
+            f"Failed to fetch secret '{var_name}' from Vault path '{path}': {exc}"
+        ) from exc
+
+
+def validate_required_secrets(*var_names: str) -> None:
+    """
+    Validate that all required secrets are available.
+    
+    This should be called early in the application lifecycle to fail fast
+    if required secrets are not available.
+    
+    Args:
+        *var_names: Names of environment variables to validate
+        
+    Raises:
+        SecretNotAvailableError: If any secret is not available
+    """
+    missing_secrets = []
+    
+    for var_name in var_names:
+        try:
+            ensure_env(var_name)
+        except SecretNotAvailableError as e:
+            missing_secrets.append(f"{var_name}: {e}")
+    
+    if missing_secrets:
+        raise SecretNotAvailableError(
+            "Required secrets not available:\n" + "\n".join(f"  - {s}" for s in missing_secrets)
+        )

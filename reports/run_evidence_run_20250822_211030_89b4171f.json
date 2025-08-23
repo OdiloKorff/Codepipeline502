@@ -1,0 +1,852 @@
+{
+  "run_id": "run_20250822_211030_89b4171f",
+  "start_time": "2025-08-22T19:10:30.422691Z",
+  "end_time": "2025-08-22T19:10:39.232843Z",
+  "metadata": {
+    "run_parameters": {
+      "seed": 42,
+      "model": "gpt-4o-mini",
+      "token_budget": 10000,
+      "temperature": 0.0,
+      "secure_mode": true,
+      "run_id": "run_20250822_211030_89b4171f"
+    },
+    "active_tools": {
+      "security_tools": [
+        {
+          "name": "bandit",
+          "version": "bandit 1.8.6\n  python version = 3.10.0 (tags/v3.10.0:b494f59, Oct  4 2021, 19:00:18) [MSC v.1929 64 bit (AMD64)]",
+          "available": true
+        },
+        {
+          "name": "semgrep",
+          "available": false
+        },
+        {
+          "name": "safety",
+          "version": "safety, version 3.6.0",
+          "available": true
+        }
+      ],
+      "coverage_tools": [
+        {
+          "name": "coverage",
+          "version": "Coverage.py, version 7.10.1 with C extension",
+          "available": true
+        },
+        {
+          "name": "pytest-cov",
+          "version": "pytest 8.4.1",
+          "available": true
+        }
+      ],
+      "linting_tools": [
+        {
+          "name": "ruff",
+          "version": "ruff 0.12.7",
+          "available": true
+        },
+        {
+          "name": "flake8",
+          "available": false
+        },
+        {
+          "name": "pylint",
+          "available": false
+        },
+        {
+          "name": "mypy",
+          "version": "mypy 1.17.1 (compiled: yes)",
+          "available": true
+        }
+      ],
+      "testing_tools": [
+        {
+          "name": "pytest",
+          "version": "pytest 8.4.1",
+          "available": true
+        }
+      ],
+      "available_tools_count": 2,
+      "total_available_tools": 7
+    },
+    "coverage_percent": 20.54,
+    "duration_seconds": 8.810152
+  },
+  "artifacts": [
+    {
+      "path": "reports\\bandit.json",
+      "absolute_path": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\bandit.json",
+      "type": "json_report",
+      "size_bytes": 264636,
+      "modified_time": "2025-08-21T19:57:09.955460Z",
+      "sha256": "6e5b651f517f664cf1941385bb5b74f4f055d176c0e874a3f8480bac039f6f61"
+    },
+    {
+      "path": "reports\\bandit_final_scan.json",
+      "absolute_path": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\bandit_final_scan.json",
+      "type": "json_report",
+      "size_bytes": 1022173,
+      "modified_time": "2025-08-21T21:21:36.356494Z",
+      "sha256": "717131976819a10835718480ca0d4ea56e1762701555d80d3270c318fb2374e6"
+    },
+    {
+      "path": "reports\\bandit_high_findings_plan.json",
+      "absolute_path": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\bandit_high_findings_plan.json",
+      "type": "json_report",
+      "size_bytes": 3333,
+      "modified_time": "2025-08-21T21:13:13.461454Z",
+      "sha256": "d315e2765e69c81377fb8a8acb3fa5a560e66e3e044652f222c8e2feeec9db77"
+    },
+    {
+      "path": "reports\\bandit_raw_scan.json",
+      "absolute_path": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\bandit_raw_scan.json",
+      "type": "json_report",
+      "size_bytes": 1268778,
+      "modified_time": "2025-08-22T13:46:49.069196Z",
+      "sha256": "627e38848deaca492506de8f66c34d9005784f8bac17bc75d8372e18861116c9"
+    },
+    {
+      "path": "reports\\bandit_rescan.json",
+      "absolute_path": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\bandit_rescan.json",
+      "type": "json_report",
+      "size_bytes": 1027767,
+      "modified_time": "2025-08-21T21:20:07.548473Z",
+      "sha256": "3887cc4617ad1435767646ce62fd3c30985c4a6f8321768c2f08e2c612ce9af5"
+    },
+    {
+      "path": "reports\\branch_protection_preflight.json",
+      "absolute_path": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\branch_protection_preflight.json",
+      "type": "json_report",
+      "size_bytes": 588,
+      "modified_time": "2025-08-22T21:08:54.279528Z",
+      "sha256": "9366403409dbe46c07cec57c11fd350ee11c50b7d64e6324d1144432fd86afc6"
+    },
+    {
+      "path": "reports\\consolidated_security_report.json",
+      "absolute_path": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\consolidated_security_report.json",
+      "type": "json_report",
+      "size_bytes": 605,
+      "modified_time": "2025-08-18T22:32:15.983884Z",
+      "sha256": "6d7eeeba45cd4c5f426acb02382b384fafb5c0a8b296a28b7d2b69c9881e8751"
+    },
+    {
+      "path": "reports\\coverage_summary.json",
+      "absolute_path": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\coverage_summary.json",
+      "type": "json_report",
+      "size_bytes": 469,
+      "modified_time": "2025-08-22T13:55:52.147564Z",
+      "sha256": "3a77d17c499fb2b1be0b61cec848bfcbf9664d2e255a36852c1af61265dcc96d"
+    },
+    {
+      "path": "reports\\e2e_security_report.json",
+      "absolute_path": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\e2e_security_report.json",
+      "type": "json_report",
+      "size_bytes": 323,
+      "modified_time": "2025-08-18T22:27:04.047060Z",
+      "sha256": "7c8453200b908daa11adf6438c259b768ca1de418979682fc28fea9aa6f8f08b"
+    },
+    {
+      "path": "reports\\feature_run_MVP-005_20250822_205213.json",
+      "absolute_path": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\feature_run_MVP-005_20250822_205213.json",
+      "type": "json_report",
+      "size_bytes": 1195,
+      "modified_time": "2025-08-22T20:52:13.755776Z",
+      "sha256": "6d1940ec52669349ff08f46fa2a367b54ec708a85e225cdcdad470f1fc148106"
+    },
+    {
+      "path": "reports\\gate_validation_result.json",
+      "absolute_path": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\gate_validation_result.json",
+      "type": "json_report",
+      "size_bytes": 693,
+      "modified_time": "2025-08-21T21:24:09.291306Z",
+      "sha256": "be42fac36df552349d5c5829377a00f51cf47a3efefe317ebcbe13a2b9f67c57"
+    },
+    {
+      "path": "reports\\license_check.json",
+      "absolute_path": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\license_check.json",
+      "type": "json_report",
+      "size_bytes": 671,
+      "modified_time": "2025-08-18T22:11:54.550473Z",
+      "sha256": "67a899c43335df83fa986c2ba45506967c57a5e35d86eec5d99b9e44c59febe8"
+    },
+    {
+      "path": "reports\\local_ci_summary.json",
+      "absolute_path": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\local_ci_summary.json",
+      "type": "json_report",
+      "size_bytes": 2708,
+      "modified_time": "2025-08-18T22:47:08.643227Z",
+      "sha256": "3f376e12295b157effe75d575dd1d5351dcfe676c901d7d11eeeee0cff91ecc2"
+    },
+    {
+      "path": "reports\\qa_gates_report_20250822_205427.json",
+      "absolute_path": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\qa_gates_report_20250822_205427.json",
+      "type": "json_report",
+      "size_bytes": 3046,
+      "modified_time": "2025-08-22T20:54:27.352908Z",
+      "sha256": "2c8161dc3f0de95b7ef5e71c9219ed89afb30d35e0db902d76285afc5fd17743"
+    },
+    {
+      "path": "reports\\qa_summary.json",
+      "absolute_path": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\qa_summary.json",
+      "type": "json_report",
+      "size_bytes": 470,
+      "modified_time": "2025-08-22T13:49:13.934689Z",
+      "sha256": "a5fbc264efd2e02ea4e8a9008a7062622985a8558c6df9d17c69cbcb81da815a"
+    },
+    {
+      "path": "reports\\run_meta.json",
+      "absolute_path": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\run_meta.json",
+      "type": "json_report",
+      "size_bytes": 436,
+      "modified_time": "2025-08-21T18:52:22.860693Z",
+      "sha256": "f5de5edd43b10e5c864ba16205e868f900cd48824bdd8be951f313e578328d03"
+    },
+    {
+      "path": "reports\\sbom.json",
+      "absolute_path": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\sbom.json",
+      "type": "json_report",
+      "size_bytes": 22777,
+      "modified_time": "2025-08-22T21:01:57.070290Z",
+      "sha256": "8520ee21eea547afc15bfa6184d2e1e7507780039528750e090ae2053f86e961"
+    },
+    {
+      "path": "reports\\sbom_license_cve_check.json",
+      "absolute_path": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\sbom_license_cve_check.json",
+      "type": "json_report",
+      "size_bytes": 2972,
+      "modified_time": "2025-08-22T13:49:13.929689Z",
+      "sha256": "1142f9bbae20ce94dbf617d90a64ae8fbc08e50f7c4563141f182588ebe4386f"
+    },
+    {
+      "path": "reports\\sbom_license_report.json",
+      "absolute_path": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\sbom_license_report.json",
+      "type": "json_report",
+      "size_bytes": 6629,
+      "modified_time": "2025-08-22T21:01:57.075245Z",
+      "sha256": "a70d159660212e51d0e74804776a880fee91d537e719ff1f8378abee1ef7d5cf"
+    },
+    {
+      "path": "reports\\scorecard.json",
+      "absolute_path": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\scorecard.json",
+      "type": "json_report",
+      "size_bytes": 1480,
+      "modified_time": "2025-08-22T21:05:22.238648Z",
+      "sha256": "5a763f6f3d77c81e5fe17105bf3bacd01c7c91aa1491780d7ebbfc5557fd7927"
+    },
+    {
+      "path": "reports\\secure_apply_summary.json",
+      "absolute_path": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\secure_apply_summary.json",
+      "type": "json_report",
+      "size_bytes": 891,
+      "modified_time": "2025-08-22T13:57:17.735774Z",
+      "sha256": "fdecb4089ba4ccceeebed8f354812b6457b3ed2a82306b9e67b11558362277f0"
+    },
+    {
+      "path": "reports\\secure_e2e_security_report.json",
+      "absolute_path": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\secure_e2e_security_report.json",
+      "type": "json_report",
+      "size_bytes": 323,
+      "modified_time": "2025-08-18T22:31:41.559722Z",
+      "sha256": "7c8453200b908daa11adf6438c259b768ca1de418979682fc28fea9aa6f8f08b"
+    },
+    {
+      "path": "reports\\security_gate_report.json",
+      "absolute_path": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\security_gate_report.json",
+      "type": "json_report",
+      "size_bytes": 642,
+      "modified_time": "2025-08-22T20:58:36.221522Z",
+      "sha256": "997025d3073c4213882c83e277fe6857bb1c3cb7bafd8279f4e25cbc145ba1f9"
+    },
+    {
+      "path": "reports\\security_report.json",
+      "absolute_path": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\security_report.json",
+      "type": "json_report",
+      "size_bytes": 190,
+      "modified_time": "2025-08-22T13:46:54.174888Z",
+      "sha256": "8f4043f3262d5b63df4ce1ecdc613786b2ea1cc883c4325d1f367d7799967a52"
+    },
+    {
+      "path": "reports\\security_test_new.json",
+      "absolute_path": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\security_test_new.json",
+      "type": "json_report",
+      "size_bytes": 323,
+      "modified_time": "2025-08-18T20:54:12.292356Z",
+      "sha256": "7c8453200b908daa11adf6438c259b768ca1de418979682fc28fea9aa6f8f08b"
+    },
+    {
+      "path": "reports\\test_security.json",
+      "absolute_path": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\test_security.json",
+      "type": "json_report",
+      "size_bytes": 316,
+      "modified_time": "2025-08-17T22:36:30.791728Z",
+      "sha256": "481d7bffe82c78ecb3f506c8b9f77f997a071affbe9d78178376a43120558009"
+    },
+    {
+      "path": "reports\\bandit_final_remediation_summary.md",
+      "absolute_path": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\bandit_final_remediation_summary.md",
+      "type": "markdown_report",
+      "size_bytes": 6477,
+      "modified_time": "2025-08-21T21:23:06.212948Z",
+      "sha256": "0ea47eb47657eb16e9617a3eb0bea486b84ee7cea2b24ede422b9a0dc703c278"
+    },
+    {
+      "path": "reports\\bandit_high_findings_plan.md",
+      "absolute_path": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\bandit_high_findings_plan.md",
+      "type": "markdown_report",
+      "size_bytes": 3562,
+      "modified_time": "2025-08-21T21:13:13.462451Z",
+      "sha256": "495dfcf79808811b5e7dc057c39f2ec62f548f92ee26462b85ea5567f2e36a42"
+    },
+    {
+      "path": "reports\\bandit_remediation_summary.md",
+      "absolute_path": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\bandit_remediation_summary.md",
+      "type": "markdown_report",
+      "size_bytes": 6193,
+      "modified_time": "2025-08-21T21:13:13.474162Z",
+      "sha256": "f60973dcbfd6f1726605a64b297a796e3641a4871414d21085ce97f01d9d0079"
+    },
+    {
+      "path": "reports\\BND-007_Security_Gate_Validation_Summary.md",
+      "absolute_path": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\BND-007_Security_Gate_Validation_Summary.md",
+      "type": "markdown_report",
+      "size_bytes": 5127,
+      "modified_time": "2025-08-22T12:37:41.085529Z",
+      "sha256": "d76f5bc3ab8268a5d19fb6f794a6415f128704c503d508f5a4ad268b244e9b34"
+    },
+    {
+      "path": "reports\\COV-101-102-103-Final-Summary.md",
+      "absolute_path": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\COV-101-102-103-Final-Summary.md",
+      "type": "markdown_report",
+      "size_bytes": 6501,
+      "modified_time": "2025-08-22T13:37:32.464211Z",
+      "sha256": "8e784f263112430e296d93be89ccad1228657b7dfbdc80509680d45b962ef94c"
+    },
+    {
+      "path": "reports\\COV-104-105-106-Final-Summary.md",
+      "absolute_path": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\COV-104-105-106-Final-Summary.md",
+      "type": "markdown_report",
+      "size_bytes": 7093,
+      "modified_time": "2025-08-22T13:42:45.722475Z",
+      "sha256": "7f7a06a96ebf5e3bced127220142d1b306c35fdffdbd18341764b2d4eb2e2dfa"
+    },
+    {
+      "path": "reports\\COV-501-RUN-601-APPLY-701-Final-Summary.md",
+      "absolute_path": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\COV-501-RUN-601-APPLY-701-Final-Summary.md",
+      "type": "markdown_report",
+      "size_bytes": 9606,
+      "modified_time": "2025-08-22T13:58:58.658640Z",
+      "sha256": "7b2968c121a60c325263a8131f0b1a194a1612368705004f9b3ebf47f0aa8b57"
+    },
+    {
+      "path": "reports\\COV-Final-Summary.md",
+      "absolute_path": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\COV-Final-Summary.md",
+      "type": "markdown_report",
+      "size_bytes": 6544,
+      "modified_time": "2025-08-22T13:12:19.006399Z",
+      "sha256": "29d8123b398342da4a4327094c22ec6a5903e7f43dc9ee91c989d66d26b655da"
+    },
+    {
+      "path": "reports\\coverage_summary.md",
+      "absolute_path": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\coverage_summary.md",
+      "type": "markdown_report",
+      "size_bytes": 1741,
+      "modified_time": "2025-08-22T13:55:52.142578Z",
+      "sha256": "5d378d1347842e7fbe0995dccc3d84eaa82e6c7840a6dcaa9c4875c2db40a416"
+    },
+    {
+      "path": "reports\\evidence_audit_complete_test_20250819_204229.md",
+      "absolute_path": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\evidence_audit_complete_test_20250819_204229.md",
+      "type": "markdown_report",
+      "size_bytes": 2092,
+      "modified_time": "2025-08-19T22:42:29.835817Z",
+      "sha256": "1729162f77ef87025ec0a1c436a653604f8e4f6047fa0bf8957b0f0cb75f694c"
+    },
+    {
+      "path": "reports\\MVP-001-002-003-Final-Summary.md",
+      "absolute_path": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\MVP-001-002-003-Final-Summary.md",
+      "type": "markdown_report",
+      "size_bytes": 10633,
+      "modified_time": "2025-08-22T20:47:53.152357Z",
+      "sha256": "cb62d2e560625e4787513dd8d8922e4666757a23abcf6523cd1ab64bac957630"
+    },
+    {
+      "path": "reports\\MVP-004-005-006-Final-Summary.md",
+      "absolute_path": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\MVP-004-005-006-Final-Summary.md",
+      "type": "markdown_report",
+      "size_bytes": 12315,
+      "modified_time": "2025-08-22T20:56:43.973977Z",
+      "sha256": "6028494314da0dff91f267823f63e70788dccc60c795943515d0952bd37c0606"
+    },
+    {
+      "path": "reports\\MVP-007-008-009-Final-Summary.md",
+      "absolute_path": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\MVP-007-008-009-Final-Summary.md",
+      "type": "markdown_report",
+      "size_bytes": 10764,
+      "modified_time": "2025-08-22T21:07:22.975195Z",
+      "sha256": "37b6920f3920fb643d833b8875ffaf2c0cb90c37ca065989a1248aa3d3f1e1c1"
+    },
+    {
+      "path": "reports\\nightly_kpi_report_20250819_201925.md",
+      "absolute_path": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\nightly_kpi_report_20250819_201925.md",
+      "type": "markdown_report",
+      "size_bytes": 1293,
+      "modified_time": "2025-08-19T22:19:25.401851Z",
+      "sha256": "eedca79e72bbf66c883d72b6b70074612e50c20bfac6088c65911fa1878412a7"
+    },
+    {
+      "path": "reports\\SEC-201-CI-301-SCORE-401-Final-Summary.md",
+      "absolute_path": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\SEC-201-CI-301-SCORE-401-Final-Summary.md",
+      "type": "markdown_report",
+      "size_bytes": 7818,
+      "modified_time": "2025-08-22T13:50:34.945290Z",
+      "sha256": "fe2062bb354b15d8eafa5d4d2b87c6219a7bef7e0ef6b7d77c68e38bd9b374b0"
+    },
+    {
+      "path": "reports\\secure_apply_summary.md",
+      "absolute_path": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\secure_apply_summary.md",
+      "type": "markdown_report",
+      "size_bytes": 1486,
+      "modified_time": "2025-08-22T13:57:17.736777Z",
+      "sha256": "0ae4410abb3713456bf9477420f19fe470aa400e6edb88550cbcbfd00df390ce"
+    },
+    {
+      "path": "reports\\SECURE_E2E_FINAL_SUMMARY.md",
+      "absolute_path": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\SECURE_E2E_FINAL_SUMMARY.md",
+      "type": "markdown_report",
+      "size_bytes": 4493,
+      "modified_time": "2025-08-18T22:36:15.583883Z",
+      "sha256": "99e29eb722eb4106b575950a4ac4e164ef3f0bd5d422b261ad09db6e7fa5adde"
+    },
+    {
+      "path": "reports\\SECURE_E2E_TEST_RESULTS.md",
+      "absolute_path": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\SECURE_E2E_TEST_RESULTS.md",
+      "type": "markdown_report",
+      "size_bytes": 3994,
+      "modified_time": "2025-08-18T22:28:53.188964Z",
+      "sha256": "aa0d4221d3a62a457947d8f6775ed52cc56897d68b4da0443acbd438b9d0cafb"
+    },
+    {
+      "path": "reports\\sbom.xml",
+      "absolute_path": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\sbom.xml",
+      "type": "xml_report",
+      "size_bytes": 832,
+      "modified_time": "2025-08-20T19:52:03.749039Z",
+      "sha256": "b91278874c60c77f53d846793f2f947cce6688fdf1d09543a1cf7f11581d7f1e"
+    },
+    {
+      "path": "coverage.xml",
+      "absolute_path": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\coverage.xml",
+      "type": "coverage_report",
+      "size_bytes": 1707677,
+      "modified_time": "2025-08-22T13:54:56.367179Z",
+      "sha256": "409e6c009e5fcf6124c14eb581af1e17daf86ad306863922064ceb136b621d8e"
+    },
+    {
+      "path": "htmlcov\\index.html",
+      "absolute_path": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\htmlcov\\index.html",
+      "type": "coverage_html",
+      "size_bytes": 77601,
+      "modified_time": "2025-08-22T13:54:44.905838Z",
+      "sha256": "2bb3c6079d9038c974025a82b281b09d3363712a08cd885f891fb2a19f111976"
+    },
+    {
+      "path": "pytest.ini",
+      "absolute_path": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\pytest.ini",
+      "type": "config",
+      "size_bytes": 347,
+      "modified_time": "2025-08-22T13:37:32.426207Z",
+      "sha256": "29253f4e7f1c5864e0f22896a75a19abbeda3594ca9508401979e2be4e284d1b"
+    },
+    {
+      "path": ".coveragerc",
+      "absolute_path": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\.coveragerc",
+      "type": "config",
+      "size_bytes": 873,
+      "modified_time": "2025-08-22T13:37:32.427205Z",
+      "sha256": "8b0c1735215ea2001c10a4c0742bad60ed8b3dc240e88d57935ec39478e297c2"
+    },
+    {
+      "path": "pyproject.toml",
+      "absolute_path": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\pyproject.toml",
+      "type": "config",
+      "size_bytes": 3504,
+      "modified_time": "2025-08-18T22:13:09.630730Z",
+      "sha256": "161afe25bbfc81d487c55631a5246e2a00cc67a62961a2f9615f7c019d3e66c4"
+    },
+    {
+      "path": "qa_summary.json",
+      "absolute_path": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\qa_summary.json",
+      "type": "qa_summary",
+      "size_bytes": 900,
+      "modified_time": "2025-08-22T13:47:46.735887Z",
+      "sha256": "72816e6436e1d7d3b43330b7beff147d1ccebdcf821c9b13a582a3608d1bf1df"
+    },
+    {
+      "path": "qa_summary.md",
+      "absolute_path": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\qa_summary.md",
+      "type": "qa_summary",
+      "size_bytes": 0,
+      "modified_time": "2025-08-22T13:48:38.574000Z",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "gates": {
+    "security": {
+      "status": "error",
+      "high": 0,
+      "medium": 0,
+      "low": 0,
+      "total": 0,
+      "active_tools": 0,
+      "timestamp": "2025-08-22T18:58:36.221521Z",
+      "details": {
+        "tools": {
+          "bandit": {
+            "status": "error",
+            "error": "JSON parse error: Expecting value: line 1 column 1 (char 0)"
+          },
+          "semgrep": {
+            "status": "not_available"
+          }
+        },
+        "active_tools_list": [],
+        "high_issues": []
+      }
+    },
+    "license": {
+      "sbom_generated": true,
+      "total_packages": 84,
+      "license_violations": 16,
+      "unknown_licenses": 37,
+      "status": "fail",
+      "timestamp": "2025-08-22T19:01:57.073247Z",
+      "details": {
+        "sbom_file": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\reports\\sbom.json",
+        "sbom_format": "CycloneDX",
+        "license_check": {
+          "total_packages": 84,
+          "approved": 31,
+          "violations": [
+            {
+              "package": "aiohappyeyeballs",
+              "license": "PSF-2.0",
+              "reason": "Not in allowlist"
+            },
+            {
+              "package": "aiosignal",
+              "license": "Apache 2.0",
+              "reason": "Not in allowlist"
+            },
+            {
+              "package": "async-timeout",
+              "license": "Apache 2",
+              "reason": "Not in allowlist"
+            },
+            {
+              "package": "backports-datetime-fromisoformat",
+              "license": "MIT License",
+              "reason": "Not in allowlist"
+            },
+            {
+              "package": "cryptography",
+              "license": "Apache-2.0 OR BSD-3-Clause",
+              "reason": "Not in allowlist"
+            },
+            {
+              "package": "distro",
+              "license": "Apache License, Version 2.0",
+              "reason": "Not in allowlist"
+            },
+            {
+              "package": "dparse",
+              "license": "MIT license",
+              "reason": "Not in allowlist"
+            },
+            {
+              "package": "joblib",
+              "license": "BSD 3-Clause",
+              "reason": "Not in allowlist"
+            },
+            {
+              "package": "MarkupSafe",
+              "license": "Copyright 2010 Pallets",
+              "reason": "Not in allowlist"
+            },
+            {
+              "package": "multidict",
+              "license": "Apache 2",
+              "reason": "Not in allowlist"
+            },
+            {
+              "package": "nltk",
+              "license": "Apache License, Version 2.0",
+              "reason": "Not in allowlist"
+            },
+            {
+              "package": "ruamel.yaml",
+              "license": "MIT license",
+              "reason": "Not in allowlist"
+            },
+            {
+              "package": "shellingham",
+              "license": "ISC License",
+              "reason": "Not in allowlist"
+            },
+            {
+              "package": "sniffio",
+              "license": "MIT OR Apache-2.0",
+              "reason": "Not in allowlist"
+            },
+            {
+              "package": "tenacity",
+              "license": "Apache 2.0",
+              "reason": "Not in allowlist"
+            },
+            {
+              "package": "tqdm",
+              "license": "MPL-2.0 AND MIT",
+              "reason": "Not in allowlist"
+            }
+          ],
+          "unknown": [
+            {
+              "package": "annotated-types",
+              "license": ""
+            },
+            {
+              "package": "attrs",
+              "license": "UNKNOWN"
+            },
+            {
+              "package": "build",
+              "license": "UNKNOWN"
+            },
+            {
+              "package": "click",
+              "license": "UNKNOWN"
+            },
+            {
+              "package": "colorama",
+              "license": ""
+            },
+            {
+              "package": "exceptiongroup",
+              "license": ""
+            },
+            {
+              "package": "fastapi",
+              "license": ""
+            },
+            {
+              "package": "filelock",
+              "license": ""
+            },
+            {
+              "package": "httpcore",
+              "license": "UNKNOWN"
+            },
+            {
+              "package": "idna",
+              "license": ""
+            },
+            {
+              "package": "importlib_metadata",
+              "license": ""
+            },
+            {
+              "package": "iniconfig",
+              "license": "UNKNOWN"
+            },
+            {
+              "package": "Jinja2",
+              "license": ""
+            },
+            {
+              "package": "markdown-it-py",
+              "license": ""
+            },
+            {
+              "package": "marshmallow",
+              "license": ""
+            },
+            {
+              "package": "mdurl",
+              "license": ""
+            },
+            {
+              "package": "mypy_extensions",
+              "license": "UNKNOWN"
+            },
+            {
+              "package": "packaging",
+              "license": ""
+            },
+            {
+              "package": "pathspec",
+              "license": ""
+            },
+            {
+              "package": "pip",
+              "license": "UNKNOWN"
+            },
+            {
+              "package": "pydantic",
+              "license": ""
+            },
+            {
+              "package": "pyproject_hooks",
+              "license": ""
+            },
+            {
+              "package": "regex",
+              "license": "UNKNOWN"
+            },
+            {
+              "package": "ruff",
+              "license": ""
+            },
+            {
+              "package": "safety",
+              "license": "UNKNOWN"
+            },
+            {
+              "package": "setuptools",
+              "license": "UNKNOWN"
+            },
+            {
+              "package": "starlette",
+              "license": "UNKNOWN"
+            },
+            {
+              "package": "stevedore",
+              "license": ""
+            },
+            {
+              "package": "tomli",
+              "license": ""
+            },
+            {
+              "package": "typer",
+              "license": ""
+            },
+            {
+              "package": "types-PyYAML",
+              "license": "UNKNOWN"
+            },
+            {
+              "package": "typing_extensions",
+              "license": "UNKNOWN"
+            },
+            {
+              "package": "typing-inspection",
+              "license": "UNKNOWN"
+            },
+            {
+              "package": "urllib3",
+              "license": "UNKNOWN"
+            },
+            {
+              "package": "uvicorn",
+              "license": "UNKNOWN"
+            },
+            {
+              "package": "wheel",
+              "license": ""
+            },
+            {
+              "package": "zipp",
+              "license": "UNKNOWN"
+            }
+          ],
+          "violation_count": 16,
+          "unknown_count": 37
+        },
+        "allowed_licenses_count": 5
+      }
+    },
+    "scorecard": {
+      "status": "fail",
+      "coverage_percent": 20.54,
+      "security_high": 0,
+      "license_violations": 16,
+      "hard_must_failures": [
+        "License violations 16 > 0",
+        "Active security tools 0 < 1"
+      ],
+      "hard_must_count": 2,
+      "overall_passing": false,
+      "timestamp": "2025-08-22T19:05:22.234638Z",
+      "details": {
+        "coverage": {
+          "coverage_percent": 20.54,
+          "lines_covered": 9266,
+          "lines_total": 45114,
+          "line_rate": 0.2054,
+          "status": "available"
+        },
+        "security": {
+          "high": 0,
+          "medium": 0,
+          "low": 0,
+          "total": 0,
+          "active_tools": 0,
+          "status": "error"
+        },
+        "license": {
+          "license_violations": 16,
+          "total_packages": 84,
+          "unknown_licenses": 37,
+          "sbom_generated": true,
+          "status": "available"
+        },
+        "missing_reports": [
+          "security"
+        ],
+        "policy": {
+          "coverage_min": 0.2,
+          "tests_green": true,
+          "sast_high": 0,
+          "secret_findings": 0,
+          "license_violations": 15,
+          "cve_blockers": 0,
+          "budget_max": 200,
+          "security_high_max": 0,
+          "license_violations_max": 0,
+          "active_security_tools_min": 1
+        }
+      }
+    },
+    "branch_protection": {
+      "status": "FAIL",
+      "reason_code": "MAIN_BRANCH_PROTECTED",
+      "branch_name": "main",
+      "message": "Branch 'main' is protected - main branch requires PR workflow",
+      "timestamp": "2025-08-22T19:08:54.270524Z",
+      "details": {
+        "protected_pattern": "^main$",
+        "protection_reason": "Main branch is the primary development branch and requires pull request workflow for quality control"
+      }
+    }
+  },
+  "environment": {
+    "python_version": "3.10.0 (tags/v3.10.0:b494f59, Oct  4 2021, 19:00:18) [MSC v.1929 64 bit (AMD64)]",
+    "platform": "win32",
+    "working_directory": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502",
+    "timestamp": "2025-08-22T19:10:38.779840Z",
+    "git": {
+      "branch": "feature/BRANCH-DEMO-001",
+      "commit": "11e3621807324e5d28612fd72797481c9a3a53c3",
+      "dirty": true,
+      "changed_files": 1212,
+      "remote_url": "https://github.com/OdiloKorff/Codepipeline502.git"
+    },
+    "system": {
+      "machine": "AMD64",
+      "processor": "Intel64 Family 6 Model 94 Stepping 3, GenuineIntel",
+      "system": "Windows",
+      "release": "10"
+    }
+  },
+  "git_info": {}
+}

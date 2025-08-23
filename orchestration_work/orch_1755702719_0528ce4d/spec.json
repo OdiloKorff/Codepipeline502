@@ -1,0 +1,10 @@
+{
+  "prompt": "Minimal web service for health monitoring",
+  "branch": "main",
+  "secure": true,
+  "dry_run": false,
+  "template_type": "web-api",
+  "policy_version": "1.0.0",
+  "seed": 9919,
+  "token_budget": 1000
+}

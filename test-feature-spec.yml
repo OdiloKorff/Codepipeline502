@@ -1,0 +1,34 @@
+id: "TEST-001"
+title: "Test Feature für CLI Validation"
+version: 1
+goal: "Teste das spec validate Kommando"
+description: "Eine einfache Test-Feature-Spec für die CLI-Validierung"
+
+target_paths:
+  - "codepipeline/"
+  - "tests/"
+  - "README.md"
+
+constraints:
+  - "Verwende nur Python 3.10+ Features"
+  - "Halte Code-Stil konsistent"
+
+risk_level: "low"
+
+reviewers:
+  - "developer"
+  - "qa-team"
+
+model: "gpt-4o-mini"
+token_budget: 10000
+
+tests:
+  coverage_min: 80
+  pytest_args: ["-v", "--tb=short"]
+
+quality:
+  score_threshold: 85
+
+hard_musts:
+  - "Alle Tests müssen bestehen"
+  - "Code-Coverage >= 80%"

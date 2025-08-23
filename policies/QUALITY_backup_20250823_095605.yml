@@ -1,0 +1,71 @@
+secure_stage: sprint1
+secure_stage_info:
+  stage: sprint1
+  coverage_min: 35.0
+  security_high_max: 0
+  security_medium_max: 10
+  license_violations_max: 3
+  active_tools_min: 2
+  description: 'Sprint 1: Erste Secure-Stufe mit realistischen Schwellwerten'
+  target_date: '2025-01-31'
+hard_musts:
+  coverage_min: 0.35
+  tests_green: true
+  sast_high: 0
+  secret_findings: 0
+  license_violations: 3
+  cve_blockers: 0
+  budget_max: 500
+  active_tools_min: 2
+smoke_profile:
+  coverage_min: 0.2
+  security_high_max: 0
+  license_violations_max: 5
+  active_tools_min: 1
+  description: Smoke profile maintains low thresholds for nightly runs
+score_threshold: 70
+weights:
+  coverage: 30
+  tests: 25
+  static: 20
+  sast: 15
+  licenses: 10
+licenses:
+  allow:
+  - MIT
+  - BSD-2-Clause
+  - BSD-3-Clause
+  - Apache-2.0
+  - MPL-2.0
+  - ISC
+  - Python-2.0
+  - Unlicense
+  - CC0-1.0
+  - Zlib
+  deny:
+  - GPL-3.0
+  - AGPL-3.0
+  - SSPL
+license_allowlist:
+- MIT
+- Apache-2.0
+- BSD-3-Clause
+- BSD-2-Clause
+- ISC
+- Python-2.0
+- Python Software Foundation License
+- Unlicense
+- CC0-1.0
+- Zlib
+- MPL-2.0
+policy_metadata:
+  created_at: '2025-08-23T07:38:59.749101Z'
+  current_stage: sprint1
+  target_stage: sprint1
+  progression_valid: true
+  progression_reason: "Valid progression: sprint1 \u2192 sprint1"
+  next_stages:
+  - sprint2
+  - sprint3
+  anti_greenwashing: Only upward progression allowed - no threshold lowering in secure
+    profiles

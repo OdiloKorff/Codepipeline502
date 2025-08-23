@@ -1,0 +1,42 @@
+{
+  "spec_id": "TEST-001",
+  "timestamp": "2025-08-17T17:53:12.463974",
+  "gates": [
+    {
+      "name": "Token Budget",
+      "passed": true,
+      "score": 100,
+      "details": {
+        "budget_limit": 10000,
+        "tokens_used": 5500,
+        "utilization_percent": 55.0,
+        "calls_count": 2,
+        "estimated_cost_usd": 0.0017
+      },
+      "error_message": null
+    },
+    {
+      "name": "Test Coverage",
+      "passed": true,
+      "score": 85,
+      "details": {
+        "threshold_percent": 80,
+        "current_coverage": 85.0,
+        "coverage_gap": 0,
+        "files_count": 20,
+        "lines_total": 1500,
+        "lines_covered": 1275
+      },
+      "error_message": null
+    }
+  ],
+  "overall_passed": true,
+  "overall_score": 92.5,
+  "pr_checks": [
+    {
+      "state": "success",
+      "description": "Coverage: 85.0% (>= 80%)",
+      "context": "ci/coverage-threshold"
+    }
+  ]
+}

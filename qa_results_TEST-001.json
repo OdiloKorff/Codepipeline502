@@ -1,0 +1,26 @@
+{
+  "all_passed": true,
+  "gates": [
+    {
+      "name": "Token Budget",
+      "passed": true,
+      "score": 100
+    },
+    {
+      "name": "Coverage Threshold",
+      "passed": true,
+      "score": 85
+    },
+    {
+      "name": "SBOM & License Policy",
+      "passed": true,
+      "score": 100
+    },
+    {
+      "name": "Static Analysis Baselines",
+      "passed": true,
+      "score": 90
+    }
+  ],
+  "total_score": 93.75
+}

@@ -1,0 +1,14 @@
+Generate documentation for the following feature:
+
+Feature: {feature_title}
+Description: {feature_description}
+API: {api_specification}
+
+Requirements:
+- Write clear, comprehensive documentation
+- Include usage examples
+- Document all parameters and return values
+- Add troubleshooting section
+- Use consistent formatting
+
+Output in Markdown format.

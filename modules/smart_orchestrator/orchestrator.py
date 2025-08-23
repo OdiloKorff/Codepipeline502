@@ -1,6 +1,7 @@
 import json
 import logging
 import os
+import shlex
 import subprocess
 from datetime import datetime
 
@@ -28,7 +29,8 @@ class SmartOrchestrator:
     def execute_module(self, name, command):
         self.log(f"Starte Modul: {name}")
         try:
-            result = subprocess.run(command, shell=True, check=True, capture_output=True, text=True)
+            # Sichere subprocess-Verwendung ohne shell=True - verhindert Command Injection
+            result = subprocess.run(shlex.split(command), check=True, capture_output=True, text=True)
             self.log(f"✔ {name} erfolgreich: {result.stdout.strip()}")
         except subprocess.CalledProcessError as e:
             self.log(f"✘ Fehler in {name}: {e.stderr.strip()}")

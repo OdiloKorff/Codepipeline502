@@ -1,0 +1,77 @@
+{
+  "run_id": "run_1755629333_bca7993e",
+  "spec": {
+    "prompt": "Create a simple web API for testing",
+    "template_type": "web-api",
+    "secure_mode": false
+  },
+  "started_at": "2025-08-19T20:48:53.170954",
+  "completed_at": null,
+  "duration_seconds": 4.552659,
+  "gates": [
+    {
+      "name": "Guard",
+      "status": "pass",
+      "start_time": "2025-08-19T20:48:53.170954",
+      "end_time": "2025-08-19T20:48:53.680213",
+      "error_message": ""
+    },
+    {
+      "name": "Diff",
+      "status": "pass",
+      "start_time": "2025-08-19T20:48:53.680213",
+      "end_time": "2025-08-19T20:48:54.187734",
+      "error_message": ""
+    },
+    {
+      "name": "Sandbox",
+      "status": "pass",
+      "start_time": "2025-08-19T20:48:54.187734",
+      "end_time": "2025-08-19T20:48:54.692475",
+      "error_message": ""
+    },
+    {
+      "name": "Tests",
+      "status": "pass",
+      "start_time": "2025-08-19T20:48:54.692475",
+      "end_time": "2025-08-19T20:48:55.186062",
+      "error_message": ""
+    },
+    {
+      "name": "Static",
+      "status": "pass",
+      "start_time": "2025-08-19T20:48:55.186062",
+      "end_time": "2025-08-19T20:48:55.691232",
+      "error_message": ""
+    },
+    {
+      "name": "Security",
+      "status": "pass",
+      "start_time": "2025-08-19T20:48:55.691232",
+      "end_time": "2025-08-19T20:48:56.206055",
+      "error_message": ""
+    },
+    {
+      "name": "SBOM",
+      "status": "pass",
+      "start_time": "2025-08-19T20:48:56.206055",
+      "end_time": "2025-08-19T20:48:56.709791",
+      "error_message": ""
+    },
+    {
+      "name": "Scorecard",
+      "status": "pass",
+      "start_time": "2025-08-19T20:48:56.709791",
+      "end_time": "2025-08-19T20:48:57.209823",
+      "error_message": ""
+    },
+    {
+      "name": "PR",
+      "status": "pass",
+      "start_time": "2025-08-19T20:48:57.209823",
+      "end_time": "2025-08-19T20:48:57.715616",
+      "error_message": ""
+    }
+  ],
+  "status": "success"
+}

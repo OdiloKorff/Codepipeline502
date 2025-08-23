@@ -1,0 +1,103 @@
+{
+  "e2e_smoketest": {
+    "overall_pass": true,
+    "steps_passed": 4,
+    "steps_total": 8,
+    "success_rate": 50.0,
+    "step_results": [
+      {
+        "step": "spec_load",
+        "status": "fail",
+        "message": "Spec load failed: No module named 'codepipeline'",
+        "details": {
+          "error": "No module named 'codepipeline'"
+        }
+      },
+      {
+        "step": "prompt_guard",
+        "status": "fail",
+        "message": "Prompt guard failed: No module named 'codepipeline'",
+        "details": {
+          "error": "No module named 'codepipeline'"
+        }
+      },
+      {
+        "step": "branch_protection",
+        "status": "fail",
+        "message": "Branch protection failed: exit code 1",
+        "details": {
+          "exit_code": 1,
+          "target_branch": "feature/e2e-test",
+          "output_preview": ""
+        }
+      },
+      {
+        "step": "qa_gates",
+        "status": "completed_with_issues",
+        "message": "QA gates completed (exit: 1)",
+        "details": {
+          "exit_code": 1,
+          "output_preview": ""
+        }
+      },
+      {
+        "step": "security_gate",
+        "status": "completed_with_issues",
+        "message": "Security gate completed (exit: 1)",
+        "details": {
+          "exit_code": 1,
+          "output_preview": ""
+        }
+      },
+      {
+        "step": "sbom_license",
+        "status": "completed_with_issues",
+        "message": "SBOM + License completed (exit: 1)",
+        "details": {
+          "exit_code": 1,
+          "output_preview": ""
+        }
+      },
+      {
+        "step": "scorecard",
+        "status": "completed_with_issues",
+        "message": "Scorecard completed (exit: 1)",
+        "details": {
+          "exit_code": 1,
+          "output_preview": ""
+        }
+      },
+      {
+        "step": "evidence_collection",
+        "status": "fail",
+        "message": "Evidence collection failed: exit code 1",
+        "details": {
+          "exit_code": 1,
+          "output_preview": ""
+        }
+      }
+    ],
+    "timestamp": "2025-08-22T20:05:37.755584Z",
+    "details": {
+      "policy_compliance": {
+        "policy_met": true,
+        "critical_failures": [],
+        "gate_statuses": {
+          "scorecard": {
+            "status": "fail",
+            "coverage_percent": 20.54,
+            "security_high": 0,
+            "license_violations": 16,
+            "hard_must_failures": 2
+          }
+        },
+        "overall_assessment": "pass"
+      },
+      "test_spec_used": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502\\test_e2e_spec.yaml",
+      "dry_run_mode": true,
+      "external_dependencies": false
+    }
+  },
+  "generated_at": "2025-08-22T20:05:37.757606Z",
+  "project_root": "C:\\Users\\odilo\\PycharmProjects\\Codepipeline502"
+}
